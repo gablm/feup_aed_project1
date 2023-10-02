@@ -1,0 +1,16 @@
+UC:
+- name
+- list of classes
+
+Class:
+- name/code
+- capacity
+- type
+- schedule:
+  -> weekday
+  -> start time
+
+Student:
+- student number
+- name
+- schedule
