@@ -25,9 +25,9 @@ int main(int argc, char **argv) {
 				  << "Option: ";
 		std::string str;
 		std::cin >> str;
+		system("clear");
 		if (str == "q")
 			break;
-		system("clear");
 	}
 	return 0;
 }
