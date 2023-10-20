@@ -12,6 +12,7 @@ all: $(NAME)
 
 $(NAME): $(FILES)
 	$(CC) $(FLAGS) $(FILES) -o $(NAME)
+	doxygen docs/Doxyfile
 
 clean:
 	rm -fr $(FILES)
