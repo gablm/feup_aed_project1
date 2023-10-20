@@ -1,4 +1,5 @@
 *.o
 a.out
-main
 schedules
+.idea/
+.cmake/
