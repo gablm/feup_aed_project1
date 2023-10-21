@@ -16,9 +16,10 @@ void UI::MainMenu() {
     while (1)
     {
         system(CLEAR);
-        std::cout << "University of Porto - Faculty of Engineering\n"
+		char *name = getenv("USER");
+        std::cout << "FEUP - Schedules service\n"
         << "\n"
-        << "Welcome to the Schedules service!\n"
+        << "Welcome, " << name << "!\n"
         << "Select an option [0-3]:\n"
         << "\n"
         << ">> List and search\n"
@@ -53,48 +54,87 @@ void UI::MainMenu() {
     }
 }
 
+/**
+ * Shows the options available to manage UCs / Subjects
+*/
 void UI::UcMenu()
 {
 	while (1)
     {
         system(CLEAR);
-        std::cout << "UC page\n"
-        << "Option: ";
+        std::cout << "FEUP - Schedules service\n"
+		<< "\n"
+		<< "Select an option [0-1]:\n"
+		<< "\n"
+		<< ">> UC management\n"
+		<< "\n"
+		<< "[0] List\n"
+		<< "[1] Search\n"
+		<< "\n"
+        << "[B] Go back\n"
+		<< "\n"
+		<< "Option: ";
         std::string str;
         std::cin >> str;
-		if (str == "b")
+		if (str == "b" || str == "B")
 			break;
         if (str == "q")
             ClearAndExit();
     }
 }
 
+/**
+ * Shows the options available to manage Students
+*/
 void UI::StudentMenu()
 {
 	while (1)
     {
         system(CLEAR);
-        std::cout << "Student page\n"
-        << "Option: ";
+        std::cout << "FEUP - Schedules service\n"
+		<< "\n"
+		<< "Select an option [0-1]:\n"
+		<< "\n"
+		<< ">> Student management\n"
+		<< "\n"
+		<< "[0] List\n"
+		<< "[1] Search\n"
+		<< "\n"
+        << "[B] Go back\n"
+		<< "\n"
+		<< "Option: ";
         std::string str;
         std::cin >> str;
-		if (str == "b")
+		if (str == "b" || str == "B")
 			break;
         if (str == "q")
             ClearAndExit();
     }
 }
 
+/**
+ * Shows the options available to manage Classes
+*/
 void UI::ClassMenu()
 {
 	while (1)
     {
         system(CLEAR);
-        std::cout << "Class page\n"
-        << "Option: ";
+        std::cout << "FEUP - Schedules service\n"
+		<< "\n"
+		<< "Select an option [0-1]:\n"
+		<< "\n"
+		<< ">> Class management\n"
+		<< "\n"
+		<< "[0] List\n"
+		<< "[1] Search\n"
+		<< "\n"
+        << "[B] Go back\n"
+		<< "\n"
+		<< "Option: ";
         std::string str;
         std::cin >> str;
-		if (str == "b")
+		if (str == "b" || str == "B")
 			break;
         if (str == "q")
             ClearAndExit();
