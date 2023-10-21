@@ -13,6 +13,7 @@ class UI {
         void UcMenu();
         void StudentMenu();
         void ClassMenu();
+		void ChangeMenu();
     public:
         UI() = default;
 		void ClearAndExit();

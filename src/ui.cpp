@@ -17,25 +17,28 @@ void UI::MainMenu() {
     {
         system(CLEAR);
 		char *name = getenv("USER");
-        std::cout << "FEUP - Schedules service\n"
+        std::cout 
+		<< "FEUP - Schedules service\n"
         << "\n"
-        << "Welcome, " << name << "!\n"
-        << "Select an option [0-3]:\n"
+        << "Welcome " << name << "!\n"
+		<< "Select an option [0-3]:\n"
         << "\n"
         << ">> List and search\n"
         << "\n"
-        << "[0] Students\n"
-        << "[1] UCs\n"
-        << "[2] Classes\n"
+        << " [0] Students\n"
+        << " [1] UCs\n"
+        << " [2] Classes\n"
         << "\n"
         << ">> Edit data\n"
         << "\n"
-        << "[3] Change Student schedule\n"
+        << " [3] Change Student schedule\n"
         << "\n"
-        << "Option: ";
+		<< "[Q] Exit\n"
+		<< "\n"
+        << "$> ";
         std::string str;
         std::cin >> str;
-        if (str == "q")
+        if (str == "Q" || str == "q")
             ClearAndExit();
 		if (str.size() > 1)
 			continue;
@@ -50,6 +53,9 @@ void UI::MainMenu() {
 			case 2:
 				ClassMenu();
 				break;
+			case 3:
+				ChangeMenu();
+				break;
 		}
     }
 }
@@ -62,24 +68,34 @@ void UI::UcMenu()
 	while (1)
     {
         system(CLEAR);
-        std::cout << "FEUP - Schedules service\n"
+        std::cout 
+		<< "FEUP - Schedules service\n"
 		<< "\n"
 		<< "Select an option [0-1]:\n"
 		<< "\n"
 		<< ">> UC management\n"
 		<< "\n"
-		<< "[0] List\n"
-		<< "[1] Search\n"
+		<< " [0] List\n"
+		<< " [1] Search\n"
 		<< "\n"
         << "[B] Go back\n"
 		<< "\n"
-		<< "Option: ";
+		<< "$> ";
         std::string str;
         std::cin >> str;
 		if (str == "b" || str == "B")
 			break;
         if (str == "q")
             ClearAndExit();
+		if (str.size() > 1)
+			continue;
+		switch (str[0] - '0')
+		{
+			case 0:
+				break;
+			case 1:
+				break;
+		}
     }
 }
 
@@ -91,7 +107,8 @@ void UI::StudentMenu()
 	while (1)
     {
         system(CLEAR);
-        std::cout << "FEUP - Schedules service\n"
+        std::cout 
+		<< "FEUP - Schedules service\n"
 		<< "\n"
 		<< "Select an option [0-1]:\n"
 		<< "\n"
@@ -102,13 +119,22 @@ void UI::StudentMenu()
 		<< "\n"
         << "[B] Go back\n"
 		<< "\n"
-		<< "Option: ";
+		<< "$> ";
         std::string str;
         std::cin >> str;
 		if (str == "b" || str == "B")
 			break;
         if (str == "q")
             ClearAndExit();
+		if (str.size() > 1)
+			continue;
+		switch (str[0] - '0')
+		{
+			case 0:
+				break;
+			case 1:
+				break;
+		}
     }
 }
 
@@ -120,23 +146,59 @@ void UI::ClassMenu()
 	while (1)
     {
         system(CLEAR);
-        std::cout << "FEUP - Schedules service\n"
+        std::cout 
+		<< "FEUP - Schedule service\n"
 		<< "\n"
 		<< "Select an option [0-1]:\n"
 		<< "\n"
 		<< ">> Class management\n"
 		<< "\n"
-		<< "[0] List\n"
-		<< "[1] Search\n"
+		<< " [0] List\n"
+		<< " [1] Search\n"
 		<< "\n"
         << "[B] Go back\n"
 		<< "\n"
-		<< "Option: ";
+		<< "$> ";
         std::string str;
         std::cin >> str;
 		if (str == "b" || str == "B")
 			break;
         if (str == "q")
             ClearAndExit();
+				if (str.size() > 1)
+			continue;
+		switch (str[0] - '0')
+		{
+			case 0:
+				break;
+			case 1:
+				break;
+		}
+    }
+}
+
+void UI::ChangeMenu()
+{
+		while (1)
+    {
+        system(CLEAR);
+        std::cout 
+		<< "FEUP - Schedule service\n"
+		<< "\n"
+		<< "You are now starting a alteration request.\n"
+		<< "\n"
+		<< "[B] Go back and cancel\n"
+		<< "[Q] Quit\n"
+		<< "\n"
+		<< ">> Name:\n"
+		<< "$> ";
+        std::string str;
+        std::cin >> str;
+		if (str == "b" || str == "B")
+			break;
+        if (str == "q" || str == "Q")
+            ClearAndExit();
+		if (str.size() > 1)
+			continue;
     }
 }
