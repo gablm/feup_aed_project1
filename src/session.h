@@ -1,5 +1,11 @@
+#ifndef SESSION_H
+#define SESSION_H
+
 #include <string>
 #include <ostream>
+#include <list>
+
+class Student;
 
 class Time {
 	public:
@@ -11,16 +17,22 @@ class Time {
 		int minute;
 };
 
-std::ostream& operator<<(std::ostream& os, const Time& obj)
-{
-    os << obj.getHour() << ":" << obj.getMinte();
-    return os;
-}
+class SessionName {
+	public:
+		int year;
+		std::string course_id;
+		int number;
+};
 
 class Session {
 	private:
+		SessionName name;
 		Time time;
-		//List students?
+		std::string type;
+		std::list<Student> studentList;
+		//...
 	public:
 		//...
 };
+
+#endif

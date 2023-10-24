@@ -3,7 +3,7 @@ NAME=schedules
 CC=g++
 FLAGS= -std=c++11 -pedantic -Wall -Wextra -Werror
 
-FILES= src/student.o src/uc.o src/ui.o src/main.o src/session.o src/manager.o
+FILES=src/uc.o src/session.o src/student.o src/ui.o src/main.o src/manager.o src/bst.o
 
 all: $(NAME)
 

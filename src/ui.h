@@ -1,3 +1,6 @@
+#ifndef UI_H
+#define UI_H
+
 #include <iostream>
 #include <string>
 #include <list>
@@ -19,3 +22,5 @@ class UI {
 		void ClearAndExit();
         void MainMenu();
 };
+
+#endif

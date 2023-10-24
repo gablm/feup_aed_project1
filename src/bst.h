@@ -1,0 +1,20 @@
+#ifndef BST_H
+#define BST_H
+
+#include <iostream>
+
+typedef struct node {
+    int key;
+	void *content;
+    struct node *left, *right;
+} BSTnode;
+
+class BST {
+	private:
+		BSTnode *node;
+	public:
+		void insert(int key, void *content);
+		BSTnode search(int key);
+};
+
+#endif
