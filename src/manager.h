@@ -4,8 +4,9 @@
 #include <string>
 #include <map>
 #include "bst.h"
-
-class UC;
+#include "student.h"
+#include "uc.h"
+#include "session.h"
 
 class Manager {
 	private:
