@@ -3,8 +3,9 @@
 /**
  * Constructor for the UC class
  * @param name UC code - Ex. L.EIC001
+ * @param year Year that the UC belongs to
 */
-UC::UC(std::string name) : name(name) {}
+UC::UC(std::string name, int year) : name(name), year(year) {}
 
 /**
  * Complexity: O(1)

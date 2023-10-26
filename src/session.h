@@ -7,34 +7,20 @@
 
 class Student;
 
-class Time {
-	public:
-		Time();
-		Time(int h, int m);
-		int getHour() const;
-		int getMinute() const;
-	private:
-		int hour;
-		int minute;
-};
-
-class SessionName {
-	public:
-		int year;
-		std::string course_id;
-		int number;
-};
-
 class Session {
 	private:
-		SessionName name;
-		Time time;
+		std::string name;
+		std::string day;
+		double time;
+		double duration;
 		std::string type;
 		std::list<Student*> studentList;
 	public:
-		Session(SessionName name, Time time, std::string type);
-		Time getTime() const;
-		SessionName getName() const;
+		Session(std::string name, std::string day, double time, double duration, std::string type);
+		std::string getDay() const;
+		double getTime() const;
+		double getDuration() const;
+		std::string getName() const;
 		std::string getType() const;
 		void addStudent(Student *student);
 };
