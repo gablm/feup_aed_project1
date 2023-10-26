@@ -13,6 +13,7 @@ class BST {
 	private:
 		BSTnode *node;
 	public:
+		BST();
 		void insert(int key, void *content);
 		BSTnode search(int key);
 };
