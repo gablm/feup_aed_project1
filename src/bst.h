@@ -16,6 +16,7 @@ class BST {
 		BST();
 		void insert(int key, void *content);
 		void *search(int key);
+		void clear();
 };
 
 #endif
