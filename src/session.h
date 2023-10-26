@@ -25,6 +25,10 @@ class SessionName {
 		int number;
 };
 
+/**
+ * A Sessions represents a specific class (as in, "aula") with a specific name and place in the schedule. The name was chosen to avoid
+ * confusion with the c++ Classes.
+*/
 class Session {
 	private:
 		SessionName name;
