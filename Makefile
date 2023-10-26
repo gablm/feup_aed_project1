@@ -12,6 +12,8 @@ all: $(NAME)
 
 $(NAME): $(FILES)
 	$(CC) $(FLAGS) $(FILES) -o $(NAME)
+
+doxygen:
 	doxygen docs/Doxyfile
 
 clean:
