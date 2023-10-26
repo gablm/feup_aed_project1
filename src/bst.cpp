@@ -1,6 +1,6 @@
 #include "bst.h"
 
-BST::BST() : node(NULL) {};
+BST::BST() : node(NULL) {}
 
 BSTnode *bst_new(int key, void *content)
 {

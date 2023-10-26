@@ -4,8 +4,7 @@
 #include <string>
 #include <ostream>
 #include <list>
-
-class Student;
+#include "student.h"
 
 class Time {
 	public:

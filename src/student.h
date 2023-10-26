@@ -5,9 +5,8 @@
 #include <ostream>
 #include <vector>
 #include <utility>
-
-class UC;
-class Session;
+#include "uc.h"
+#include "session.h"
 
 class Student {
 	private:
@@ -15,7 +14,12 @@ class Student {
 		int up;
 		std::vector<std::pair<UC, Session>> schedule;
 	public:
-		//...
+		Student(std::string name, int up);
+		std::string getName() const;
+		int getUP() const;
+		std::vector<std::pair<UC,Session>> getSchedule() const;
+		bool addToSchedule(std::pair<UC,Session> ucSessionPair);
+		bool removeFromSchedule(std::pair<UC,Session> ucSessiontoRemove);
 };
 
 #endif
