@@ -12,6 +12,8 @@ void Manager::load_data() {
 
     while(!file.eof()){
 		getline(file,line);
-        cout << line;
+        cout << line << "\n";
+
+        
     }
 }
