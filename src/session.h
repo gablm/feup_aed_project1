@@ -29,7 +29,7 @@ class Session {
 		SessionName name;
 		Time time;
 		std::string type;
-		std::list<Student> studentList;
+		std::list<Student*> studentList;
 		//...
 	public:
 		//...
