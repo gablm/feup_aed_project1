@@ -4,15 +4,18 @@
 #include <string>
 #include <list>
 #include <ostream>
-
-class Session;
+#include "session.h"
 
 class UC {
 	private:
 		std::string name;
-		std::list<Session> sessions;
+		int year;
+		std::list<Session> sessionList;
 	public:
-		//...
+		UC(std::string name, int year);
+		std::string getName() const;
+		void addSession(Session session);
+		std::list<Session> getSessionList() const;
 };
 
 #endif

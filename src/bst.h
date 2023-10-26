@@ -15,7 +15,7 @@ class BST {
 	public:
 		BST();
 		void insert(int key, void *content);
-		BSTnode search(int key);
+		void *search(int key);
 };
 
 #endif

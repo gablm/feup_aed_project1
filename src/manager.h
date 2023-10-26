@@ -3,8 +3,6 @@
 
 #include <string>
 #include <map>
-#include <iostream>
-#include <fstream>
 #include "bst.h"
 #include "student.h"
 #include "uc.h"
@@ -15,7 +13,6 @@ class Manager {
 		BST students;
 		std::map<std::string, UC> ucMap;
 	public:
-		Manager();
 		void load_data();
 };
 

@@ -1,7 +1,16 @@
 #include "bst.h"
 
+/**
+ * Creates a Binary Search Tree (BST)
+*/
 BST::BST() : node(NULL) {}
 
+/**
+ * Create a BST node, composed of a key + content
+ * The left and right nodes are initiated to 0/NULL
+ * @param key Key of the node
+ * @param content Content on the node
+*/
 BSTnode *bst_new(int key, void *content)
 {
 	BSTnode *node = new BSTnode;
@@ -12,6 +21,12 @@ BSTnode *bst_new(int key, void *content)
 	return node;
 }
 
+/**
+ * Inserts a new node in the BST.
+ * Following the concept of a Binary Search Tree, it looks for a place where the next node does not exist and the key is less than the key before it
+ * @param key Key of the new node
+ * @param content Content on the new node
+*/
 void BST::insert(int key, void *content)
 {
 	BSTnode *new_node = bst_new(key, content);
@@ -36,10 +51,15 @@ void BST::insert(int key, void *content)
 		last->right = new_node;
 }
 
-BSTnode BST::search(int key)
+/**
+ * Searches the BST for the content related to the key
+ * @param key Key to look for
+ * @return The content associated to the key
+*/
+void *BST::search(int key)
 {
 	BSTnode *temp = node;
 	while (temp->key != key)
 		temp = (temp->right->key > key) ? temp->left : temp->right;
-	return *temp;
+	return temp->content;
 }
