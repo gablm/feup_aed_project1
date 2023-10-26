@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include <string>
-#include <list>
 
 #ifdef __linux__
 #define CLEAR "clear"
