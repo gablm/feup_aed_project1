@@ -9,9 +9,10 @@ class Student;
 
 class Time {
 	public:
-		Time(int h, int m) : hour(h), minute(m) {}
-		int getHour() const { return hour; }
-		int getMinte() const { return minute; }
+		Time();
+		Time(int h, int m);
+		int getHour() const;
+		int getMinute() const;
 	private:
 		int hour;
 		int minute;
@@ -30,9 +31,12 @@ class Session {
 		Time time;
 		std::string type;
 		std::list<Student*> studentList;
-		//...
 	public:
-		//...
+		Session(SessionName name, Time time, std::string type);
+		Time getTime() const;
+		SessionName getName() const;
+		std::string getType() const;
+		void addStudent(Student *student);
 };
 
 #endif
