@@ -2,7 +2,6 @@
 #define STUDENT_H
 
 #include <string>
-#include <ostream>
 #include <vector>
 #include <utility>
 #include "uc.h"
