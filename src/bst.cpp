@@ -9,6 +9,7 @@ BSTnode *bst_new(int key, void *content)
 	node->key = key;
 	node->left = NULL;
 	node->right = NULL;
+	return node;
 }
 
 void BST::insert(int key, void *content)
