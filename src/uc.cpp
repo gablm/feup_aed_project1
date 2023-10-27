@@ -30,3 +30,11 @@ void UC::addSession(Session session) {
 std::list<Session> UC::getSessionList() const {
 	return sessionList;
 }
+
+/**
+ * Complexity: O(n???)
+ * Clears all the sessions for a UC
+*/
+void UC::clearSessions() {
+	sessionList.clear();
+}

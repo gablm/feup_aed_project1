@@ -15,6 +15,7 @@ class UC {
 		UC(std::string name, int year);
 		std::string getName() const;
 		void addSession(Session session);
+		void clearSessions();
 		std::list<Session> getSessionList() const;
 };
 

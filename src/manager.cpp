@@ -88,5 +88,9 @@ void Manager::dealocate_memory()
 {
 	// As UCs as dinamically allocated, they need to be deleted
 	for (auto i = ucMap.begin(); i != ucMap.end(); i++)
+	{
+		UC *p = i->second;
+		p->clearSessions();
 		delete i->second;
+	}
 }
