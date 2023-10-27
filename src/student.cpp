@@ -40,9 +40,10 @@ std::vector<std::pair<UC*,Session*>> Student::getSchedule() const {
  * Complexity: O(??)
  * @return If the addition was sucessful
 */
-bool addToSchedule(std::pair<UC*,Session*> ucSessionPair) {
+bool Student::addToSchedule(std::pair<UC*,Session*> ucSessionPair) {
 	(void)ucSessionPair;
 	std::cout << "not done - add schedule";
+	exit(0);
 	return true;
 }
 
@@ -54,5 +55,6 @@ bool addToSchedule(std::pair<UC*,Session*> ucSessionPair) {
 bool Student::removeFromSchedule(std::pair<UC*,Session*> ucSessionToRemove) {
 	(void)ucSessionToRemove;
 	std::cout << "not done - remove schedule";
+	exit(0);
 	return false;
 }
