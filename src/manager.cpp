@@ -83,3 +83,10 @@ void Manager::test_map()
 		std::cout << endl;
 	}
 }
+
+void Manager::dealocate_memory()
+{
+	// As UCs as dinamically allocated, they need to be deleted
+	for (auto i = ucMap.begin(); i != ucMap.end(); i++)
+		delete i->second;
+}
