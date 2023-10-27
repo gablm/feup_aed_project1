@@ -16,8 +16,10 @@ class Manager {
 		std::map<std::string, UC*> ucMap;
 	public:
 		Manager();
-		void load_data();
+		void load_map();
 		void test_map();
+		void load_students();
+		void test_students();
 		void dealocate_memory();
 };
 

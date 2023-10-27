@@ -7,7 +7,7 @@ using namespace std;
 
 Manager::Manager(): students(BST()), ucMap() {}
 
-void Manager::load_data() {
+void Manager::load_map() {
 
     string line, sessionName, UCName, sessionDay, sessionType, sessionTimestr, sessionDurationstr;
     double sessionTime, sessionDuration;
