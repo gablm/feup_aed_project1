@@ -11,7 +11,7 @@ void Manager::load_data() {
 
     string line, sessionName, UCName, sessionDay, sessionType, sessionTimestr, sessionDurationstr;
     double sessionTime, sessionDuration;
-	UC *temp_uc;
+	UC *temp_uc = NULL;
 
     ifstream file;
     file.open("data/classes.csv");
@@ -65,7 +65,7 @@ void Manager::load_data() {
 			}
 		}
 
-        Session temp_session(sessionName, sessionDay, sessionTime, sessionDuration, sessionType);
+        Session *temp_session = new Session(sessionName, sessionDay, sessionTime, sessionDuration, sessionType);
         //std::cout << sessionName << " " << UCName << " " << sessionDay << " " << sessionTime << " " << sessionDuration << " " << sessionType << '\n';
         temp_uc->addSession(temp_session);
     }
@@ -78,13 +78,13 @@ void Manager::test_map()
 	{
 		UC *temp = i->second;
 		std::cout << temp->getName() << endl;
-		for (Session i : temp->getSessionList())
+		for (Session *i : temp->getSessionList())
 		{
-			std::cout << " ID: " << i.getName() 
-			<< " Type: " << i.getType()
-			<< " At: " << i.getTime()
-			<< " During: " << i.getDuration()
-			<< " Day: " << i.getDay() 
+			std::cout << " ID: " << i->getName() 
+			<< " Type: " << i->getType()
+			<< " At: " << i->getTime()
+			<< " During: " << i->getDuration()
+			<< " Day: " << i->getDay() 
 			<< "\n";
 		}
 		std::cout << endl;

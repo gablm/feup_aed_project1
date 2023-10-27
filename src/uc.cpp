@@ -19,7 +19,7 @@ std::string UC::getName() const {
  * Complexity: O(1)
  * @param session The class/session to add to the UC
 */
-void UC::addSession(Session session) {
+void UC::addSession(Session *session) {
 	sessionList.push_back(session);
 }
 
@@ -27,7 +27,7 @@ void UC::addSession(Session session) {
  * Complexity: O(1)
  * @return The list of Sessions for the UC
 */
-std::list<Session> UC::getSessionList() const {
+std::list<Session*> UC::getSessionList() const {
 	return sessionList;
 }
 
@@ -36,5 +36,7 @@ std::list<Session> UC::getSessionList() const {
  * Clears all the sessions for a UC
 */
 void UC::clearSessions() {
+	for (auto i = sessionList.begin(); i != sessionList.end(); i++)
+		delete *i;
 	sessionList.clear();
 }
