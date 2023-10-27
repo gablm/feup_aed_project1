@@ -13,10 +13,12 @@ class Manager {
 	private:
 		BST students;
 		static const int sessionCap = 25;
-		std::map<std::string, UC> ucMap;
+		std::map<std::string, UC*> ucMap;
 	public:
 		Manager();
 		void load_data();
+		void test_map();
+		void dealocate_memory();
 };
 
 #endif
