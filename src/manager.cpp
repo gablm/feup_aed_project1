@@ -18,7 +18,8 @@ void Manager::load_data() {
 
     getline(file,line); //removes the first line, which has no usable values
 	
-	if (line != "ClassCode,UcCode,Weekday,StartHour,Duration,Type")
+	if (line != "ClassCode,UcCode,Weekday,StartHour,Duration,Type\r"
+		&& line != "ClassCode,UcCode,Weekday,StartHour,Duration,Type")
 	{
 		std::cout << "Invalid Header";
 		exit(0);
@@ -75,9 +76,9 @@ void Manager::test_map()
 {
 	for (auto i = ucMap.begin(); i != ucMap.end(); i++)
 	{
-		UC temp = *(i->second);
-		std::cout << temp.getName() << endl;
-		for (Session i : temp.getSessionList())
+		UC *temp = i->second;
+		std::cout << temp->getName() << endl;
+		for (Session i : temp->getSessionList())
 		{
 			std::cout << " ID: " << i.getName() 
 			<< " Type: " << i.getType()
