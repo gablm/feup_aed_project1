@@ -5,7 +5,7 @@
 
 using namespace std;
 
-Manager::Manager() : students(BST()), ucMap() {}
+Manager::Manager(): students(BST()), ucMap() {}
 
 void Manager::load_data() {
 
@@ -17,6 +17,12 @@ void Manager::load_data() {
     file.open("data/classes.csv");
 
     getline(file,line); //removes the first line, which has no usable values
+	
+	if (line != "ClassCode,UcCode,Weekday,StartHour,Duration,Type")
+	{
+		std::cout << "Invalid Header";
+		exit(0);
+	}
 
     while(true) {
 		
