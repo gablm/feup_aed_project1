@@ -3,6 +3,7 @@
 
 #include <string>
 #include <map>
+
 #include "bst.h"
 #include "student.h"
 #include "uc.h"
@@ -11,9 +12,13 @@
 class Manager {
 	private:
 		BST students;
-		std::map<std::string, UC> ucMap;
+		static const int sessionCap = 25;
+		std::map<std::string, UC*> ucMap;
 	public:
+		Manager();
 		void load_data();
+		void test_map();
+		void dealocate_memory();
 };
 
 #endif

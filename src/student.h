@@ -11,14 +11,14 @@ class Student {
 	private:
 		std::string name;
 		int up;
-		std::vector<std::pair<UC, Session>> schedule;
+		std::vector<std::pair<UC*, Session*>> schedule;
 	public:
 		Student(std::string name, int up);
 		std::string getName() const;
 		int getUP() const;
-		std::vector<std::pair<UC,Session>> getSchedule() const;
-		bool addToSchedule(std::pair<UC,Session> ucSessionPair);
-		bool removeFromSchedule(std::pair<UC,Session> ucSessiontoRemove);
+		std::vector<std::pair<UC*,Session*>> getSchedule() const;
+		bool addToSchedule(std::pair<UC*,Session*> ucSessionPair);
+		bool removeFromSchedule(std::pair<UC*,Session*> ucSessiontoRemove);
 };
 
 #endif
