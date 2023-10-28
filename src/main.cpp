@@ -1,5 +1,5 @@
-#include "ui.h"
-#include "manager.h"
+#include "headers/ui.h"
+#include "headers/manager.h"
 
 int main(int argc, char **argv) {
     Manager *manager = new Manager();

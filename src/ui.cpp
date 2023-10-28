@@ -1,4 +1,4 @@
-#include "ui.h"
+#include "headers/ui.h"
 
 UI::UI(Manager *manager) : manager(manager) {}
 
@@ -23,11 +23,14 @@ void UI::MainMenu() {
     while (1)
     {
         system(CLEAR);
-		char *name = getenv("USER");
         std::cout 
 		<< "FEUP - Schedules service\n"
         << "\n"
-        << "Welcome " << name << "!\n"
+        #ifdef _linux__
+        << "Welcome " << getenv("USER") << "!\n"
+        #else
+        << "Welcome!\n"
+        #endif
 		<< "Select an option [0-3]:\n"
         << "\n"
         << ">> List and search\n"

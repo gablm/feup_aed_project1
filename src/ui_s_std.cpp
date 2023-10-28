@@ -1,4 +1,4 @@
-#include "ui.h"
+#include "headers/ui.h"
 
 size_t ucAmmount(std::vector<std::pair<UC *, Session *>> iterList)
 {
@@ -180,7 +180,7 @@ void UI::PrintStudent(bool (*tree_filter)(void *), bool (*sort_filter)(const voi
 			{
 				system(CLEAR);
 				std::cout << "INVALID OPERATION\n\n Usage: search [code|name|minUC] [query]\n";
-				sleep(1);
+				SLEEP(1);
 				continue;
 			}
 			PrintStudent(new_filter, sort_filter);
@@ -193,7 +193,7 @@ void UI::PrintStudent(bool (*tree_filter)(void *), bool (*sort_filter)(const voi
 			{
 				system(CLEAR);
 				std::cout << "INVALID OPERATION\n\n Usage: sort [name|rev_name|code|rev_code|minUC|rev_minUC]\n";
-				sleep(1);
+				SLEEP(1);
 				continue;
 			}
 			PrintStudent(tree_filter, new_filter);
@@ -221,7 +221,7 @@ void UI::ShowStudent(std::string option)
 	{
 		system(CLEAR);
 		std::cout << "INVALID OPERATION - INVALID CODE\n\n Usage: select [code]\n";
-		sleep(1);
+		SLEEP(1);
 		return;
 	}
 	void *content = manager->getStudents().search(std::stod(up));
@@ -229,7 +229,7 @@ void UI::ShowStudent(std::string option)
 	{
 		system(CLEAR);
 		std::cout << "INVALID OPERATION - NOT FOUND\n\n Usage: sort [type]\n";
-		sleep(1);
+		SLEEP(1);
 		return;
 	}
 

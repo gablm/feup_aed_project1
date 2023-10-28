@@ -5,3 +5,5 @@ schedules.exe
 .vscode/
 .cmake/
 docs/output/
+.idea/
+

@@ -1,4 +1,4 @@
-#include "manager.h"
+#include "headers/manager.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -34,7 +34,7 @@ void Manager::load_map() {
 	UC *temp_uc = NULL;
 
     ifstream file;
-    file.open("data/classes.csv");
+    file.open("./data/classes.csv");
 
 	if (file.fail()) {
 		std::cout << "Invalid File";
@@ -102,7 +102,7 @@ void Manager::load_students() {
 	Student *temp_student = NULL;
 
     ifstream file;
-    file.open("data/students_classes.csv");
+    file.open("./data/students_classes.csv");
 
 	if (file.fail()) {
 		std::cout << "Invalid File";
