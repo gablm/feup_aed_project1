@@ -245,20 +245,33 @@ void UI::TestFunc() {
 	// Default ordering >> PrintStudent(NULL, NULL)
 }
 
-/* Takes two filters, one for search and one for sorting
-*/	
+std::string query;
+bool (*parse_filter())(void *)
+{
+	std::string field;
+	std::cin >> field;
+	std::cin >> query;
+
+	if (field == "code")
+	{
+		auto res = [](void * a) { std::string code = std::to_string(((Student *)a)->getCode());
+								return code.find(query) != code.npos; };
+		return res;
+	}
+	if (field == "name")
+	{
+		auto res = [](void * a) { std::string name = ((Student *)a)->getName();
+								return name.find(query) != name.npos; };
+		return res;
+	}
+	return NULL;
+}
+
+/* Takes two filters, one for search and one for sorting */	
 void UI::PrintStudent(bool (*tree_filter)(void *), bool (*sort_filter)(const void *, const void *)) {
-	system(CLEAR);
 	toDisplay.clear();
 
-	std::cout.width(30);
-	std::cout << std::left
-	<< std::setw(10) << "Code"
-	<< std::setw(30) << "Name"
-	<< "Number of UCs" << "\n\n";
-
 	// Filter things
-	
 	if (!tree_filter)
 		tree_filter = [](void *ptr){ return ptr != NULL; };
 	read_if_student(manager->getStudents().getNode(), toDisplay, tree_filter);
@@ -266,17 +279,41 @@ void UI::PrintStudent(bool (*tree_filter)(void *), bool (*sort_filter)(const voi
 	// Sort things
 	if (sort_filter)
 		toDisplay.sort(sort_filter);
-
-	for (auto i : toDisplay) {
-		Student *a = (Student *)i;
+	
+	while (1) {
+		system(CLEAR);
+		std::cout.width(30);	
 		std::cout << std::left
-		<< std::setw(10) << a->getCode()
-		<< std::setw(30) << a->getName()
-		<< len(a->getSchedule())
-		<< "\n";
-	}
+		<< std::setw(10) << "Code"
+		<< std::setw(30) << "Name"
+		<< "Number of UCs" << "\n\n";
+		
+		for (auto i : toDisplay) {
+			Student *a = (Student *)i;
+			std::cout << std::left
+			<< std::setw(10) << a->getCode()
+			<< std::setw(30) << a->getName()
+			<< len(a->getSchedule())
+			<< "\n";
+		}
 
-	std::cout << "\nOption: ";
-	std::string option;
-	std::cin >> option;
+		std::cout << "\n$> ";
+		std::string option;
+		std::cin >> option;
+		if (option == "b" || option == "B")
+			break;
+		if (option == "search")
+		{
+			auto new_filter = parse_filter();
+			if (!new_filter)
+			{
+				system(CLEAR);
+				std::cout << "INVALID OPERATION\n s [field] [query]\n";
+				usleep(700000);
+				continue;
+			}
+			PrintStudent(new_filter, sort_filter);
+			break;
+		}
+	}
 }
