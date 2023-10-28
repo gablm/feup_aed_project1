@@ -1,10 +1,19 @@
 #include "ui.h"
 
-template <typename T>	
-size_t len(T iterList)
+size_t ucAmmount(std::vector<std::pair<UC*, Session*>> iterList)
 {
 	size_t res = 0;
+	UC *uc = NULL;
 	for (auto i = iterList.begin(); i != iterList.end(); i++)
+	{
+		if (!uc)
+			uc = i->first;
+		if (uc->getName() != i->first->getName()) {	
+			uc = i->first;
+			res++;
+		}
+	}
+	if (uc)
 		res++;
 	return (res);
 }
@@ -51,6 +60,12 @@ bool (*parse_search_filter(std::string option))(void *)
 								return name.find(query) != name.npos; };
 		return res;
 	}
+	if (field == "minUC")
+	{
+		auto res = [](void * a) { auto name = ((Student *)a)->getSchedule();
+								return ucAmmount(name) >= std::stod(query); };
+		return res;
+	}	
 	return NULL;
 }
 
@@ -75,6 +90,16 @@ bool (*parse_sort_filter(std::string option))(const void * a, const void *b)
 		auto res = [](const void * a, const void *b) { return ((Student *)a)->getCode() > ((Student *)b)->getCode(); };
 		return res;
 	}
+	if (field == "minUC")
+	{
+		auto res = [](const void * a, const void *b) { return ucAmmount(((Student *)a)->getSchedule()) < ucAmmount(((Student *)b)->getSchedule()); };
+		return res;
+	}
+	if (field == "rev_minUC")
+	{
+		auto res = [](const void * a, const void *b) { return ucAmmount(((Student *)a)->getSchedule()) > ucAmmount(((Student *)b)->getSchedule()); };
+		return res;
+	}
 	return NULL;
 }
 
@@ -96,15 +121,15 @@ void UI::PrintStudent(bool (*tree_filter)(void *), bool (*sort_filter)(const voi
 		std::cout.width(30);	
 		std::cout << std::left
 		<< std::setw(10) << "Code"
-		<< std::setw(30) << "Name"
-		<< "Number of UCs" << "\n\n";
+		<< std::setw(11) << "Uc number"
+		<< "Name" << "\n\n";
 		
 		for (auto i : toDisplay) {
 			Student *a = (Student *)i;
 			std::cout << std::left
 			<< std::setw(10) << a->getCode()
-			<< std::setw(30) << a->getName()
-			<< len(a->getSchedule())
+			<< "    " << std::setw(6) << std::left << ucAmmount(a->getSchedule())
+			<< a->getName()
 			<< "\n";
 		}
 		if (toDisplay.empty())
@@ -112,8 +137,9 @@ void UI::PrintStudent(bool (*tree_filter)(void *), bool (*sort_filter)(const voi
 
 		std::cout << "\nOptions:"
 				  << "\n reset - Reset listing to the default sorting and search scheme" 
-				  << "\n search [code|name] [query] - Search the current list"
-				  << "\n sort [name|rev_name|code|rev_code] - Sort the current list"
+				  << "\n search [code|name|minUC] [query] - Search the current list"
+				  << "\n sort [name|rev_name|code|rev_code|minUC|rev_minUC] - Sort the current list"
+				  << "\n select [code] - Show the student"
 				  << "\nNote: The terminal will wait for all the arguments for each operation."
 				  << "\n\n$> ";
 		std::string option;
