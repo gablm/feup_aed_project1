@@ -4,6 +4,8 @@
 #include <iostream>
 #include <string>
 #include <cstdlib>
+#include <set>
+#include <iomanip>
 #include "manager.h"
 
 #ifdef __linux__
@@ -15,6 +17,7 @@
 class UI {
     private:
 		Manager *manager;
+		std::set<void *> toDisplay;
         void UcMenu();
         void StudentMenu();
         void ClassMenu();

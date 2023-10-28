@@ -215,6 +215,46 @@ void UI::ChangeMenu()
     }
 }
 
-void UI::TestFunc() {
+template <typename T>	
+size_t len(T iterList)
+{
+	size_t res = 0;
+	for (auto i = iterList.begin(); i != iterList.end(); i++)
+		res++;
+	return (res);
+}
 
+void read_all_student(BSTnode *node, std::set<void *> &toDisplay)
+{
+	if (!node)
+		return;
+	
+	read_all_student(node->left, toDisplay);
+	toDisplay.insert(node->content);
+	read_all_student(node->right, toDisplay);
+}
+
+void UI::TestFunc() {
+	system(CLEAR);
+	toDisplay.clear();
+
+	std::cout.width(30);
+	std::cout << std::left
+	<< std::setw(10) << "Code"
+	<< std::setw(30) << "Name"
+	<< "Number of UCs" << "\n\n";
+	read_all_student(manager->getStudents().getNode(), toDisplay);
+
+	for (auto i : toDisplay) {
+		Student *a = (Student *)i;
+		std::cout << std::left
+		<< std::setw(10) << a->getCode()
+		<< std::setw(30) << a->getName()
+		<< len(a->getSchedule())
+		<< "\n";
+	}
+
+	std::cout << "\nOption: ";
+	std::string option;
+	std::cin >> option;
 }
