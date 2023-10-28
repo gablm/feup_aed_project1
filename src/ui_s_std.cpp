@@ -48,7 +48,7 @@ bool (*parse_search_filter(std::string option))(void *)
 	std::istringstream is(option);
 	is >> field;
 	if (is.eof())
-		return NULL; 
+		return NULL;
 	is >> field;
 	getline(is, query);
 	if (query.length() > 1)
@@ -84,7 +84,7 @@ bool (*parse_sort_filter(std::string option))(const void *a, const void *b)
 	std::istringstream is(option);
 	is >> field;
 	if (is.eof())
-		return NULL;  
+		return NULL;
 	is >> field;
 
 	if (field == "name")
@@ -225,7 +225,8 @@ void UI::ShowStudent(std::string option)
 		return;
 	}
 	void *content = manager->getStudents().search(std::stod(up));
-	if (!content) {
+	if (!content)
+	{
 		system(CLEAR);
 		std::cout << "INVALID OPERATION - NOT FOUND\n\n Usage: sort [type]\n";
 		sleep(1);
