@@ -103,7 +103,9 @@ void UI::PrintStudent(bool (*tree_filter)(void *), bool (*sort_filter)(const voi
 			break;
 		}
 		if (option == "reset")
+		{
 			PrintStudent(NULL, NULL);
 			break;
+		}
 	}
 }
