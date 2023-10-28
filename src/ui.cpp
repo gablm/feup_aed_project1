@@ -242,6 +242,7 @@ void UI::TestFunc() {
 	// Sort in reverse name alphabetical order
 	auto sort_filter = [](const void * a, const void *b) { return ((Student *)a)->getName() > ((Student *)b)->getName(); };
 	PrintStudent(tree_filter, sort_filter);
+	// Default ordering >> PrintStudent(NULL, NULL)
 }
 
 /* Takes two filters, one for search and one for sorting
