@@ -10,12 +10,12 @@
 class Student {
 	private:
 		std::string name;
-		int up;
+		int code;
 		std::vector<std::pair<UC*, Session*>> schedule;
 	public:
-		Student(std::string name, int up);
+		Student(std::string name, int code);
 		std::string getName() const;
-		int getUP() const;
+		int getCode() const;
 		std::vector<std::pair<UC*,Session*>> getSchedule() const;
 		bool addToSchedule(std::pair<UC*,Session*> ucSessionPair);
 		bool removeFromSchedule(std::pair<UC*,Session*> ucSessiontoRemove);

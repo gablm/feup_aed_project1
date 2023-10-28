@@ -6,9 +6,9 @@
 /**
  * The only constructor for this class
  * @param name Student Name
- * @param up Student number (commonly known as UP)
+ * @param up Student number (commonly known as code)
 */
-Student::Student(std::string name, int up) : name(name), up(up) {}
+Student::Student(std::string name, int code) : name(name), code(code) {}
 
 /**
  * Complexity: O(1)
@@ -20,10 +20,10 @@ std::string Student::getName() const {
 
 /**
  * Complexity: O(1)
- * @return Identification number (UP)
+ * @return Identification number (code)
 */
-int Student::getUP() const {
-	return up;
+int Student::getCode() const {
+	return code;
 }
 
 /**
@@ -41,9 +41,7 @@ std::vector<std::pair<UC*,Session*>> Student::getSchedule() const {
  * @return If the addition was sucessful
 */
 bool Student::addToSchedule(std::pair<UC*,Session*> ucSessionPair) {
-	(void)ucSessionPair;
-	std::cout << "not done - add schedule";
-	exit(0);
+	schedule.push_back(ucSessionPair);
 	return true;
 }
 

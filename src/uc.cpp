@@ -40,3 +40,13 @@ void UC::clearSessions() {
 		delete *i;
 	sessionList.clear();
 }
+
+std::list<Session*> UC::find(std::string sessionName) {
+	std::list<Session*> res;
+	for (auto i = sessionList.begin(); i != sessionList.end(); i++)
+	{
+		if ((*i)->getName() == sessionName)
+			res.push_back(*i);
+	}
+	return res;
+}

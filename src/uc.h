@@ -16,6 +16,7 @@ class UC {
 		std::string getName() const;
 		void addSession(Session *session);
 		void clearSessions();
+		std::list<Session*> find(std::string sessionName);
 		std::list<Session*> getSessionList() const;
 };
 

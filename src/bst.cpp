@@ -63,3 +63,11 @@ void *BST::search(int key)
 		temp = (temp->right->key > key) ? temp->left : temp->right;
 	return temp->content;
 }
+
+void BST::clear() {
+	return ;
+}
+
+BSTnode *BST::getNode() const {
+	return node;
+}
