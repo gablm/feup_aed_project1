@@ -224,7 +224,7 @@ size_t len(T iterList)
 	return (res);
 }
 
-void read_if_student(BSTnode *node, std::list<void *> &toDisplay, bool (*f)(void *))
+static void read_if_student(BSTnode *node, std::list<void *> &toDisplay, bool (*f)(void *))
 {
 	if (!node)
 		return;
@@ -236,6 +236,17 @@ void read_if_student(BSTnode *node, std::list<void *> &toDisplay, bool (*f)(void
 }
 
 void UI::TestFunc() {
+	
+	// Filter only names starting by N
+	auto tree_filter = [](void *ptr){ return ((Student *)ptr)->getName()[0] == 'M';};
+	// Sort in reverse name alphabetical order
+	auto sort_filter = [](const void * a, const void *b) { return ((Student *)a)->getName() > ((Student *)b)->getName(); };
+	PrintStudent(tree_filter, sort_filter);
+}
+
+/* Takes two filters, one for search and one for sorting
+*/	
+void UI::PrintStudent(bool (*tree_filter)(void *), bool (*sort_filter)(const void *, const void *)) {
 	system(CLEAR);
 	toDisplay.clear();
 
@@ -247,13 +258,13 @@ void UI::TestFunc() {
 
 	// Filter things
 	
-	auto m_filter = [](void *ptr){ return ((Student *)ptr)->getName()[0] == 'M';};
-	//auto no_filter = [](void *ptr){ return ptr != NULL; };
-	read_if_student(manager->getStudents().getNode(), toDisplay, m_filter);
+	if (!tree_filter)
+		tree_filter = [](void *ptr){ return ptr != NULL; };
+	read_if_student(manager->getStudents().getNode(), toDisplay, tree_filter);
 
 	// Sort things
-	auto rev_alpha_cond = [](const void * a, const void *b) { return ((Student *)a)->getName() > ((Student *)b)->getName(); };
-	toDisplay.sort(rev_alpha_cond);
+	if (sort_filter)
+		toDisplay.sort(sort_filter);
 
 	for (auto i : toDisplay) {
 		Student *a = (Student *)i;

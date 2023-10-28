@@ -23,6 +23,8 @@ class UI {
         void StudentMenu();
         void ClassMenu();
 		void ChangeMenu();
+		void PrintStudent(bool (*tree_filter)(void *), bool (*sort_filter)(const void *, const void *));
+
 		void TestFunc();
     public:
         UI(Manager *manager);
