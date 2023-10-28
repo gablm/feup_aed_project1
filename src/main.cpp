@@ -12,7 +12,7 @@ int main(int argc, char **argv) {
 	manager.dealocate_memory();
 	auto stop = std::chrono::high_resolution_clock::now();
 	auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start);
-    //UI ui;
-    //ui.MainMenu();
+    UI ui;
+    ui.MainMenu();
 	return 0;
 }
