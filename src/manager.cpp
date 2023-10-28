@@ -30,10 +30,8 @@ void Manager::load_map() {
 		
 		getline(file,line);
 
-		if (line.size() < 1) {
-			std::cout << "[DEBUG] Invalid line" << endl;
+		if (line.size() < 1)
 			continue;
-		}
 
         istringstream ss(line);
 
@@ -101,10 +99,7 @@ void Manager::load_students() {
 		getline(file,line);
 
 		if (line.size() < 1)
-		{
-			std::cout << "[DEBUG] Invalid line" << endl;
 			continue;
-		}
 
         istringstream ss(line);
 
