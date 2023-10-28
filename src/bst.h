@@ -17,7 +17,7 @@ class BST {
 		void insert(int key, void *content);
 		void *search(int key);
 		BSTnode *getNode() const;
-		void clear();
+		void clear(void (*del)(void *));
 };
 
 #endif

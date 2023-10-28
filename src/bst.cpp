@@ -64,8 +64,19 @@ void *BST::search(int key)
 	return temp->content;
 }
 
-void BST::clear() {
-	return ;
+void bst_del(BSTnode *node, void (*del)(void *)) {
+	if (!node)
+		return;
+	bst_del(node->left, del);
+	bst_del(node->right, del);
+	del(node->content);
+	delete node;
+	node->left = node->right = NULL;
+	node = NULL;
+}
+
+void BST::clear(void (*del)(void *)) {
+	bst_del(node, del);
 }
 
 BSTnode *BST::getNode() const {

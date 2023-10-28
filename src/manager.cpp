@@ -157,10 +157,15 @@ void Manager::test_students() {
 	print(students.getNode());
 }
 
+void free_student(void *ptr)
+{
+	delete (Student *)ptr;
+}
+
 void Manager::dealocate_memory()
 {
 	// As UCs as dinamically allocated, they need to be deleted
-	students.clear();
+	students.clear(free_student);
 	for (auto i = ucMap.begin(); i != ucMap.end(); i++)
 	{
 		UC *p = i->second;
