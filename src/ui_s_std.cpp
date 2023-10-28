@@ -238,24 +238,45 @@ void UI::ShowStudent(std::string option)
 	while (1)
 	{
 		std::cout
+			<< "Student Inspector - "
 			<< student->getCode()
-			<< " - " << student->getName()
-			<< std::endl;
+			<< "/" << student->getName()
+			<< " Schedule\n\n";
 
+		std::list<std::pair<UC*, Session*>> weekdays[7];
 		for (auto pair : student->getSchedule())
 		{
-			Session *a = pair.second;
-			std::cout
-				<< " " << pair.first->getName()
-				<< " " << a->getName()
-				<< " " << a->getDay()
-				<< " " << a->getType()
-				<< " @ " << a->getTime()
-				<< " > " << a->getDuration()
-				<< std::endl;
+			std::istringstream wday(pair.second->getDay());
+			std::tm time;
+			wday >> std::get_time(&time, "%a");
+			weekdays[time.tm_wday].push_back(pair);
+		}
+
+		bool print = true;
+		for (auto i : weekdays) {
+			i.sort([](std::pair<UC*, Session*> a, std::pair<UC*, Session*> b) { return a.second->getTime() < b.second->getTime(); });
+			for (auto session : i) {
+				Session *a = session.second;
+				if (print)
+				{
+					std::cout << " " << a->getDay() << "\n\n";
+					print = false;
+				}
+				int time = a->getTime() * 60;
+				int duration = a->getDuration() * 60;
+				std::cout
+					<< "   UC: " << session.first->getName()
+					<< " | Class: " << a->getName()
+					<< "\n	 Type: " << a->getType()
+					<< "\n	 Start time: " << std::right << std::setfill('0') << std::setw(2) << time / 60 << ":" << std::setfill('0') << std::setw(2) << time % 60
+					<< "\n	 Duration: " << std::setfill('0') << std::setw(2) << duration / 60 << ":" << std::setfill('0') << std::setw(2) << duration % 60
+					<< "\n\n";
+			}
+			print = true;
 		}
 
 		std::string option;
+		std::cout << " [B] Go back\n\n$>";
 		getline(std::cin, option);
 		if (option[0] == 'b' || option[0] == 'B' && option.length() == 1)
 			break;

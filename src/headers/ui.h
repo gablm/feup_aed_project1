@@ -8,6 +8,7 @@
 #include <set>
 #include <iomanip>
 #include <algorithm>
+#include <map>
 #include "manager.h"
 
 #ifdef __linux__
