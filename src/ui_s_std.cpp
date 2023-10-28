@@ -161,7 +161,8 @@ void UI::PrintStudent(bool (*tree_filter)(void *), bool (*sort_filter)(const voi
 				  << "\n reset - Reset listing to the default sorting and search scheme"
 				  << "\n search [code|name|minUC] [query] - Search the current list"
 				  << "\n sort [name|rev_name|code|rev_code|minUC|rev_minUC] - Sort the current list"
-				  << "\n select [code] - Show the student"
+				  << "\n select [code] - Show the student's schedule"
+				  << "\n b - Go back"
 				  << "\nNote: The terminal will wait for all the arguments for each operation."
 				  << "\n\n$> ";
 		std::string option;
@@ -186,7 +187,7 @@ void UI::PrintStudent(bool (*tree_filter)(void *), bool (*sort_filter)(const voi
 			PrintStudent(new_filter, sort_filter);
 			break;
 		}
-		if (option.substr(0, 5) == "sort ")
+		if (option.substr(0, 5) == "sort " && option != "sort code")
 		{
 			auto new_filter = parse_sort_filter(option);
 			if (!new_filter)
