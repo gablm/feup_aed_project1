@@ -6,6 +6,7 @@
 #include <cstdlib>
 #include <set>
 #include <iomanip>
+#include <algorithm>
 #include "manager.h"
 
 #ifdef __linux__
@@ -17,7 +18,7 @@
 class UI {
     private:
 		Manager *manager;
-		std::set<void *> toDisplay;
+		std::list<void *> toDisplay;
         void UcMenu();
         void StudentMenu();
         void ClassMenu();

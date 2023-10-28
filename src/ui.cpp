@@ -224,14 +224,15 @@ size_t len(T iterList)
 	return (res);
 }
 
-void read_all_student(BSTnode *node, std::set<void *> &toDisplay)
+void read_if_student(BSTnode *node, std::list<void *> &toDisplay, bool (*f)(void *))
 {
 	if (!node)
 		return;
 	
-	read_all_student(node->left, toDisplay);
-	toDisplay.insert(node->content);
-	read_all_student(node->right, toDisplay);
+	read_if_student(node->left, toDisplay, f);
+	if (f(node->content))
+		toDisplay.push_back(node->content);
+	read_if_student(node->right, toDisplay, f);
 }
 
 void UI::TestFunc() {
@@ -243,7 +244,16 @@ void UI::TestFunc() {
 	<< std::setw(10) << "Code"
 	<< std::setw(30) << "Name"
 	<< "Number of UCs" << "\n\n";
-	read_all_student(manager->getStudents().getNode(), toDisplay);
+
+	// Filter things
+	
+	auto m_filter = [](void *ptr){ return ((Student *)ptr)->getName()[0] == 'M';};
+	//auto no_filter = [](void *ptr){ return ptr != NULL; };
+	read_if_student(manager->getStudents().getNode(), toDisplay, m_filter);
+
+	// Sort things
+	auto rev_alpha_cond = [](const void * a, const void *b) { return ((Student *)a)->getName() > ((Student *)b)->getName(); };
+	toDisplay.sort(rev_alpha_cond);
 
 	for (auto i : toDisplay) {
 		Student *a = (Student *)i;
