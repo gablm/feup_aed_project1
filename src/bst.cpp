@@ -70,8 +70,8 @@ void bst_del(BSTnode *node, void (*del)(void *)) {
 	bst_del(node->left, del);
 	bst_del(node->right, del);
 	del(node->content);
-	delete node;
 	node->left = node->right = NULL;
+	delete node;
 	node = NULL;
 }
 

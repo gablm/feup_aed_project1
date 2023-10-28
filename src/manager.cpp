@@ -7,6 +7,26 @@ using namespace std;
 
 Manager::Manager(): students(BST()), ucMap() {}
 
+Manager::~Manager()
+{
+	// As UCs as dinamically allocated, they need to be deleted
+
+	students.clear([] (void *ptr) { delete (Student *)ptr; });
+	for (auto i = ucMap.begin(); i != ucMap.end(); i++)
+	{
+		UC *p = i->second;
+		p->clearSessions();
+		delete i->second;
+	}
+}
+
+BST& Manager::getStudents() {
+	return students;
+}
+std::map<std::string, UC*>& Manager::getUcMap() {
+	return ucMap;
+}
+
 void Manager::load_map() {
 
     string line, sessionName, UCName, sessionDay, sessionType, sessionTimestr, sessionDurationstr;
@@ -155,21 +175,4 @@ void print(BSTnode *node)
 
 void Manager::test_students() {
 	print(students.getNode());
-}
-
-void free_student(void *ptr)
-{
-	delete (Student *)ptr;
-}
-
-void Manager::dealocate_memory()
-{
-	// As UCs as dinamically allocated, they need to be deleted
-	students.clear(free_student);
-	for (auto i = ucMap.begin(); i != ucMap.end(); i++)
-	{
-		UC *p = i->second;
-		p->clearSessions();
-		delete i->second;
-	}
 }

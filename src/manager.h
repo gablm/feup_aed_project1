@@ -16,11 +16,13 @@ class Manager {
 		std::map<std::string, UC*> ucMap;
 	public:
 		Manager();
+		~Manager();
 		void load_map();
 		void test_map();
 		void load_students();
 		void test_students();
-		void dealocate_memory();
+		BST& getStudents();
+		std::map<std::string, UC*>& getUcMap();
 };
 
 #endif

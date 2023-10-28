@@ -3,6 +3,8 @@
 
 #include <iostream>
 #include <string>
+#include <cstdlib>
+#include "manager.h"
 
 #ifdef __linux__
 #define CLEAR "clear"
@@ -12,12 +14,15 @@
 
 class UI {
     private:
+		Manager *manager;
         void UcMenu();
         void StudentMenu();
         void ClassMenu();
 		void ChangeMenu();
+		void TestFunc();
     public:
-        UI() = default;
+        UI(Manager *manager);
+		~UI();
 		void ClearAndExit();
         void MainMenu();
 };
