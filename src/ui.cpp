@@ -57,7 +57,7 @@ void UI::MainMenu() {
 		switch (str[0] - '0')
 		{
 			case 0:
-				StudentMenu();
+				PrintStudent(NULL, NULL);
 				break;
 			case 1:
 				UcMenu();
@@ -114,7 +114,7 @@ void UI::UcMenu()
 /**
  * Shows the options available to manage Students
 */
-void UI::StudentMenu()
+/*void UI::StudentMenu()
 {
 	while (1)
     {
@@ -148,7 +148,7 @@ void UI::StudentMenu()
 				break;
 		}
     }
-}
+}*/
 
 /**
  * Shows the options available to manage Classes
