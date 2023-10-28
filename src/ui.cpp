@@ -1,11 +1,18 @@
 #include "ui.h"
 
+UI::UI(Manager *manager) : manager(manager) {}
+
+UI::~UI() {
+	delete manager;
+}
+
 /**
- * Clear the standard io and exits
+ * Clears the standard io, dealocates memory and exits
 */
 void UI::ClearAndExit() {
 	system(CLEAR);
-	exit(0);
+	delete manager;
+	std::exit(0);
 }
 
 /**
@@ -33,6 +40,7 @@ void UI::MainMenu() {
         << "\n"
         << " [3] Change Student schedule\n"
         << "\n"
+		<< "[T] Fast Test Access\n"
 		<< "[Q] Exit\n"
 		<< "\n"
         << "$> ";
@@ -40,6 +48,10 @@ void UI::MainMenu() {
         std::cin >> str;
         if (str == "Q" || str == "q")
             ClearAndExit();
+		if (str == "t" || str == "T") {
+			TestFunc();
+			continue;
+		}	
 		if (str.size() > 1)
 			continue;
 		switch (str[0] - '0')
@@ -201,4 +213,8 @@ void UI::ChangeMenu()
 		if (str.size() > 1)
 			continue;
     }
+}
+
+void UI::TestFunc() {
+
 }
