@@ -51,6 +51,18 @@ void BST::insert(int key, void *content)
 		last->right = new_node;
 }
 
+static void *recursive_search(BSTnode *node, int key) {
+	if (!node)
+		return NULL;
+	if (node->key == key)
+		return node->content;
+	
+	if (node->key > key)
+		return recursive_search(node->left, key);
+	
+	return recursive_search(node->right, key);
+}
+
 /**
  * Searches the BST for the content related to the key
  * @param key Key to look for
@@ -58,13 +70,12 @@ void BST::insert(int key, void *content)
 */
 void *BST::search(int key)
 {
-	BSTnode *temp = node;
-	while (temp->key != key)
-		temp = (temp->right->key > key) ? temp->left : temp->right;
-	return temp->content;
+	return recursive_search(node, key);
 }
 
-void bst_del(BSTnode *node, void (*del)(void *)) {
+
+
+static void bst_del(BSTnode *node, void (*del)(void *)) {
 	if (!node)
 		return;
 	bst_del(node->left, del);

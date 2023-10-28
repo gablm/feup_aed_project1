@@ -28,6 +28,7 @@ class UI {
         void ClassMenu();
 		void ChangeMenu();
 		void PrintStudent(bool (*tree_filter)(void *), bool (*sort_filter)(const void *, const void *));
+		void ShowStudent(std::string option);
 
 		void TestFunc();
     public:
