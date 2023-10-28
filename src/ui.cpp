@@ -215,6 +215,56 @@ void UI::ChangeMenu()
     }
 }
 
-void UI::TestFunc() {
+template <typename T>	
+size_t len(T iterList)
+{
+	size_t res = 0;
+	for (auto i = iterList.begin(); i != iterList.end(); i++)
+		res++;
+	return (res);
+}
 
+void read_if_student(BSTnode *node, std::list<void *> &toDisplay, bool (*f)(void *))
+{
+	if (!node)
+		return;
+	
+	read_if_student(node->left, toDisplay, f);
+	if (f(node->content))
+		toDisplay.push_back(node->content);
+	read_if_student(node->right, toDisplay, f);
+}
+
+void UI::TestFunc() {
+	system(CLEAR);
+	toDisplay.clear();
+
+	std::cout.width(30);
+	std::cout << std::left
+	<< std::setw(10) << "Code"
+	<< std::setw(30) << "Name"
+	<< "Number of UCs" << "\n\n";
+
+	// Filter things
+	
+	auto m_filter = [](void *ptr){ return ((Student *)ptr)->getName()[0] == 'M';};
+	//auto no_filter = [](void *ptr){ return ptr != NULL; };
+	read_if_student(manager->getStudents().getNode(), toDisplay, m_filter);
+
+	// Sort things
+	auto rev_alpha_cond = [](const void * a, const void *b) { return ((Student *)a)->getName() > ((Student *)b)->getName(); };
+	toDisplay.sort(rev_alpha_cond);
+
+	for (auto i : toDisplay) {
+		Student *a = (Student *)i;
+		std::cout << std::left
+		<< std::setw(10) << a->getCode()
+		<< std::setw(30) << a->getName()
+		<< len(a->getSchedule())
+		<< "\n";
+	}
+
+	std::cout << "\nOption: ";
+	std::string option;
+	std::cin >> option;
 }
