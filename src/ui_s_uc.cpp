@@ -136,60 +136,48 @@ void UI::PrintUC(bool (*tree_filter)(void *), bool (*sort_filter)(const void *, 
 					  << "\n";
 		}
 		if (toDisplay.empty())
-			std::cout << "(No results)\n\nWarning: Search is case sensitive!\n";
+			std::cout << "(No results)\n";
 
-		std::cout << "\nOptions:"
-				  << "\n reset - Reset listing to the default sorting and search scheme"
-				  << "\n search [code|year|minOccupation] [query] - Search the list"
-				  << "\n sort [code|rev_code|year|occupation|rev_occupation] - Sort the current list"
-				  << "\n select [code] - Show the UC's schedule"
-				  << "\n b - Go back"
-				  << "\nNote: The terminal will wait for all the arguments for each operation."
+		std::cout << "\nTo see the available commands, use 'help'!"
+				  << "\nTo go back to the main menu, use 'b'"
 				  << "\n\n$> ";
 		std::string option;
 		getline(std::cin, option);
 		if ((option[0] == 'b' || option[0] == 'B') && option.length() == 1)
 			break;
-		if ((option[0] == 'q' || option[0] == 'Q') && option.length() == 1)
-		{
+		if ((option[0] == 'q' || option[0] == 'Q') && option.length() == 1) {
 			toDisplay.clear();
 			ClearAndExit();
 		}
-		if (option.substr(0, 7) == "search ")
-		{
+		if (option.substr(0, 7) == "search ") {
 			auto new_filter = uc_parse_search_filter(option);
 			if (!new_filter)
 			{
-				system(CLEAR);
-				std::cout << "INVALID OPERATION\n\n Usage: search [code|year|minOccupation] [query]\n";
-				SLEEP(1);
+				HelpUC("Invalid field", "search [code|year|minOccupation] [query]");
 				continue;
 			}
 			PrintUC(new_filter, sort_filter);
 			break;
 		}
-		if (option.substr(0, 5) == "sort ")
-		{
+		if (option.substr(0, 5) == "sort ") {
 			auto new_filter = uc_parse_sort_filter(option);
 			if (!new_filter && option != "sort code")
 			{
-				system(CLEAR);
-				std::cout << "INVALID OPERATION\n\n Usage: sort [code|rev_code|year|occupation|rev_occupation]\n";
-				SLEEP(1);
+				HelpUC("Invalid field", "sort [code|rev_code|year|occupation|rev_occupation]");
 				continue;
 			}
 			PrintUC(tree_filter, new_filter);
 			break;
 		}
-		if (option == "reset")
-		{
+		if (option == "reset") {
 			PrintUC(NULL, NULL);
 			break;
 		}
 		if (option.substr(0, 6) == "select")
-		{
 			ShowUC(option);
-		}
+		if (option == "help")
+			HelpUC("", "");
+
 	}
 }
 
@@ -206,17 +194,15 @@ void UI::ShowUC(std::string option) {
 	if (code.length() < 1)
 	{
 		system(CLEAR);
-		std::cout << "INVALID OPERATION - INVALID CODE\n\n Usage: select [code]\n";
-		SLEEP(1);
+		std::cout << "Invalid operation!\nPlease insert a valid code.\n\n Usage: select [code]\n\nPress ENTER to continue...";
+		while (std::cin.get() != '\n') { }
 		return;
 	}
 	auto ucmap = manager->getUcMap();
 	auto ucIter = ucmap.find(code);
 	if (ucIter == ucmap.end())
 	{
-		system(CLEAR);
-		std::cout << "INVALID OPERATION - NOT FOUND\n\n Usage: select [code]\n";
-		SLEEP(1);
+		HelpUC("The UC was not found.", "select [code]");
 		return;
 	}
 
@@ -267,4 +253,25 @@ void UI::ShowUC(std::string option) {
 		if ((option[0] == 'b' || option[0] == 'B') && option.length() == 1)
 			break;
 	}
+}
+
+void UI::HelpUC(std::string error, std::string usage)
+{
+	system(CLEAR);
+	std::cout << "Schedules - UC List\n\n";
+	if (error != "" && usage != "") {
+		std::cout << "Invalid operation!\n"
+				  << "\n Problem: " << error
+				  << "\n Usage: " << usage
+				  << "\n\nPress ENTER to continue...";
+	} else {
+		std::cout << "Commands available for the UC page:"
+				  << "\n reset - Reset listing to the default sorting and search scheme"
+				  << "\n search [code|year|minOccupation] [query] - Search the list (case-sensitive)"
+				  << "\n sort [code|rev_code|year|occupation|rev_occupation] - Sort the current list"
+				  << "\n select [code] - Show the UC's schedule"
+				  << "\n b - Go back to the main menu"
+				  << "\n\nPress ENTER to continue...";
+	}
+	while (std::cin.get() != '\n') { }
 }

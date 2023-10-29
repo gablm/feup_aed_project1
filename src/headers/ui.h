@@ -39,6 +39,7 @@ class UI {
 		// UC
 		void PrintUC(bool (*tree_filter)(void *), bool (*sort_filter)(const void *, const void *));
 		void ShowUC(std::string option);
+		void HelpUC(std::string error, std::string usage);
 		void read_if_UC(std::list<void *> &toDisplay, bool (*f)(void *));
 		bool (*uc_parse_search_filter(std::string option))(void *);
 		bool (*uc_parse_sort_filter(std::string option))(const void *a, const void *b);
@@ -47,9 +48,6 @@ class UI {
 		~UI();
 		void ClearAndExit();
         void MainMenu();
-
-		static size_t ucAmmount(std::vector<std::pair<UC *, Session *>> iterList);
-		static size_t studentAmmount(std::list<Session*> sessionList);
 };
 
 #endif
