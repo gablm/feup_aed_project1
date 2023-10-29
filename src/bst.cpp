@@ -64,16 +64,14 @@ static void *recursive_search(BSTnode *node, int key) {
 }
 
 /**
+ * Complexity: O(n)
  * Searches the BST for the content related to the key
  * @param key Key to look for
  * @return The content associated to the key
 */
-void *BST::search(int key)
-{
+void *BST::search(int key) {
 	return recursive_search(node, key);
 }
-
-
 
 static void bst_del(BSTnode *node, void (*del)(void *)) {
 	if (!node)
@@ -86,10 +84,21 @@ static void bst_del(BSTnode *node, void (*del)(void *)) {
 	node = NULL;
 }
 
+/**
+ * Complexity: O(n)
+ * Deletes the entire BST.
+ * As the BST stores void pointers, there is a need to ask for an appropriate function to delete the data. 
+ * @param del Function to delete the content
+*/
 void BST::clear(void (*del)(void *)) {
 	bst_del(node, del);
 }
 
+/**
+ * Complexity: O(1)
+ * Returns a pointer to the root node of the BST
+ * @return Node
+*/
 BSTnode *BST::getNode() const {
 	return node;
 }
