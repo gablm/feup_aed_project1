@@ -70,6 +70,8 @@ void Manager::load_map() {
 			ucMap[UCName] = temp_uc;
 		}
 
+		sessionSet.insert(sessionName);
+
         Session *temp_session = new Session(sessionName, sessionDay, sessionTime, sessionDuration, sessionType);
         temp_uc->addSession(temp_session);
     }

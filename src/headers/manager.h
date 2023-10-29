@@ -3,6 +3,7 @@
 
 #include <string>
 #include <map>
+#include <set>
 
 #include "bst.h"
 #include "student.h"
@@ -14,6 +15,7 @@ class Manager {
 		BST students;
 		static const int sessionCap = 25;
 		std::map<std::string, UC*> ucMap;
+		std::set<std::string> sessionSet;
 	public:
 		Manager();
 		~Manager();
