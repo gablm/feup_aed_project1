@@ -25,6 +25,7 @@ class Manager {
 		void test_students();
 		BST& getStudents();
 		std::map<std::string, UC*>& getUcMap();
+		std::set<std::string>& getSessionSet();
 };
 
 #endif

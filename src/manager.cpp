@@ -27,6 +27,10 @@ std::map<std::string, UC*>& Manager::getUcMap() {
 	return ucMap;
 }
 
+std::set<std::string>& Manager::getSessionSet() {
+	return sessionSet;
+}
+
 void Manager::load_map() {
 
     string line, sessionName, UCName, sessionDay, sessionType, sessionTimestr, sessionDurationstr;
