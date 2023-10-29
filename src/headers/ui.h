@@ -32,6 +32,7 @@ class UI {
 		// Student
 		void PrintStudent(bool (*tree_filter)(void *), bool (*sort_filter)(const void *, const void *));
 		void ShowStudent(std::string option);
+		void HelpStudent(std::string error, std::string usage);
 		void read_if_student(BSTnode *node, std::list<void *> &toDisplay, bool (*f)(void *));
 		bool (*st_parse_search_filter(std::string option))(void *);
 		bool (*st_parse_sort_filter(std::string option))(const void *a, const void *b);

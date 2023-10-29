@@ -149,60 +149,46 @@ void UI::PrintStudent(bool (*tree_filter)(void *), bool (*sort_filter)(const voi
 					  << "\n";
 		}
 		if (toDisplay.empty())
-			std::cout << "(No results)\n\nWarning: Search is case sensitive!\n";
+			std::cout << "(No results)\n";
 
-		std::cout << "\nOptions:"
-				  << "\n reset - Reset listing to the default sorting and search scheme"
-				  << "\n search [code|name|minUC] [query] - Search the list"
-				  << "\n sort [name|rev_name|code|rev_code|minUC|rev_minUC] - Sort the current list"
-				  << "\n select [code] - Show the student's schedule"
-				  << "\n b - Go back"
-				  << "\nNote: The terminal will wait for all the arguments for each operation."
+		std::cout << "\nTo see the available commands, use 'help'!"
+				  << "\nTo go back to the main menu, use 'b'."
 				  << "\n\n$> ";
 		std::string option;
 		getline(std::cin, option);
 		if ((option[0] == 'b' || option[0] == 'B') && option.length() == 1)
 			break;
-		if ((option[0] == 'q' || option[0] == 'Q') && option.length() == 1)
-		{
+		if ((option[0] == 'q' || option[0] == 'Q') && option.length() == 1) {
 			toDisplay.clear();
 			ClearAndExit();
 		}
-		if (option.substr(0, 7) == "search ")
-		{
+		if (option.substr(0, 7) == "search ") {
 			auto new_filter = st_parse_search_filter(option);
-			if (!new_filter)
-			{
-				system(CLEAR);
-				std::cout << "INVALID OPERATION\n\n Usage: search [code|name|minUC] [query]\n";
-				SLEEP(1);
+			if (!new_filter) {
+				HelpStudent("Invalid field", "search [code|name|minUC] [query]");
 				continue;
 			}
 			PrintStudent(new_filter, sort_filter);
 			break;
 		}
-		if (option.substr(0, 5) == "sort " && option != "sort code")
-		{
+		if (option.substr(0, 5) == "sort " && option != "sort code") {
 			auto new_filter = st_parse_sort_filter(option);
-			if (!new_filter)
-			{
-				system(CLEAR);
-				std::cout << "INVALID OPERATION\n\n Usage: sort [name|rev_name|code|rev_code|minUC|rev_minUC]\n";
-				SLEEP(1);
+			if (!new_filter) {
+				HelpStudent("Invalid field", "sort [name|rev_name|code|rev_code|minUC|rev_minUC]");
 				continue;
 			}
 			PrintStudent(tree_filter, new_filter);
 			break;
 		}
-		if (option == "reset")
-		{
+		if (option == "reset") {
 			PrintStudent(NULL, NULL);
 			break;
 		}
-		if (option.substr(0, 6) == "select")
-		{
+		if (option.substr(0, 6) == "select") {
 			ShowStudent(option);
 		}
+		if (option == "help")
+			HelpStudent("", "");
 	}
 }
 
@@ -219,17 +205,13 @@ void UI::ShowStudent(std::string option)
 	is >> up >> up;
 	if (up.length() != 9)
 	{
-		system(CLEAR);
-		std::cout << "INVALID OPERATION - INVALID CODE\n\n Usage: select [code]\n";
-		SLEEP(1);
+		HelpStudent("Please insert a valid code.", "select [code]");
 		return;
 	}
 	void *content = manager->getStudents().search(std::stod(up));
 	if (!content)
 	{
-		system(CLEAR);
-		std::cout << "INVALID OPERATION - NOT FOUND\n\n Usage: select [code]\n";
-		SLEEP(1);
+		HelpStudent("The Student was not found.", "select [code]");
 		return;
 	}
 
@@ -281,4 +263,26 @@ void UI::ShowStudent(std::string option)
 		if (option[0] == 'b' || option[0] == 'B' && option.length() == 1)
 			break;
 	}
+}
+
+void UI::HelpStudent(std::string error, std::string usage)
+{
+	system(CLEAR);
+	std::cout << "Schedules - Student List\n\n";
+	if (error != "" && usage != "") {
+		std::cout << "Invalid operation!\n"
+				  << "\n Problem: " << error
+				  << "\n Usage: " << usage
+				  << "\n\nPress ENTER to continue...";
+	} else {
+		std::cout << "Commands available for the Student page:"
+				  << "\n reset - Reset listing to the default sorting and search scheme"
+				  << "\n search [code|name|minUC] [query] - Search the list"
+				  << "\n sort [name|rev_name|code|rev_code|minUC|rev_minUC] - Sort the current list"
+				  << "\n select [code] - Show the student's schedule"
+				  << "\n b - Go back"
+				  << "\n\nNote: The commands and the respective arguments are case-sensitive."
+				  << "\n\nPress ENTER to continue...";
+	}
+	while (std::cin.get() != '\n') { }
 }

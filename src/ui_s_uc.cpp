@@ -139,7 +139,7 @@ void UI::PrintUC(bool (*tree_filter)(void *), bool (*sort_filter)(const void *, 
 			std::cout << "(No results)\n";
 
 		std::cout << "\nTo see the available commands, use 'help'!"
-				  << "\nTo go back to the main menu, use 'b'"
+				  << "\nTo go back to the main menu, use 'b'."
 				  << "\n\n$> ";
 		std::string option;
 		getline(std::cin, option);
@@ -151,8 +151,7 @@ void UI::PrintUC(bool (*tree_filter)(void *), bool (*sort_filter)(const void *, 
 		}
 		if (option.substr(0, 7) == "search ") {
 			auto new_filter = uc_parse_search_filter(option);
-			if (!new_filter)
-			{
+			if (!new_filter) {
 				HelpUC("Invalid field", "search [code|year|minOccupation] [query]");
 				continue;
 			}
@@ -161,8 +160,7 @@ void UI::PrintUC(bool (*tree_filter)(void *), bool (*sort_filter)(const void *, 
 		}
 		if (option.substr(0, 5) == "sort ") {
 			auto new_filter = uc_parse_sort_filter(option);
-			if (!new_filter && option != "sort code")
-			{
+			if (!new_filter && option != "sort code") {
 				HelpUC("Invalid field", "sort [code|rev_code|year|occupation|rev_occupation]");
 				continue;
 			}
@@ -193,9 +191,7 @@ void UI::ShowUC(std::string option) {
 	is >> code >> code;
 	if (code.length() < 1)
 	{
-		system(CLEAR);
-		std::cout << "Invalid operation!\nPlease insert a valid code.\n\n Usage: select [code]\n\nPress ENTER to continue...";
-		while (std::cin.get() != '\n') { }
+		HelpUC("Please insert a valid code.", "select [code]");
 		return;
 	}
 	auto ucmap = manager->getUcMap();
@@ -271,6 +267,7 @@ void UI::HelpUC(std::string error, std::string usage)
 				  << "\n sort [code|rev_code|year|occupation|rev_occupation] - Sort the current list"
 				  << "\n select [code] - Show the UC's schedule"
 				  << "\n b - Go back to the main menu"
+				  << "\n\nNote: The commands and the respective arguments are case-sensitive."
 				  << "\n\nPress ENTER to continue...";
 	}
 	while (std::cin.get() != '\n') { }
