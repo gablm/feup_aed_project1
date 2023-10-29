@@ -27,6 +27,22 @@ int Student::getCode() const {
 }
 
 /**
+ * Complexity: O(1)
+ * @return The number of UCs the student is in
+*/
+int Student::getUCcount() const {
+	return ucCount;
+}
+
+/**
+ * Complexity: O(1)
+ * @param diff Number to add to the UC count
+ */
+void Student::editUCcount(int diff) {
+	ucCount += diff;
+}
+
+/**
  * Returns the student schedule, composed of pairs of one UC and a Session/Class 
  * Complexity: O(1)
  * @return Vector of pair<UC, Session>

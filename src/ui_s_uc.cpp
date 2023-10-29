@@ -1,37 +1,5 @@
 #include "headers/ui.h"
 
-/**
- * Complexity: O(n)
- * Counts the number of students a UC have. 
- * It assumes the user only has a class per UC.
- * @param SessionList list <session*>
- * @return the number of students in a uc
-*/
-size_t UI::studentAmmount(std::list<Session*> sessionList)
-{
-	size_t res = 0, count = 1;
-	Session *s = NULL;
-	std::string start;
-	for (auto i = sessionList.begin(); i != sessionList.end(); i++)
-	{
-		if (!s)
-		{
-			s = *i;
-			start = s->getName();
-		}
-		if (s->getName() != (*i)->getName())
-		{
-			res += s->getSessionCount();
-			s = *i;
-			if (s->getName() == start)
-				count++;
-		}
-	}
-	if (s)
-		res += s->getSessionCount();
-	return (res / count);
-}
-
 static std::string query;
 /**
  * Complexity: O(1)
@@ -65,8 +33,7 @@ bool (*UI::uc_parse_search_filter(std::string option))(void *)
 	if (field == "minOccupation")
 	{
 		auto res = [](void *a)
-		{ auto name = ((UC *)a)->getSessionList();
-								return studentAmmount(name) >= std::stod(query); };
+		{ return ((UC *)a)->getStudentCount() >= std::stod(query); };
 		return res;
 	}
 	return NULL;
@@ -102,13 +69,13 @@ bool (*UI::uc_parse_sort_filter(std::string option))(const void *a, const void *
 	if (field == "occupation")
 	{
 		auto res = [](const void *a, const void *b)
-		{ return studentAmmount(((UC *)a)->getSessionList()) < studentAmmount(((UC *)b)->getSessionList()); };
+		{ return ((UC *)a)->getStudentCount() < ((UC *)b)->getStudentCount(); };
 		return res;
 	}
 	if (field == "rev_occupation")
 	{
 		auto res = [](const void *a, const void *b)
-		{ return studentAmmount(((UC *)a)->getSessionList()) > studentAmmount(((UC *)b)->getSessionList()); };
+		{ return ((UC *)a)->getStudentCount() > ((UC *)b)->getStudentCount(); };
 		return res;
 	}
 	return NULL;
@@ -132,7 +99,7 @@ void UI::read_if_UC(std::list<void *> &toDisplay, bool (*f)(void *)) {
 }
 
 /**
- * Complexity: O(n^3)
+ * Complexity: O(n^2)
  * Prints the UC list, according to the results from the two filters.
  * @param tree_filter Lambda function to filter the content
  * @param sort_filter Lambda function to sort the content
@@ -165,7 +132,7 @@ void UI::PrintUC(bool (*tree_filter)(void *), bool (*sort_filter)(const void *, 
 			std::cout << std::left
 					  << std::setw(10) << uc->getName()
 					  << " " << std::setw(7) << std::left << uc->getYear()
-					  << studentAmmount(uc->getSessionList())
+					  << uc->getStudentCount()
 					  << "\n";
 		}
 		if (toDisplay.empty())

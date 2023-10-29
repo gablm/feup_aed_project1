@@ -25,6 +25,22 @@ int UC::getYear() const {
 
 /**
  * Complexity: O(1)
+ * @param diff Number to add to the student count
+ */
+void UC::editStudentCount(int diff) {
+	students += diff;
+}
+
+/**
+ * Complexity: O(1)
+ * @return UC student count
+*/
+int UC::getStudentCount() const {
+	return students;
+}
+
+/**
+ * Complexity: O(1)
  * @param session The class/session to add to the UC
 */
 void UC::addSession(Session *session) {

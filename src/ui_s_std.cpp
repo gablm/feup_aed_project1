@@ -2,31 +2,6 @@
 
 /**
  * Complexity: O(n)
- * Counts the number of UCs a student has. It assumes the vector is ordered.
- * @param iterList vector of pairs <uc*, session*>
- * @return the number of ucs found
-*/
-size_t UI::ucAmmount(std::vector<std::pair<UC *, Session *>> iterList)
-{
-	size_t res = 0;
-	UC *uc = NULL;
-	for (auto i = iterList.begin(); i != iterList.end(); i++)
-	{
-		if (!uc)
-			uc = i->first;
-		if (uc->getName() != i->first->getName())
-		{
-			uc = i->first;
-			res++;
-		}
-	}
-	if (uc)
-		res++;
-	return (res);
-}
-
-/**
- * Complexity: O(n)
  * Goes through the binary search tree and checks if the content validates the function passed.
  * If so, this content is added to a list
  * @param node String with the request
@@ -81,8 +56,7 @@ bool (*UI::st_parse_search_filter(std::string option))(void *)
 	if (field == "minUC")
 	{
 		auto res = [](void *a)
-		{ auto name = ((Student *)a)->getSchedule();
-								return ucAmmount(name) >= std::stod(query); };
+		{ return ((Student *)a)->getUCcount() >= std::stod(query); };
 		return res;
 	}
 	return NULL;
@@ -124,20 +98,20 @@ bool (*UI::st_parse_sort_filter(std::string option))(const void *a, const void *
 	if (field == "minUC")
 	{
 		auto res = [](const void *a, const void *b)
-		{ return ucAmmount(((Student *)a)->getSchedule()) < ucAmmount(((Student *)b)->getSchedule()); };
+		{ return ((Student *)a)->getUCcount() < ((Student *)b)->getUCcount(); };
 		return res;
 	}
 	if (field == "rev_minUC")
 	{
 		auto res = [](const void *a, const void *b)
-		{ return ucAmmount(((Student *)a)->getSchedule()) > ucAmmount(((Student *)b)->getSchedule()); };
+		{ return ((Student *)a)->getUCcount() > ((Student *)b)->getUCcount(); };
 		return res;
 	}
 	return NULL;
 }
 
 /**
- * Complexity: O(n^3)
+ * Complexity: O(n^2)
  * Prints the student list, according to the results from the two filters.
  * @param tree_filter Lambda function to filter the content
  * @param sort_filter Lambda function to sort the content
@@ -170,7 +144,7 @@ void UI::PrintStudent(bool (*tree_filter)(void *), bool (*sort_filter)(const voi
 			Student *a = (Student *)i;
 			std::cout << std::left
 					  << std::setw(10) << a->getCode()
-					  << "    " << std::setw(6) << std::left << ucAmmount(a->getSchedule())
+					  << "    " << std::setw(6) << std::left << a->getUCcount()
 					  << a->getName()
 					  << "\n";
 		}

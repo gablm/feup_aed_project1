@@ -142,7 +142,8 @@ void Manager::load_students() {
 			temp_student->addToSchedule(make_pair(uc, s));
 			s->addStudent(temp_student);
 		}
-		
+		uc->editStudentCount(1);
+		temp_student->editUCcount(1);
     }
     file.close();
 }
