@@ -210,7 +210,7 @@ void UI::ShowUC(std::string option) {
 			<< "UC Inspector - "
 			<< uc->getName()
 			<< "/Y" << uc->getYear()
-			<< " Schedule\n\n";
+			<< " Schedule\n";
 
 		std::list<Session*> weekdays[7];
 		for (auto s : uc->getSessionList())
@@ -227,24 +227,23 @@ void UI::ShowUC(std::string option) {
 			for (auto a : i) {
 				if (print)
 				{
-					std::cout << " " << a->getDay() << "\n\n";
+					std::cout << "\n " << a->getDay() << "\n\n";
 					print = false;
 				}
 				int time = a->getTime() * 60;
 				int duration = a->getDuration() * 60;
-				std::cout
+				std::cout << std::setfill(' ') << std::right
 					<< "   Class: " << a->getName()
-					<< "\n	 Type: " << a->getType()
-					<< "\n	 Start time: " << std::right << std::setfill('0') << time / 60 << ":" << std::setw(2) << time % 60
-					<< "\n	 Duration: " << std::setw(2) << duration / 60 << ":" << std::setw(2) << duration % 60
-					<< "\n	 Allocation: " << a->getSessionCount()
-					<< std::setfill(' ') << "\n\n";
+					<< " | Type: " << std::setw(2) << a->getType()
+					<< " | Start: " << std::setfill('0') << std::setw(2) << time / 60 << ":" << std::setw(2) << time % 60
+					<< " | Duration: " << std::setw(2) << duration / 60 << ":" << std::setw(2) << duration % 60
+					<< " | Occupation: " << a->getSessionCount()
+					<< std::setfill(' ') << "\n";
 			}
 			print = true;
 		}
-
 		std::string option;
-		std::cout << " [B] Go back\n\n$> ";
+		std::cout << std::left << "\n [B] Go back\n\n$> ";
 		getline(std::cin, option);
 		if ((option[0] == 'b' || option[0] == 'B') && option.length() == 1)
 			break;

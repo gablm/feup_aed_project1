@@ -246,19 +246,19 @@ void UI::ShowStudent(std::string option)
 				}
 				int time = a->getTime() * 60;
 				int duration = a->getDuration() * 60;
-				std::cout
+				std::cout << std::setfill(' ') << std::right
 					<< "   UC: " << session.first->getName()
 					<< " | Class: " << a->getName()
-					<< "\n	 Type: " << a->getType()
-					<< "\n	 Start time: " << std::right << std::setfill('0') << time / 60 << ":" << std::setw(2) << time % 60
-					<< "\n	 Duration: " << std::setw(2) << duration / 60 << ":" << std::setw(2) << duration % 60
+					<< " | Type: " << std::setw(2) << a->getType()
+					<< " | Start: "  << std::setfill('0') << std::setw(2) << time / 60 << ":" << std::setw(2) << time % 60
+					<< " | Duration: " << std::setw(2) << duration / 60 << ":" << std::setw(2) << duration % 60
 					<< std::setfill(' ') << "\n\n";
 			}
 			print = true;
 		}
 
 		std::string option;
-		std::cout << " [B] Go back\n\n$> ";
+		std::cout  << std::left << " [B] Go back\n\n$> ";
 		getline(std::cin, option);
 		if (option[0] == 'b' || option[0] == 'B' && option.length() == 1)
 			break;
