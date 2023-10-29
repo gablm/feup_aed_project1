@@ -14,6 +14,7 @@ class UC {
 	public:
 		UC(std::string name, int year);
 		std::string getName() const;
+		int getYear() const;
 		void addSession(Session *session);
 		void clearSessions();
 		std::list<Session*> find(std::string sessionName);

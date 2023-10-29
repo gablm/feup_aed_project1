@@ -26,14 +26,22 @@ class UI {
 		Manager *manager;
 		std::list<void *> toDisplay;
 		std::string field, filter;
-        void UcMenu();
-        void StudentMenu();
-        void ClassMenu();
+		
 		void ChangeMenu();
+
+		// Student
 		void PrintStudent(bool (*tree_filter)(void *), bool (*sort_filter)(const void *, const void *));
 		void ShowStudent(std::string option);
+		void read_if_student(BSTnode *node, std::list<void *> &toDisplay, bool (*f)(void *));
+		bool (*st_parse_search_filter(std::string option))(void *);
+		bool (*st_parse_sort_filter(std::string option))(const void *a, const void *b);
 
-		void TestFunc();
+		// UC
+		void PrintUC(bool (*tree_filter)(void *), bool (*sort_filter)(const void *, const void *));
+		void ShowUC(std::string option);
+		void read_if_UC(std::list<void *> &toDisplay, bool (*f)(void *));
+		bool (*uc_parse_search_filter(std::string option))(void *);
+		bool (*uc_parse_sort_filter(std::string option))(const void *a, const void *b);
     public:
         UI(Manager *manager);
 		~UI();

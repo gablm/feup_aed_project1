@@ -20,6 +20,7 @@ class Session {
 		std::string getDay() const;
 		double getTime() const;
 		double getDuration() const;
+		size_t getSessionCount() const;
 		std::string getName() const;
 		std::string getType() const;
 		void addStudent(Student *student);

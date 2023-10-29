@@ -52,7 +52,6 @@ void UI::MainMenu() {
         if (str == "Q" || str == "q")
             ClearAndExit();
 		if (str == "t" || str == "T") {
-			TestFunc();
 			continue;
 		}	
 		if (str.size() > 1)
@@ -63,130 +62,11 @@ void UI::MainMenu() {
 				PrintStudent(NULL, NULL);
 				break;
 			case 1:
-				UcMenu();
+				PrintUC(NULL, NULL);
 				break;
 			case 2:
-				ClassMenu();
 				break;
 			case 3:
-				ChangeMenu();
-				break;
-		}
-    }
-}
-
-/**
- * Shows the options available to manage UCs / Subjects
-*/
-void UI::UcMenu()
-{
-	while (1)
-    {
-        system(CLEAR);
-        std::cout 
-		<< "FEUP - Schedules service\n"
-		<< "\n"
-		<< "Select an option [0-1]:\n"
-		<< "\n"
-		<< ">> UC management\n"
-		<< "\n"
-		<< " [0] List\n"
-		<< " [1] Search\n"
-		<< "\n"
-        << "[B] Go back\n"
-		<< "\n"
-		<< "$> ";
-        std::string str;
-        std::cin >> str;
-		if (str == "b" || str == "B")
-			break;
-        if (str == "q")
-            ClearAndExit();
-		if (str.size() > 1)
-			continue;
-		switch (str[0] - '0')
-		{
-			case 0:
-				break;
-			case 1:
-				break;
-		}
-    }
-}
-
-/**
- * Shows the options available to manage Students
-*/
-/*void UI::StudentMenu()
-{
-	while (1)
-    {
-        system(CLEAR);
-        std::cout 
-		<< "FEUP - Schedules service\n"
-		<< "\n"
-		<< "Select an option [0-1]:\n"
-		<< "\n"
-		<< ">> Student management\n"
-		<< "\n"
-		<< "[0] List\n"
-		<< "[1] Search\n"
-		<< "\n"
-        << "[B] Go back\n"
-		<< "\n"
-		<< "$> ";
-        std::string str;
-        std::cin >> str;
-		if (str == "b" || str == "B")
-			break;
-        if (str == "q")
-            ClearAndExit();
-		if (str.size() > 1)
-			continue;
-		switch (str[0] - '0')
-		{
-			case 0:
-				break;
-			case 1:
-				break;
-		}
-    }
-}*/
-
-/**
- * Shows the options available to manage Classes
-*/
-void UI::ClassMenu()
-{
-	while (1)
-    {
-        system(CLEAR);
-        std::cout 
-		<< "FEUP - Schedule service\n"
-		<< "\n"
-		<< "Select an option [0-1]:\n"
-		<< "\n"
-		<< ">> Class management\n"
-		<< "\n"
-		<< " [0] List\n"
-		<< " [1] Search\n"
-		<< "\n"
-        << "[B] Go back\n"
-		<< "\n"
-		<< "$> ";
-        std::string str;
-        std::cin >> str;
-		if (str == "b" || str == "B")
-			break;
-        if (str == "q")
-            ClearAndExit();
-				if (str.size() > 1)
-			continue;
-		switch (str[0] - '0')
-		{
-			case 0:
-				break;
-			case 1:
 				break;
 		}
     }

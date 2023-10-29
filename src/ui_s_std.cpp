@@ -19,7 +19,7 @@ size_t ucAmmount(std::vector<std::pair<UC *, Session *>> iterList)
 	return (res);
 }
 
-static void read_if_student(BSTnode *node, std::list<void *> &toDisplay, bool (*f)(void *))
+void UI::read_if_student(BSTnode *node, std::list<void *> &toDisplay, bool (*f)(void *))
 {
 	if (!node)
 		return;
@@ -30,19 +30,8 @@ static void read_if_student(BSTnode *node, std::list<void *> &toDisplay, bool (*
 	read_if_student(node->right, toDisplay, f);
 }
 
-void UI::TestFunc()
-{
-
-	// Filter only names starting by N
-	// auto tree_filter = [](void *ptr){ return ((Student *)ptr)->getName()[0] == 'M';};
-	// Sort in reverse name alphabetical order
-	// auto sort_filter = [](const void * a, const void *b) { return ((Student *)a)->getName() > ((Student *)b)->getName(); };
-	PrintStudent(NULL, NULL);
-	// Default ordering >> PrintStudent(NULL, NULL)
-}
-
-std::string query;
-bool (*parse_search_filter(std::string option))(void *)
+static std::string query;
+bool (*UI::st_parse_search_filter(std::string option))(void *)
 {
 	std::string field;
 	std::istringstream is(option);
@@ -78,7 +67,7 @@ bool (*parse_search_filter(std::string option))(void *)
 	return NULL;
 }
 
-bool (*parse_sort_filter(std::string option))(const void *a, const void *b)
+bool (*UI::st_parse_sort_filter(std::string option))(const void *a, const void *b)
 {
 	std::string field;
 	std::istringstream is(option);
@@ -138,8 +127,7 @@ void UI::PrintStudent(bool (*tree_filter)(void *), bool (*sort_filter)(const voi
 	while (1)
 	{
 		system(CLEAR);
-		std::cout.width(30);
-		std::cout << std::left
+		std::cout << "Schedules - Student List\n\n"
 				  << std::setw(10) << "Code"
 				  << std::setw(11) << "Uc number"
 				  << "Name"
@@ -159,7 +147,7 @@ void UI::PrintStudent(bool (*tree_filter)(void *), bool (*sort_filter)(const voi
 
 		std::cout << "\nOptions:"
 				  << "\n reset - Reset listing to the default sorting and search scheme"
-				  << "\n search [code|name|minUC] [query] - Search the current list"
+				  << "\n search [code|name|minUC] [query] - Search the list"
 				  << "\n sort [name|rev_name|code|rev_code|minUC|rev_minUC] - Sort the current list"
 				  << "\n select [code] - Show the student's schedule"
 				  << "\n b - Go back"
@@ -167,16 +155,16 @@ void UI::PrintStudent(bool (*tree_filter)(void *), bool (*sort_filter)(const voi
 				  << "\n\n$> ";
 		std::string option;
 		getline(std::cin, option);
-		if (option[0] == 'b' || option[0] == 'B' && option.length() == 1)
+		if ((option[0] == 'b' || option[0] == 'B') && option.length() == 1)
 			break;
-		if (option[0] == 'q' || option[0] == 'Q' && option.length() == 1)
+		if ((option[0] == 'q' || option[0] == 'Q') && option.length() == 1)
 		{
 			toDisplay.clear();
 			ClearAndExit();
 		}
 		if (option.substr(0, 7) == "search ")
 		{
-			auto new_filter = parse_search_filter(option);
+			auto new_filter = st_parse_search_filter(option);
 			if (!new_filter)
 			{
 				system(CLEAR);
@@ -189,7 +177,7 @@ void UI::PrintStudent(bool (*tree_filter)(void *), bool (*sort_filter)(const voi
 		}
 		if (option.substr(0, 5) == "sort " && option != "sort code")
 		{
-			auto new_filter = parse_sort_filter(option);
+			auto new_filter = st_parse_sort_filter(option);
 			if (!new_filter)
 			{
 				system(CLEAR);
@@ -229,7 +217,7 @@ void UI::ShowStudent(std::string option)
 	if (!content)
 	{
 		system(CLEAR);
-		std::cout << "INVALID OPERATION - NOT FOUND\n\n Usage: sort [type]\n";
+		std::cout << "INVALID OPERATION - NOT FOUND\n\n Usage: select [code]\n";
 		SLEEP(1);
 		return;
 	}
@@ -269,15 +257,15 @@ void UI::ShowStudent(std::string option)
 					<< "   UC: " << session.first->getName()
 					<< " | Class: " << a->getName()
 					<< "\n	 Type: " << a->getType()
-					<< "\n	 Start time: " << std::right << std::setfill('0') << std::setw(2) << time / 60 << ":" << std::setfill('0') << std::setw(2) << time % 60
-					<< "\n	 Duration: " << std::setfill('0') << std::setw(2) << duration / 60 << ":" << std::setfill('0') << std::setw(2) << duration % 60
-					<< "\n\n";
+					<< "\n	 Start time: " << std::right << std::setfill('0') << time / 60 << ":" << std::setw(2) << time % 60
+					<< "\n	 Duration: " << std::setw(2) << duration / 60 << ":" << std::setw(2) << duration % 60
+					<< std::setfill(' ') << "\n\n";
 			}
 			print = true;
 		}
 
 		std::string option;
-		std::cout << " [B] Go back\n\n$>";
+		std::cout << " [B] Go back\n\n$> ";
 		getline(std::cin, option);
 		if (option[0] == 'b' || option[0] == 'B' && option.length() == 1)
 			break;

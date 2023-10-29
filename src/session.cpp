@@ -45,6 +45,14 @@ double Session::getDuration() const {
 
 /**
  * Complexity: O(1)
+ * @return Number of students in the session
+*/
+size_t Session::getSessionCount() const {
+	return studentList.size();
+}
+
+/**
+ * Complexity: O(1)
  * @return Session Type
 */
 std::string Session::getType() const {

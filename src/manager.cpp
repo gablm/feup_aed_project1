@@ -138,7 +138,10 @@ void Manager::load_students() {
 		UC *uc = ucMap[UCName];
 		std::list<Session*> sessions = uc->find(sessionName);
 		for (Session *s : sessions)
+		{
 			temp_student->addToSchedule(make_pair(uc, s));
+			s->addStudent(temp_student);
+		}
 		
     }
     file.close();

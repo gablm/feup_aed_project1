@@ -17,6 +17,14 @@ std::string UC::getName() const {
 
 /**
  * Complexity: O(1)
+ * @return UC year
+*/
+int UC::getYear() const {
+	return year;
+}
+
+/**
+ * Complexity: O(1)
  * @param session The class/session to add to the UC
 */
 void UC::addSession(Session *session) {
