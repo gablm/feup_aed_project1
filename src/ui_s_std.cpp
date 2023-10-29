@@ -1,6 +1,12 @@
 #include "headers/ui.h"
 
-size_t ucAmmount(std::vector<std::pair<UC *, Session *>> iterList)
+/**
+ * Complexity: O(n)
+ * Counts the number of UCs a student has. It assumes the vector is ordered.
+ * @param iterList vector of pairs <uc*, session*>
+ * @return the number of ucs found
+*/
+size_t UI::ucAmmount(std::vector<std::pair<UC *, Session *>> iterList)
 {
 	size_t res = 0;
 	UC *uc = NULL;
@@ -19,6 +25,15 @@ size_t ucAmmount(std::vector<std::pair<UC *, Session *>> iterList)
 	return (res);
 }
 
+/**
+ * Complexity: O(n)
+ * Goes through the binary search tree and checks if the content validates the function passed.
+ * If so, this content is added to a list
+ * @param node String with the request
+ * @param toDisplay The list used to store the output shown
+ * @param f Function used to check if the element is supposed to be shown
+ * @return Lambda function
+*/
 void UI::read_if_student(BSTnode *node, std::list<void *> &toDisplay, bool (*f)(void *))
 {
 	if (!node)
@@ -31,6 +46,12 @@ void UI::read_if_student(BSTnode *node, std::list<void *> &toDisplay, bool (*f)(
 }
 
 static std::string query;
+/**
+ * Complexity: O(1)
+ * Parses user input and returns the appropriate function to search the list 
+ * @param option String with the request
+ * @return Lambda function
+*/
 bool (*UI::st_parse_search_filter(std::string option))(void *)
 {
 	std::string field;
@@ -67,6 +88,12 @@ bool (*UI::st_parse_search_filter(std::string option))(void *)
 	return NULL;
 }
 
+/**
+ * Complexity: O(1)
+ * Parses user input and returns the appropriate function to sort the list 
+ * @param option String with the request
+ * @return Lambda function
+*/
 bool (*UI::st_parse_sort_filter(std::string option))(const void *a, const void *b)
 {
 	std::string field;
@@ -109,7 +136,12 @@ bool (*UI::st_parse_sort_filter(std::string option))(const void *a, const void *
 	return NULL;
 }
 
-/* Takes two filters, one for search and one for sorting */
+/**
+ * Complexity: O(n^3)
+ * Prints the student list, according to the results from the two filters.
+ * @param tree_filter Lambda function to filter the content
+ * @param sort_filter Lambda function to sort the content
+ */
 void UI::PrintStudent(bool (*tree_filter)(void *), bool (*sort_filter)(const void *, const void *))
 {
 	toDisplay.clear();
@@ -200,6 +232,11 @@ void UI::PrintStudent(bool (*tree_filter)(void *), bool (*sort_filter)(const voi
 	}
 }
 
+/**
+ * Complexity: O(n log n)
+ * Shows a student's schedule based on its code 
+ * @param option The string with the full request
+*/
 void UI::ShowStudent(std::string option)
 {
 	system(CLEAR);

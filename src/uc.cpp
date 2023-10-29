@@ -40,7 +40,7 @@ std::list<Session*> UC::getSessionList() const {
 }
 
 /**
- * Complexity: O(n???)
+ * Complexity: O(n)
  * Clears all the sessions for a UC
 */
 void UC::clearSessions() {
@@ -49,6 +49,11 @@ void UC::clearSessions() {
 	sessionList.clear();
 }
 
+/**
+ * Complexity: O(n)
+ * Finds all the session with the same name/code
+ * @return List of sessions
+*/
 std::list<Session*> UC::find(std::string sessionName) {
 	std::list<Session*> res;
 	for (auto i = sessionList.begin(); i != sessionList.end(); i++)

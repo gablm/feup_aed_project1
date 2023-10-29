@@ -1,6 +1,13 @@
 #include "headers/ui.h"
 
-size_t studentAmmount(std::list<Session*> sessionList)
+/**
+ * Complexity: O(n)
+ * Counts the number of students a UC have. 
+ * It assumes the user only has a class per UC.
+ * @param SessionList list <session*>
+ * @return the number of students in a uc
+*/
+size_t UI::studentAmmount(std::list<Session*> sessionList)
 {
 	size_t res = 0, count = 1;
 	Session *s = NULL;
@@ -26,6 +33,12 @@ size_t studentAmmount(std::list<Session*> sessionList)
 }
 
 static std::string query;
+/**
+ * Complexity: O(1)
+ * Parses user input and returns the appropriate function to search the list 
+ * @param option String with the request
+ * @return Lambda function
+*/
 bool (*UI::uc_parse_search_filter(std::string option))(void *)
 {
 	std::string field;
@@ -59,6 +72,12 @@ bool (*UI::uc_parse_search_filter(std::string option))(void *)
 	return NULL;
 }
 
+/**
+ * Complexity: O(1)
+ * Parses user input and returns the appropriate function to sort the list 
+ * @param option String with the request
+ * @return Lambda function
+*/
 bool (*UI::uc_parse_sort_filter(std::string option))(const void *a, const void *b)
 {
 	std::string field;
@@ -95,6 +114,14 @@ bool (*UI::uc_parse_sort_filter(std::string option))(const void *a, const void *
 	return NULL;
 }
 
+/**
+ * Complexity: O(n)
+ * Goes through the map and checks if the content validates the function passed.
+ * If so, this content is added to a list
+ * @param toDisplay The list used to store the output shown
+ * @param f Function used to check if the element is supposed to be shown
+ * @return Lambda function
+*/
 void UI::read_if_UC(std::list<void *> &toDisplay, bool (*f)(void *)) {
 	std::map<std::string, UC*> ucmap = manager->getUcMap();
 	for (auto i = ucmap.begin(); i != ucmap.end(); i++)
@@ -104,19 +131,22 @@ void UI::read_if_UC(std::list<void *> &toDisplay, bool (*f)(void *)) {
 	}
 }
 
-/* Takes two filters, one for search and one for sorting */
+/**
+ * Complexity: O(n^3)
+ * Prints the UC list, according to the results from the two filters.
+ * @param tree_filter Lambda function to filter the content
+ * @param sort_filter Lambda function to sort the content
+ */
 void UI::PrintUC(bool (*tree_filter)(void *), bool (*sort_filter)(const void *, const void *))
 {
 	toDisplay.clear();
 
-	// Filter things
 	if (!tree_filter)
 		tree_filter = [](void *ptr)
 		{ return ptr != NULL; };
 
 	read_if_UC(toDisplay, tree_filter);
 
-	// Sort things
 	if (sort_filter)
 		toDisplay.sort(sort_filter);
 
@@ -196,6 +226,11 @@ void UI::PrintUC(bool (*tree_filter)(void *), bool (*sort_filter)(const void *, 
 	}
 }
 
+/**
+ * Complexity: O(n log n)
+ * Shows a UC's schedule based on its code 
+ * @param option The string with the full request
+*/
 void UI::ShowUC(std::string option) {
 	system(CLEAR);
 	std::istringstream is(option);

@@ -47,6 +47,9 @@ class UI {
 		~UI();
 		void ClearAndExit();
         void MainMenu();
+
+		static size_t ucAmmount(std::vector<std::pair<UC *, Session *>> iterList);
+		static size_t studentAmmount(std::list<Session*> sessionList);
 };
 
 #endif

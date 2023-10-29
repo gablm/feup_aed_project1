@@ -37,7 +37,7 @@ std::vector<std::pair<UC*,Session*>> Student::getSchedule() const {
 
 /**
  * Adds an element to the student schedule
- * Complexity: O(??)
+ * Complexity: O(1)
  * @return If the addition was sucessful
 */
 bool Student::addToSchedule(std::pair<UC*,Session*> ucSessionPair) {
