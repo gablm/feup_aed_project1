@@ -143,9 +143,9 @@ void UI::PrintUC(bool (*tree_filter)(void *), bool (*sort_filter)(const void *, 
 				  << "\n\n$> ";
 		std::string option;
 		getline(std::cin, option);
-		if ((option[0] == 'b' || option[0] == 'B') && option.length() == 1)
+		if (option == "b" || option == "B")
 			break;
-		if ((option[0] == 'q' || option[0] == 'Q') && option.length() == 1) {
+		if (option == "q" || option == "Q") {
 			toDisplay.clear();
 			ClearAndExit();
 		}
@@ -245,7 +245,7 @@ void UI::ShowUC(std::string option) {
 		std::string option;
 		std::cout << std::left << "\n [B] Go back\n\n$> ";
 		getline(std::cin, option);
-		if ((option[0] == 'b' || option[0] == 'B') && option.length() == 1)
+		if (option == "b" || option == "B")
 			break;
 	}
 }

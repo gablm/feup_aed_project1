@@ -3,7 +3,7 @@
 
 void UI::PrintChange()
 {
-		while (1)
+	while (1)
     {
         system(CLEAR);
         std::cout 
@@ -17,12 +17,11 @@ void UI::PrintChange()
 		<< ">> Student Code:\n"
 		<< "$> ";
         std::string str;
-        std::cin >> str;
+        getline(std::cin, str);
 		if (str == "b" || str == "B")
 			break;
         if (str == "q" || str == "Q")
             ClearAndExit();
-        system(CLEAR);
         RequestDetails(str);
     }
 }
@@ -48,6 +47,7 @@ void UI::RequestDetails(std::string option)
 	Student *student = (Student *)content;
 	while (1)
 	{
+		system(CLEAR);
 		std::cout
 			<< "Student Inspector - "
 			<< student->getCode()
@@ -94,39 +94,37 @@ void UI::RequestDetails(std::string option)
             << "\n [B] Go back"
             << "\n [Q] Quit"
             << "\n\n"
-            << " $>";
+            << " $> ";
                 
         std::string option;
 		getline(std::cin, option);
-		if ((option[0] == 'b' || option[0] == 'B') && option.length() == 1)
+		if (option == "b" || option == "B")
 			break;
-        else if ((option[0] == 'q' || option[0] == 'Q') && option.length() == 1)
+        if (option == "q" || option == "Q")
             ClearAndExit();
-        else if (option[0] == 0 && option.length() == 1)
+        if (option == "0")
             ChangeClass();
-        else if (option[0] == 1 && option.length() == 1)
+        if (option == "1")
             ReplaceUC();
-        else if (option[0] == 2 && option.length() == 1)
+        if (option == "2")
             AddUC();
-        else if (option[0] == 3 && option.length() == 1)
+        if (option == "3")
             RemoveUC();
-        system(CLEAR);
 	}
 }
 
-void ChangeClass(){
+void UI::ChangeClass(){
     
 }
 
-void AddUC(){
+void UI::AddUC(){
     
 }
 
-void RemoveUC(){
+void UI::RemoveUC(){
     
 }
 
-void ReplaceUC(){
+void UI::ReplaceUC(){
     
 }
-
