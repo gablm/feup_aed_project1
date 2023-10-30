@@ -185,18 +185,50 @@ void UI::ShowSession(std::string option) {
 		return;
 	}
 
+	std::list<std::pair<UC*, Session*>> toDisplayMap[7];
+	for (auto pair : manager->getUcMap())
+	{
+		std::list<Session*> sessions = pair.second->find(code);
+		for (Session *s : sessions)
+		{
+			std::istringstream wday(s->getDay());
+			std::tm time;
+			wday >> std::get_time(&time, "%a");
+			toDisplayMap[time.tm_wday].push_back(std::make_pair(pair.second, s));
+		}
+	}
+
 	while (1)
 	{
 		std::cout
 			<< "Class Inspector - "
 			<< code
-			<< " Schedule\n\n";
+			<< " Schedule\n";
 
-		std::cout 
-			<< "TODO\n\n";
+		bool print = true;
+		for (auto i : toDisplayMap) {
+			i.sort([](std::pair<UC*, Session*> a, std::pair<UC*, Session*> b) { return a.second->getTime() < b.second->getTime(); });
+			for (auto session : i) {
+				Session *a = session.second;
+				if (print)
+				{
+					std::cout << "\n " << a->getDay() << "\n\n";
+					print = false;
+				}
+				int time = a->getTime() * 60;
+				int duration = a->getDuration() * 60;
+				std::cout << std::setfill(' ') << std::right
+					<< "   UC: " << session.first->getName()
+					<< " | Type: " << std::setw(2) << a->getType()
+					<< " | Start: "  << std::setfill('0') << std::setw(2) << time / 60 << ":" << std::setw(2) << time % 60
+					<< " | Duration: " << std::setw(2) << duration / 60 << ":" << std::setw(2) << duration % 60
+					<< std::setfill(' ') << "\n";
+			}
+			print = true;
+		}
 
 		std::string option;
-		std::cout  << std::left << " [B] Go back\n\n$> ";
+		std::cout  << std::left << "\n [B] Go back\n\n$> ";
 		getline(std::cin, option);
 		if (option[0] == 'b' || option[0] == 'B' && option.length() == 1)
 			break;

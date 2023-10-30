@@ -223,7 +223,7 @@ void UI::ShowStudent(std::string option)
 			<< "Student Inspector - "
 			<< student->getCode()
 			<< "/" << student->getName()
-			<< " Schedule\n\n";
+			<< " Schedule\n";
 
 		std::list<std::pair<UC*, Session*>> weekdays[7];
 		for (auto pair : student->getSchedule())
@@ -241,7 +241,7 @@ void UI::ShowStudent(std::string option)
 				Session *a = session.second;
 				if (print)
 				{
-					std::cout << " " << a->getDay() << "\n\n";
+					std::cout << "\n " << a->getDay() << "\n\n";
 					print = false;
 				}
 				int time = a->getTime() * 60;
@@ -252,13 +252,13 @@ void UI::ShowStudent(std::string option)
 					<< " | Type: " << std::setw(2) << a->getType()
 					<< " | Start: "  << std::setfill('0') << std::setw(2) << time / 60 << ":" << std::setw(2) << time % 60
 					<< " | Duration: " << std::setw(2) << duration / 60 << ":" << std::setw(2) << duration % 60
-					<< std::setfill(' ') << "\n\n";
+					<< std::setfill(' ') << "\n";
 			}
 			print = true;
 		}
 
 		std::string option;
-		std::cout  << std::left << " [B] Go back\n\n$> ";
+		std::cout  << std::left << "\n [B] Go back\n\n$> ";
 		getline(std::cin, option);
 		if (option[0] == 'b' || option[0] == 'B' && option.length() == 1)
 			break;
