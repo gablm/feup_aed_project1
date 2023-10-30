@@ -173,9 +173,10 @@ void UI::PrintUC(bool (*tree_filter)(void *), bool (*sort_filter)(const void *, 
 		}
 		if (option.substr(0, 6) == "select")
 			ShowUC(option);
-		if (option == "help")
+		else if (option == "help")
 			HelpUC("", "");
-
+		else
+			HelpUC("Command not found or incomplete", "help - Shows all commands");
 	}
 }
 

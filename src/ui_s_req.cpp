@@ -86,7 +86,7 @@ void UI::RequestDetails(std::string option)
 			print = true;
 		}
 
-		std::cout  << std::left 
+		std::cout << std::left 
             << "\n [1] Change Class"
             << "\n [2] Replace UC"
             << "\n [3] Add UC"

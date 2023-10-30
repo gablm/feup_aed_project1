@@ -183,11 +183,12 @@ void UI::PrintStudent(bool (*tree_filter)(void *), bool (*sort_filter)(const voi
 			PrintStudent(NULL, NULL);
 			break;
 		}
-		if (option.substr(0, 6) == "select") {
+		if (option.substr(0, 6) == "select")
 			ShowStudent(option);
-		}
-		if (option == "help")
+		else if (option == "help")
 			HelpStudent("", "");
+		else
+			HelpStudent("Command not found or incomplete", "help - Shows all commands");
 	}
 }
 

@@ -158,8 +158,10 @@ void UI::PrintSession(bool (*tree_filter)(std::string), bool (*sort_filter)(cons
 		}
 		if (option.substr(0, 6) == "select")
 			ShowSession(option);
-		if (option == "help")
+		else if (option == "help")
 			HelpSession("", "");
+		else
+			HelpSession("Command not found or incomplete", "help - Shows all commands");
 	}
 }
 
