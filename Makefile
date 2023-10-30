@@ -7,7 +7,7 @@ FILES=src/uc.o src/session.o src/student.o src/ui.o src/main.o src/manager.o src
 
 all: $(NAME)
 
-%.o: %.cpp headers/%.h
+%.o: %.cpp
 	$(CC) $(FLAGS) -c $*.cpp -o $*.o
 
 $(NAME): $(FILES)

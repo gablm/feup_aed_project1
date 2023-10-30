@@ -2,6 +2,8 @@
 #include "headers/manager.h"
 
 int main(int argc, char **argv) {
+	(void)argc;
+	(void)argv;
     Manager *manager = new Manager();
     manager->load_map();
 	//manager->test_map();

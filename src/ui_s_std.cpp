@@ -260,7 +260,7 @@ void UI::ShowStudent(std::string option)
 		std::string option;
 		std::cout  << std::left << "\n [B] Go back\n\n$> ";
 		getline(std::cin, option);
-		if (option[0] == 'b' || option[0] == 'B' && option.length() == 1)
+		if ((option[0] == 'b' || option[0] == 'B') && option.length() == 1)
 			break;
 	}
 }
