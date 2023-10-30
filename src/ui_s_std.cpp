@@ -77,36 +77,36 @@ bool (*UI::st_parse_sort_filter(std::string option))(const void *a, const void *
 		return NULL;
 	is >> field;
 
-	if (field == "name")
-	{
+	if (field == "name") {
 		auto res = [](const void *a, const void *b)
 		{ return ((Student *)a)->getName() < ((Student *)b)->getName(); };
 		return res;
 	}
-	if (field == "rev_name")
-	{
+
+	if (field == "rev_name") {
 		auto res = [](const void *a, const void *b)
 		{ return ((Student *)a)->getName() > ((Student *)b)->getName(); };
 		return res;
 	}
-	if (field == "rev_code")
-	{
+
+	if (field == "rev_code") {
 		auto res = [](const void *a, const void *b)
 		{ return ((Student *)a)->getCode() > ((Student *)b)->getCode(); };
 		return res;
 	}
-	if (field == "minUC")
-	{
+
+	if (field == "minUC") {
 		auto res = [](const void *a, const void *b)
 		{ return ((Student *)a)->getUCcount() < ((Student *)b)->getUCcount(); };
 		return res;
 	}
-	if (field == "rev_minUC")
-	{
+
+	if (field == "rev_minUC") {
 		auto res = [](const void *a, const void *b)
 		{ return ((Student *)a)->getUCcount() > ((Student *)b)->getUCcount(); };
 		return res;
 	}
+	
 	return NULL;
 }
 

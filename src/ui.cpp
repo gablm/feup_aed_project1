@@ -65,8 +65,10 @@ void UI::MainMenu() {
 				PrintUC(NULL, NULL);
 				break;
 			case 2:
+				PrintSession(NULL, NULL);
 				break;
 			case 3:
+				ChangeMenu();
 				break;
 		}
     }

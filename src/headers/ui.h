@@ -25,6 +25,7 @@ class UI {
     private:
 		Manager *manager;
 		std::list<void *> toDisplay;
+		std::list<std::string> toDisplayStr;
 		std::string field, filter;
 		
 		void ChangeMenu();
@@ -44,6 +45,15 @@ class UI {
 		void read_if_UC(std::list<void *> &toDisplay, bool (*f)(void *));
 		bool (*uc_parse_search_filter(std::string option))(void *);
 		bool (*uc_parse_sort_filter(std::string option))(const void *a, const void *b);
+
+		// Session
+		void PrintSession(bool (*tree_filter)(std::string), bool (*sort_filter)(const std::string, const std::string));
+		void ShowSession(std::string option);
+		void HelpSession(std::string error, std::string usage);
+		void read_if_Session(std::list<std::string> &toDisplayStr, bool (*f)(std::string));
+		bool (*ses_parse_search_filter(std::string option))(std::string);
+		bool (*ses_parse_sort_filter(std::string option))(const std::string a, const std::string b);
+
     public:
         UI(Manager *manager);
 		~UI();
