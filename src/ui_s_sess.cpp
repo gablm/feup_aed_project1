@@ -185,16 +185,15 @@ void UI::ShowSession(std::string option) {
 		return;
 	}
 
-	auto ucMap = manager->getUcMap();
-
-	(void)ucMap;
-
 	while (1)
 	{
 		std::cout
 			<< "Class Inspector - "
 			<< code
 			<< " Schedule\n\n";
+
+		std::cout 
+			<< "TODO\n\n";
 
 		std::string option;
 		std::cout  << std::left << " [B] Go back\n\n$> ";
