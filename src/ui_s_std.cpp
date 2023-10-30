@@ -4,10 +4,9 @@
  * Complexity: O(n)
  * Goes through the binary search tree and checks if the content validates the function passed.
  * If so, this content is added to a list
- * @param node String with the request
- * @param toDisplay The list used to store the output shown
+ * @param node Node da BST a pesquisar
+ * @param toDisplay The list used to store all values meant to be shown in the output
  * @param f Function used to check if the element is supposed to be shown
- * @return Lambda function
 */
 void UI::read_if_student(BSTnode *node, std::list<void *> &toDisplay, bool (*f)(void *))
 {
@@ -262,6 +261,8 @@ void UI::ShowStudent(std::string option)
 		getline(std::cin, option);
 		if ((option[0] == 'b' || option[0] == 'B') && option.length() == 1)
 			break;
+		if ((option[0] == 'q' || option[0] == 'Q') && option.length() == 1)
+            ClearAndExit();
 	}
 }
 

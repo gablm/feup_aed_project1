@@ -54,6 +54,14 @@ class UI {
 		bool (*ses_parse_search_filter(std::string option))(std::string);
 		bool (*ses_parse_sort_filter(std::string option))(const std::string a, const std::string b);
 
+		// Change Menu
+		void PrintChange();
+		void RequestDetails(std::string option);
+		void ReplaceUC();
+		void ChangeClass();
+		void AddUC();
+		void RemoveUC();
+
     public:
         UI(Manager *manager);
 		~UI();

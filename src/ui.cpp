@@ -48,7 +48,7 @@ void UI::MainMenu() {
 		<< "\n"
         << "$> ";
         std::string str;
-        std::cin >> str;
+		getline(std::cin, str);
         if (str == "Q" || str == "q")
             ClearAndExit();
 		if (str == "t" || str == "T") {
@@ -68,34 +68,8 @@ void UI::MainMenu() {
 				PrintSession(NULL, NULL);
 				break;
 			case 3:
-				ChangeMenu();
+				PrintChange();
 				break;
 		}
-    }
-}
-
-void UI::ChangeMenu()
-{
-		while (1)
-    {
-        system(CLEAR);
-        std::cout 
-		<< "FEUP - Schedule service\n"
-		<< "\n"
-		<< "You are now starting a alteration request.\n"
-		<< "\n"
-		<< "[B] Go back and cancel\n"
-		<< "[Q] Quit\n"
-		<< "\n"
-		<< ">> Name:\n"
-		<< "$> ";
-        std::string str;
-        std::cin >> str;
-		if (str == "b" || str == "B")
-			break;
-        if (str == "q" || str == "Q")
-            ClearAndExit();
-		if (str.size() > 1)
-			continue;
     }
 }
