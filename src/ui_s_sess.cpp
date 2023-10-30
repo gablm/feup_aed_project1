@@ -169,7 +169,39 @@ void UI::PrintSession(bool (*tree_filter)(std::string), bool (*sort_filter)(cons
  * @param option The string with the full request
 */
 void UI::ShowSession(std::string option) {
+	system(CLEAR);
+	std::istringstream is(option);
+	std::string code;
+	is >> code >> code;
+	if (code.length() < 4)
+	{
+		HelpSession("Please insert a valid code.", "select [code]");
+		return;
+	}
+	auto sessionSet = manager->getSessionSet();
+	if (sessionSet.find(code) == sessionSet.end())
+	{
+		HelpSession("The Class was not found.", "select [code]");
+		return;
+	}
 
+	auto ucMap = manager->getUcMap();
+
+	(void)ucMap;
+
+	while (1)
+	{
+		std::cout
+			<< "Class Inspector - "
+			<< code
+			<< " Schedule\n\n";
+
+		std::string option;
+		std::cout  << std::left << " [B] Go back\n\n$> ";
+		getline(std::cin, option);
+		if (option[0] == 'b' || option[0] == 'B' && option.length() == 1)
+			break;
+	}
 }
 
 void UI::HelpSession(std::string error, std::string usage)
