@@ -43,8 +43,8 @@ void Student::editUCcount(int diff) {
 }
 
 /**
+ * Complexity: O(1) |
  * Returns the student schedule, composed of pairs of one UC and a Session/Class 
- * Complexity: O(1)
  * @return Vector of pair<UC, Session>
 */
 std::vector<std::pair<UC*,Session*>> Student::getSchedule() const {
@@ -52,8 +52,8 @@ std::vector<std::pair<UC*,Session*>> Student::getSchedule() const {
 }
 
 /**
+ * Complexity: O(1) |
  * Adds an element to the student schedule
- * Complexity: O(1)
  * @return If the addition was sucessful
 */
 bool Student::addToSchedule(std::pair<UC*,Session*> ucSessionPair) {
@@ -62,8 +62,8 @@ bool Student::addToSchedule(std::pair<UC*,Session*> ucSessionPair) {
 }
 
 /**
+ * Complexity: O(n) |
  * Removes a <UC, Class> combination from the students schedule
- * Complexity: O(n)
  * @return If that pair exists and can be removed
 */
 bool Student::removeFromSchedule(std::pair<UC*,Session*> ucSessionToRemove) {

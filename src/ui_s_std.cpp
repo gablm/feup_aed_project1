@@ -1,7 +1,7 @@
 #include "headers/ui.h"
 
 /**
- * Complexity: O(n)
+ * Complexity: O(n) | 
  * Goes through the binary search tree and checks if the content validates the function passed.
  * If so, this content is added to a list
  * @param node Node da BST a pesquisar
@@ -21,7 +21,7 @@ void UI::read_if_student(BSTnode *node, std::list<void *> &toDisplay, bool (*f)(
 
 static std::string query;
 /**
- * Complexity: O(1)
+ * Complexity: O(1) | 
  * Parses user input and returns the appropriate function to search the list 
  * @param option String with the request
  * @return Lambda function
@@ -62,7 +62,7 @@ bool (*UI::st_parse_search_filter(std::string option))(void *)
 }
 
 /**
- * Complexity: O(1)
+ * Complexity: O(1) | 
  * Parses user input and returns the appropriate function to sort the list 
  * @param option String with the request
  * @return Lambda function
@@ -110,7 +110,7 @@ bool (*UI::st_parse_sort_filter(std::string option))(const void *a, const void *
 }
 
 /**
- * Complexity: O(n^2)
+ * Complexity: O(n log n) |
  * Prints the student list, according to the results from the two filters.
  * @param tree_filter Lambda function to filter the content
  * @param sort_filter Lambda function to sort the content
@@ -195,7 +195,7 @@ void UI::PrintStudent(bool (*tree_filter)(void *), bool (*sort_filter)(const voi
 }
 
 /**
- * Complexity: O(n log n)
+ * Complexity: O(n^2) |
  * Shows a student's schedule based on its code 
  * @param option The string with the full request
 */
@@ -269,6 +269,12 @@ void UI::ShowStudent(std::string option)
 	}
 }
 
+/**
+ * Complexity: O(1) |
+ * Prints the help menu if both arguments are equal to "".
+ * Otherwise, shows an error message.
+ * It waits the the user input to proceed.
+*/
 void UI::HelpStudent(std::string error, std::string usage)
 {
 	system(CLEAR);

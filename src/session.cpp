@@ -60,7 +60,7 @@ std::string Session::getType() const {
 }
 
 /**
- * Complexity: O(1)
+ * Complexity: O(1) | 
  * Adds a student to a session
  * @param student Pointer to a student
 */
@@ -70,6 +70,7 @@ void Session::addStudent(Student *student)
 }
 
 /**
+ * Complexity: estimated worse case O(n) |
  * Removes a student from the session
  * @param student Pointer to a student
 */
