@@ -57,10 +57,10 @@ class UI {
 		// Change Menu
 		void PrintChange();
 		void RequestDetails(std::string option);
-		void ReplaceUC();
-		void ChangeClass();
-		void AddUC();
-		void RemoveUC();
+		void RequestHelp();
+		void NewClass(std::string option);
+		void RemoveUC(std::string option, Student *student);
+		void SwapUC(std::string option);
 
     public:
         UI(Manager *manager);

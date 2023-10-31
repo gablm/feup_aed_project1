@@ -22,7 +22,6 @@ void UI::PrintChange()
 			break;
         if (str == "q" || str == "Q")
             ClearAndExit();
-        system(CLEAR);
         RequestDetails(str);
     }
 }
@@ -87,10 +86,7 @@ void UI::RequestDetails(std::string option)
 		}
 
 		std::cout  << std::left 
-            << "\n [1] Change Class"
-            << "\n [2] Replace UC"
-            << "\n [3] Add UC"
-            << "\n [4] Remove UC"
+            << "\n To see the available commands, use 'help'!"
             << "\n [B] Go back"
             << "\n [Q] Quit"
             << "\n\n"
@@ -98,35 +94,69 @@ void UI::RequestDetails(std::string option)
                 
         std::string option;
 		getline(std::cin, option);
-		if ((option[0] == 'b' || option[0] == 'B') && option.length() == 1)
+
+        if (option.substr(0, 4) == "add "){
+            NewClass(option);
+        }
+        else if (option.substr(0,7) == "remove "){
+            RemoveUC(option, student);
+        }
+        else if (option.substr(0,7) == "swapUC "){
+            SwapUC(option);
+        }
+        else if (option == "b" || option == "B")
 			break;
-        else if ((option[0] == 'q' || option[0] == 'Q') && option.length() == 1)
+        else if (option == "q" || option == "Q")
             ClearAndExit();
-        else if (option[0] == 0 && option.length() == 1)
-            ChangeClass();
-        else if (option[0] == 1 && option.length() == 1)
-            ReplaceUC();
-        else if (option[0] == 2 && option.length() == 1)
-            AddUC();
-        else if (option[0] == 3 && option.length() == 1)
-            RemoveUC();
+        else if (option == "help" || option == "h" || option == "H"){
+            RequestHelp();
+            return;
+        }
         system(CLEAR);
 	}
 }
 
-void ChangeClass(){
-    
+void UI::RequestHelp()
+{
+    std::string option;
+    system(CLEAR);
+    std::cout << "Commands available for the Requests page:"
+		<< "\n add [UCcode] [ClassCode] - add new UC to the schedule in the specified class or swaps the current class if the UC is already present"
+		<< "\n remove [UCcode] - remove an UC from the schedule"
+		<< "\n swapUC [old UCCode] [new UCCode] [new ClassCode] - swaps an UC for another in the specified class"
+		<< "\n b/B - Go back"
+		<< "\n\nNote: The commands and the respective arguments are case-sensitive."
+		<< "\n\nPress ENTER to continue...";
+    std::cin >> option;
+    RequestDetails(option);
 }
 
-void AddUC(){
-    
+//void ChangeClass(){}
+
+void UI::RemoveUC(std::string option, Student *student){ //not working right
+    std::istringstream is(option);
+	std::string up;
+	is >> up;
+    if (up.length()!=8){
+        std::cout << "Invalid code, try again";
+        getline(std::cin, option);
+        RemoveUC(option, student);
+        return;
+    }
+    for (const auto& pair : student->getSchedule()){
+        if (pair.first->getName()==up){
+            student->removeFromSchedule(pair);
+        }
+    }
 }
 
-void RemoveUC(){
-    
+void UI::NewClass(std::string option){
+    option = option; //TODO
 }
 
-void ReplaceUC(){
+
+void UI::SwapUC(std::string option){
+    option = option; //TODO
     
 }
 
