@@ -143,9 +143,9 @@ void UI::PrintUC(bool (*tree_filter)(void *), bool (*sort_filter)(const void *, 
 				  << "\n\n$> ";
 		std::string option;
 		getline(std::cin, option);
-		if ((option[0] == 'b' || option[0] == 'B') && option.length() == 1)
+		if (option == "b" || option == "B")
 			break;
-		if ((option[0] == 'q' || option[0] == 'Q') && option.length() == 1) {
+		if (option == "q" || option == "Q") {
 			toDisplay.clear();
 			ClearAndExit();
 		}
@@ -173,9 +173,10 @@ void UI::PrintUC(bool (*tree_filter)(void *), bool (*sort_filter)(const void *, 
 		}
 		if (option.substr(0, 6) == "select")
 			ShowUC(option);
-		if (option == "help")
+		else if (option == "help")
 			HelpUC("", "");
-
+		else
+			HelpUC("Command not found or incomplete", "help - Shows all commands");
 	}
 }
 
@@ -245,7 +246,7 @@ void UI::ShowUC(std::string option) {
 		std::string option;
 		std::cout << std::left << "\n [B] Go back\n\n$> ";
 		getline(std::cin, option);
-		if ((option[0] == 'b' || option[0] == 'B') && option.length() == 1)
+		if (option == "b" || option == "B")
 			break;
 	}
 }

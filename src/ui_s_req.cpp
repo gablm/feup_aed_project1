@@ -3,7 +3,7 @@
 
 void UI::PrintChange()
 {
-		while (1)
+	while (1)
     {
         system(CLEAR);
         std::cout 
@@ -17,7 +17,7 @@ void UI::PrintChange()
 		<< ">> Student Code:\n"
 		<< "$> ";
         std::string str;
-        std::cin >> str;
+        getline(std::cin, str);
 		if (str == "b" || str == "B")
 			break;
         if (str == "q" || str == "Q")
@@ -47,6 +47,7 @@ void UI::RequestDetails(std::string option)
 	Student *student = (Student *)content;
 	while (1)
 	{
+		system(CLEAR);
 		std::cout
 			<< "Student Inspector - "
 			<< student->getCode()
@@ -87,10 +88,11 @@ void UI::RequestDetails(std::string option)
 
 		std::cout  << std::left 
             << "\n To see the available commands, use 'help'!"
+
             << "\n [B] Go back"
             << "\n [Q] Quit"
             << "\n\n"
-            << " $>";
+            << " $> ";
                 
         std::string option;
 		getline(std::cin, option);
@@ -157,6 +159,4 @@ void UI::NewClass(std::string option){
 
 void UI::SwapUC(std::string option){
     option = option; //TODO
-    
 }
-

@@ -155,9 +155,9 @@ void UI::PrintStudent(bool (*tree_filter)(void *), bool (*sort_filter)(const voi
 				  << "\n\n$> ";
 		std::string option;
 		getline(std::cin, option);
-		if ((option[0] == 'b' || option[0] == 'B') && option.length() == 1)
+		if (option == "b" || option == "B")
 			break;
-		if ((option[0] == 'q' || option[0] == 'Q') && option.length() == 1) {
+		if (option == "q" || option == "Q") {
 			toDisplay.clear();
 			ClearAndExit();
 		}
@@ -183,11 +183,12 @@ void UI::PrintStudent(bool (*tree_filter)(void *), bool (*sort_filter)(const voi
 			PrintStudent(NULL, NULL);
 			break;
 		}
-		if (option.substr(0, 6) == "select") {
+		if (option.substr(0, 6) == "select")
 			ShowStudent(option);
-		}
-		if (option == "help")
+		else if (option == "help")
 			HelpStudent("", "");
+		else
+			HelpStudent("Command not found or incomplete", "help - Shows all commands");
 	}
 }
 
@@ -259,9 +260,9 @@ void UI::ShowStudent(std::string option)
 		std::string option;
 		std::cout  << std::left << "\n [B] Go back\n\n$> ";
 		getline(std::cin, option);
-		if ((option[0] == 'b' || option[0] == 'B') && option.length() == 1)
+		if (option == "b" || option == "B")
 			break;
-		if ((option[0] == 'q' || option[0] == 'Q') && option.length() == 1)
+		if (option == "q" || option == "Q")
             ClearAndExit();
 	}
 }
