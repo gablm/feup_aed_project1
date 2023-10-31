@@ -57,15 +57,17 @@ class UI {
 		void PrintChange();
 		void RequestDetails(std::string option);
 		void HelpRequest(std::string error, std::string usage);
-		void NewClass(std::string option);
 		void RemoveUC(std::string option, Student *student);
+
+		void NewClass(std::string option);
 		void SwapUC(std::string option);
 
     public:
         UI(Manager *manager);
 		~UI();
 		void ClearAndExit();
-        void MainMenu();
+		void MainMenu();
+        
 };
 
 #endif

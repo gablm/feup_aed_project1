@@ -6,9 +6,8 @@ int main(int argc, char **argv) {
 	(void)argv;
     Manager *manager = new Manager();
     manager->load_map();
-	//manager->test_map();
 	manager->load_students();
-	//manager->test_students();
+	manager->load_alterations();
 	UI ui(manager);
     ui.MainMenu();
 	return 0;

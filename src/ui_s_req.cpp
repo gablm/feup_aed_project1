@@ -1,5 +1,4 @@
 #include "headers/ui.h"
-#include <iostream> //remove later, just for debugging
 
 void UI::PrintChange()
 {

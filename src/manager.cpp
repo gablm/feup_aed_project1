@@ -1,4 +1,5 @@
 #include "headers/manager.h"
+#include "headers/ui.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -150,6 +151,50 @@ void Manager::load_students() {
 		}
 		uc->editStudentCount(1);
 		temp_student->editUCcount(1);
+    }
+    file.close();
+}
+
+void Manager::load_alterations() {
+
+    string line, action, studentCode, UCName, sessionName;
+    int code;
+	Student *temp_student = NULL;
+
+    ifstream file;
+    file.open("./data/changes.csv");
+
+	if (file.fail())
+		return ;
+
+    getline(file,line); //removes the first line, which has no usable values
+
+    while(true) {
+		
+		if (file.eof())
+			break;
+		
+		getline(file,line);
+
+		if (line.size() < 1)
+			continue;
+
+        istringstream ss(line);
+
+        // inserts the contents of the line into the apropriate variables, for the non-string variables an extra line was needed
+		std::getline(ss, action, ',');
+		std::getline(ss, studentCode, ',');
+		code = stoi(studentCode);
+		std::getline(ss, UCName, ',');
+		std::getline(ss, sessionName, '\r');
+        
+		if (!temp_student || temp_student->getCode() != code) {
+			temp_student = (Student *)students.search(code);
+		}
+
+		if (action == "remove") {
+			RemoveUC(UCName, temp_student);
+		}
     }
     file.close();
 }

@@ -23,9 +23,12 @@ class Manager {
 		void test_map();
 		void load_students();
 		void test_students();
+		void load_alterations();
 		BST& getStudents();
 		std::map<std::string, UC*>& getUcMap();
 		std::set<std::string>& getSessionSet();
+
+		void RemoveUC(std::string UCname, Student *student);
 };
 
 #endif
