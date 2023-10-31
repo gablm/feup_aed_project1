@@ -9,6 +9,7 @@
 #include <iomanip>
 #include <algorithm>
 #include <map>
+#include <fstream>
 #include "manager.h"
 
 #ifdef __linux__

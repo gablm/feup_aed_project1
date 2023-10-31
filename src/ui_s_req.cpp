@@ -142,7 +142,7 @@ void UI::HelpRequest(std::string error, std::string usage)
 	{
 		std::cout << "Commands available for the Requests page:"
 				  << "\n add [UCcode] [ClassCode] - add new UC to the schedule in the specified class or swaps the current class if the UC is already present"
-				  << "\n remove [UCcode] - remove an UC from the schedule"
+				  << "\n remove [UCcode] - Remove an UC from the schedule"
 				  << "\n swapUC [old UCCode] [new UCCode] [new ClassCode] - swaps an UC for another in the specified class"
 				  << "\n b/B - Go back"
 				  << "\n\nNote: The commands and the respective arguments are case-sensitive."
@@ -163,24 +163,28 @@ void UI::RemoveUC(std::string option, Student *student) // now is working!
 	auto ucMap = manager->getUcMap();
 	if (up.length() < 1 || ucMap.find(up) == ucMap.end())
 	{
-		HelpRequest("Invalid UC code", "remove [UCcode]");
+		HelpRequest("Invalid UC code", "removeUC [UCcode]");
 		return;
 	}
 
 	bool removed = false;
+	std::ofstream out;
+	out.open("./data/changes.csv", std::ios::app);
 	for (const auto &pair : student->getSchedule())
 	{
 		if (pair.first->getName() == up)
 		{
 			if (!removed) {
 				student->editUCcount(-1);
+				pair.first->editStudentCount(-1);
+				out << "remove," + std::to_string(student->getCode()) + "," + up + ",all" << std::endl;
 				removed = true;
 			}
-			pair.first->editStudentCount(-1);
 			student->removeFromSchedule(pair);
 			pair.second->removeStudent(student);
 		}
 	}
+	out.close();
 }
 
 void UI::NewClass(std::string option)
