@@ -27,8 +27,6 @@ class UI {
 		std::list<void *> toDisplay;
 		std::list<std::string> toDisplayStr;
 		std::string field, filter;
-		
-		void ChangeMenu();
 
 		// Student
 		void PrintStudent(bool (*tree_filter)(void *), bool (*sort_filter)(const void *, const void *));
@@ -57,7 +55,7 @@ class UI {
 		// Change Menu
 		void PrintChange();
 		void RequestDetails(std::string option);
-		void RequestHelp();
+		void HelpRequest(std::string error, std::string usage);
 		void NewClass(std::string option);
 		void RemoveUC(std::string option, Student *student);
 		void SwapUC(std::string option);

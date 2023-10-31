@@ -183,8 +183,10 @@ void UI::PrintStudent(bool (*tree_filter)(void *), bool (*sort_filter)(const voi
 			PrintStudent(NULL, NULL);
 			break;
 		}
-		if (option.substr(0, 6) == "select")
+		if (option.substr(0, 7) == "select ")
 			ShowStudent(option);
+		else if (option.substr(0, 5) == "edit " && option.length() > 5)
+			RequestDetails(option.substr(5));
 		else if (option == "help")
 			HelpStudent("", "");
 		else
@@ -282,6 +284,7 @@ void UI::HelpStudent(std::string error, std::string usage)
 				  << "\n search [code|name|minUC] [query] - Search the list"
 				  << "\n sort [name|rev_name|code|rev_code|minUC|rev_minUC] - Sort the current list"
 				  << "\n select [code] - Show the student's schedule"
+				  << "\n edit [code] - Change a student's schedule"
 				  << "\n b - Go back"
 				  << "\n\nNote: The commands and the respective arguments are case-sensitive."
 				  << "\n\nPress ENTER to continue...";

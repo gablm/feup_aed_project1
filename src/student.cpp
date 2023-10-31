@@ -63,12 +63,15 @@ bool Student::addToSchedule(std::pair<UC*,Session*> ucSessionPair) {
 
 /**
  * Removes a <UC, Class> combination from the students schedule
- * Complexity: O(??)
+ * Complexity: O(n)
  * @return If that pair exists and can be removed
 */
 bool Student::removeFromSchedule(std::pair<UC*,Session*> ucSessionToRemove) {
-	(void)ucSessionToRemove;
-	std::cout << "not done - remove schedule";
-	exit(0);
+	for (auto i = schedule.begin(); i != schedule.end(); i++) {
+		if (*i == ucSessionToRemove) {
+			schedule.erase(i);
+			return true;
+		}
+	}
 	return false;
 }

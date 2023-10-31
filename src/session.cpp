@@ -61,9 +61,18 @@ std::string Session::getType() const {
 
 /**
  * Complexity: O(1)
+ * Adds a student to a session
  * @param student Pointer to a student
 */
 void Session::addStudent(Student *student)
 {
 	studentList.push_back(student);
+}
+
+/**
+ * Removes a student from the session
+ * @param student Pointer to a student
+*/
+void Session::removeStudent(Student *student) {
+	studentList.remove(student);
 }

@@ -4,26 +4,26 @@
 void UI::PrintChange()
 {
 	while (1)
-    {
-        system(CLEAR);
-        std::cout 
-		<< "FEUP - Schedule service\n"
-		<< "\n"
-		<< "You are now starting a alteration request.\n"
-		<< "\n"
-		<< "[B] Go back and cancel\n"
-		<< "[Q] Quit\n"
-		<< "\n"
-		<< ">> Student Code:\n"
-		<< "$> ";
-        std::string str;
-        getline(std::cin, str);
+	{
+		system(CLEAR);
+		std::cout
+			<< "FEUP - Schedule service\n"
+			<< "\n"
+			<< "You are now starting a alteration request.\n"
+			<< "\n"
+			<< "[B] Go back and cancel\n"
+			<< "[Q] Quit\n"
+			<< "\n"
+			<< ">> Student Code:\n"
+			<< "$> ";
+		std::string str;
+		getline(std::cin, str);
 		if (str == "b" || str == "B")
 			break;
-        if (str == "q" || str == "Q")
-            ClearAndExit();
-        RequestDetails(str);
-    }
+		if (str == "q" || str == "Q")
+			ClearAndExit();
+		RequestDetails(str);
+	}
 }
 
 void UI::RequestDetails(std::string option)
@@ -33,18 +33,19 @@ void UI::RequestDetails(std::string option)
 	is >> up;
 	if (up.length() != 9)
 	{
-		HelpStudent("Please insert a valid code.", "select [code]");
+		HelpRequest("Please insert a valid code.", "[code]");
 		return;
 	}
+
 	void *content = manager->getStudents().search(std::stod(up));
 	if (!content)
 	{
-		HelpStudent("The Student was not found.", "select [code]");
+		HelpRequest("The Student was not found.", "[code]");
 		return;
 	}
 
-
 	Student *student = (Student *)content;
+
 	while (1)
 	{
 		system(CLEAR);
@@ -54,7 +55,7 @@ void UI::RequestDetails(std::string option)
 			<< "/" << student->getName()
 			<< " Schedule\n";
 
-		std::list<std::pair<UC*, Session*>> weekdays[7];
+		std::list<std::pair<UC *, Session *>> weekdays[7];
 		for (auto pair : student->getSchedule())
 		{
 			std::istringstream wday(pair.second->getDay());
@@ -64,9 +65,12 @@ void UI::RequestDetails(std::string option)
 		}
 
 		bool print = true;
-		for (auto i : weekdays) {
-			i.sort([](std::pair<UC*, Session*> a, std::pair<UC*, Session*> b) { return a.second->getTime() < b.second->getTime(); });
-			for (auto session : i) {
+		for (auto i : weekdays)
+		{
+			i.sort([](std::pair<UC *, Session *> a, std::pair<UC *, Session *> b)
+				   { return a.second->getTime() < b.second->getTime(); });
+			for (auto session : i)
+			{
 				Session *a = session.second;
 				if (print)
 				{
@@ -76,87 +80,115 @@ void UI::RequestDetails(std::string option)
 				int time = a->getTime() * 60;
 				int duration = a->getDuration() * 60;
 				std::cout << std::setfill(' ') << std::right
-					<< "   UC: " << session.first->getName()
-					<< " | Class: " << a->getName()
-					<< " | Type: " << std::setw(2) << a->getType()
-					<< " | Start: "  << std::setfill('0') << std::setw(2) << time / 60 << ":" << std::setw(2) << time % 60
-					<< " | Duration: " << std::setw(2) << duration / 60 << ":" << std::setw(2) << duration % 60
-					<< std::setfill(' ') << "\n";
+						  << "   UC: " << session.first->getName()
+						  << " | Class: " << a->getName()
+						  << " | Type: " << std::setw(2) << a->getType()
+						  << " | Start: " << std::setfill('0') << std::setw(2) << time / 60 << ":" << std::setw(2) << time % 60
+						  << " | Duration: " << std::setw(2) << duration / 60 << ":" << std::setw(2) << duration % 60
+						  << std::setfill(' ') << "\n";
 			}
 			print = true;
 		}
 
-		std::cout  << std::left 
-            << "\n To see the available commands, use 'help'!"
+		std::cout << std::left
+				  << "\n To see the available commands, use 'help'!"
 
-            << "\n [B] Go back"
-            << "\n [Q] Quit"
-            << "\n\n"
-            << " $> ";
-                
-        std::string option;
+				  << "\n [B] Go back"
+				  << "\n [Q] Quit"
+				  << "\n\n"
+				  << " $> ";
+
+		std::string option;
 		getline(std::cin, option);
 
-        if (option.substr(0, 4) == "add "){
-            NewClass(option);
-        }
-        else if (option.substr(0,7) == "remove "){
-            RemoveUC(option, student);
-        }
-        else if (option.substr(0,7) == "swapUC "){
-            SwapUC(option);
-        }
-        else if (option == "b" || option == "B")
+		if (option.substr(0, 4) == "add ")
+		{
+			NewClass(option);
+			continue;
+		}
+		if (option.substr(0, 7) == "remove ")
+		{
+			RemoveUC(option, student);
+			continue;
+		}
+		if (option.substr(0, 7) == "swapUC ")
+		{
+			SwapUC(option);
+			continue;
+		}
+		if (option == "b" || option == "B")
 			break;
-        else if (option == "q" || option == "Q")
-            ClearAndExit();
-        else if (option == "help" || option == "h" || option == "H"){
-            RequestHelp();
-            return;
-        }
-        system(CLEAR);
+		if (option == "q" || option == "Q")
+			ClearAndExit();
+		else if (option == "help" || option == "h" || option == "H")
+			HelpRequest("", "");
+		else
+			HelpRequest("Command not found or incomplete", "help - Shows all commands");
 	}
 }
 
-void UI::RequestHelp()
+void UI::HelpRequest(std::string error, std::string usage)
 {
-    std::string option;
-    system(CLEAR);
-    std::cout << "Commands available for the Requests page:"
-		<< "\n add [UCcode] [ClassCode] - add new UC to the schedule in the specified class or swaps the current class if the UC is already present"
-		<< "\n remove [UCcode] - remove an UC from the schedule"
-		<< "\n swapUC [old UCCode] [new UCCode] [new ClassCode] - swaps an UC for another in the specified class"
-		<< "\n b/B - Go back"
-		<< "\n\nNote: The commands and the respective arguments are case-sensitive."
-		<< "\n\nPress ENTER to continue...";
-    std::cin >> option;
-    RequestDetails(option);
+	std::string option;
+	system(CLEAR);
+	if (error != "" && usage != "")
+	{
+		std::cout << "Invalid operation!\n"
+				  << "\n Problem: " << error
+				  << "\n Usage: " << usage
+				  << "\n\nPress ENTER to continue...";
+	}
+	else
+	{
+		std::cout << "Commands available for the Requests page:"
+				  << "\n add [UCcode] [ClassCode] - add new UC to the schedule in the specified class or swaps the current class if the UC is already present"
+				  << "\n remove [UCcode] - remove an UC from the schedule"
+				  << "\n swapUC [old UCCode] [new UCCode] [new ClassCode] - swaps an UC for another in the specified class"
+				  << "\n b/B - Go back"
+				  << "\n\nNote: The commands and the respective arguments are case-sensitive."
+				  << "\n\nPress ENTER to continue...";
+	}
+	while (std::cin.get() != '\n')
+	{
+	}
 }
 
-//void ChangeClass(){}
+// void ChangeClass(){}
 
-void UI::RemoveUC(std::string option, Student *student){ //not working right
-    std::istringstream is(option);
+void UI::RemoveUC(std::string option, Student *student) // now is working!
+{ 
+	std::istringstream is(option);
 	std::string up;
-	is >> up;
-    if (up.length()!=8){
-        std::cout << "Invalid code, try again";
-        getline(std::cin, option);
-        RemoveUC(option, student);
-        return;
-    }
-    for (const auto& pair : student->getSchedule()){
-        if (pair.first->getName()==up){
-            student->removeFromSchedule(pair);
-        }
-    }
+	is >> up >> up;
+	auto ucMap = manager->getUcMap();
+	if (up.length() < 1 || ucMap.find(up) == ucMap.end())
+	{
+		HelpRequest("Invalid UC code", "remove [UCcode]");
+		return;
+	}
+
+	bool removed = false;
+	for (const auto &pair : student->getSchedule())
+	{
+		if (pair.first->getName() == up)
+		{
+			if (!removed) {
+				student->editUCcount(-1);
+				removed = true;
+			}
+			pair.first->editStudentCount(-1);
+			student->removeFromSchedule(pair);
+			pair.second->removeStudent(student);
+		}
+	}
 }
 
-void UI::NewClass(std::string option){
-    option = option; //TODO
+void UI::NewClass(std::string option)
+{
+	option = option; // TODO
 }
 
-
-void UI::SwapUC(std::string option){
-    option = option; //TODO
+void UI::SwapUC(std::string option)
+{
+	option = option; // TODO
 }

@@ -24,6 +24,7 @@ class Session {
 		std::string getName() const;
 		std::string getType() const;
 		void addStudent(Student *student);
+		void removeStudent(Student *student);
 };
 
 #endif
