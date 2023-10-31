@@ -42,11 +42,11 @@ void Manager::load_map() {
     file.open("./data/classes.csv");
 
 	if (file.fail()) {
-		std::cout << "Invalid File";
+		std::cout << "Invalid File - Please insert a valid classes.csv in the data folder.";
 		exit(0);
 	}
 
-    getline(file,line); //removes the first line, which has no usable values
+    getline(file,line);
 
     while(true) {
 		
@@ -60,7 +60,6 @@ void Manager::load_map() {
 
         istringstream ss(line);
 
-        // inserts the contents of the line into the apropriate variables, for the non-string variables an extra line was needed
 		std::getline(ss, sessionName, ',');
         std::getline(ss, UCName, ',');
         std::getline(ss, sessionDay, ',');
@@ -112,11 +111,11 @@ void Manager::load_students() {
     file.open("./data/students_classes.csv");
 
 	if (file.fail()) {
-		std::cout << "Invalid File";
+		std::cout << "Invalid File - Please insert a valid students_classes.csv in the data folder.";
 		exit(0);
 	}
 
-    getline(file,line); //removes the first line, which has no usable values
+    getline(file,line);
 
     while(true) {
 		
@@ -130,7 +129,6 @@ void Manager::load_students() {
 
         istringstream ss(line);
 
-        // inserts the contents of the line into the apropriate variables, for the non-string variables an extra line was needed
 		std::getline(ss, codeStr, ',');
 		code = stoi(codeStr);
 		std::getline(ss, studentName, ',');
@@ -164,10 +162,16 @@ void Manager::load_alterations() {
     ifstream file;
     file.open("./data/changes.csv");
 
-	if (file.fail())
-		return ;
+	getline(file,line);
 
-    getline(file,line); //removes the first line, which has no usable values
+	if (line == "") {
+		file.close();
+		ofstream file2;
+		file2.open("./data/changes.csv", std::ios::app);
+		file2 << "Action,StudentCode,UCName,SessionName" << endl;
+		file2.close();
+		return ;
+	}
 
     while(true) {
 		
@@ -181,7 +185,6 @@ void Manager::load_alterations() {
 
         istringstream ss(line);
 
-        // inserts the contents of the line into the apropriate variables, for the non-string variables an extra line was needed
 		std::getline(ss, action, ',');
 		std::getline(ss, studentCode, ',');
 		code = stoi(studentCode);

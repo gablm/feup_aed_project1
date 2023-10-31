@@ -43,7 +43,6 @@ void UI::MainMenu() {
         << "\n"
         << " [3] Change Student schedule\n"
         << "\n"
-		<< "[T] Fast Test Access\n"
 		<< "[Q] Exit\n"
 		<< "\n"
         << "$> ";
