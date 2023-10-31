@@ -25,6 +25,7 @@ class Session {
 		std::string getType() const;
 		void addStudent(Student *student);
 		void removeStudent(Student *student);
+		int getsize() const;
 };
 
 #endif

@@ -22,6 +22,7 @@ class UC {
 		void clearSessions();
 		std::list<Session*> find(std::string sessionName);
 		std::list<Session*> getSessionList() const;
+		bool verifyOccupancyConflict(Session* newSession, Session* oldSession);
 };
 
 #endif

@@ -234,3 +234,7 @@ void print(BSTnode *node)
 void Manager::test_students() {
 	print(students.getNode());
 }
+
+int Manager::getsessionCap(){
+	return sessionCap;
+}

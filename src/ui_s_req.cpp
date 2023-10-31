@@ -102,7 +102,7 @@ void UI::RequestDetails(std::string option)
 
 		if (option.substr(0, 4) == "add ")
 		{
-			NewClass(option);
+			NewClass(option, student);
 			continue;
 		}
 		if (option.substr(0, 7) == "remove ")
@@ -112,7 +112,7 @@ void UI::RequestDetails(std::string option)
 		}
 		if (option.substr(0, 7) == "swapUC ")
 		{
-			SwapUC(option);
+			SwapUC(option, student);
 			continue;
 		}
 		if (option == "b" || option == "B")
@@ -186,12 +186,94 @@ void UI::RemoveUC(std::string option, Student *student) // now is working!
 	out.close();
 }
 
-void UI::NewClass(std::string option)
+void UI::NewClass(std::string option, Student *student)
 {
-	option = option; // TODO
+	student = student;
+	std::istringstream is(option);
+	std::string uccode, classcode;
+	is >> uccode >> uccode >> classcode;
+
+	auto ucMap = manager->getUcMap();
+	if (uccode.length() < 1 || ucMap.find(uccode) == ucMap.end())
+	{
+		HelpRequest("Invalid UC code", "add [UCcode] [ClassCode]");
+		return;
+	}
+	auto uc = *manager->getUcMap()[uccode];
+
+
+	if (classcode == "any"){
+		int minCount = 100;
+		Session *tempsession;
+		for(auto i : uc.getSessionList()){
+			if(i->getsize()<minCount){
+				minCount=i->getsize();
+				tempsession=i;
+			}
+		}
+		classcode = tempsession->getName();
+	}
+
+
+	if (classcode.length() < 1 || uc.find(classcode).size()<1)
+	{
+		HelpRequest("Invalid Classcode", "add [UCcode] [ClassCode]");
+		return;
+	}
+
+	auto schedule = student->getSchedule();
+	Session *oldClass = nullptr;
+	for (auto i: schedule){
+		if (i.first->getName() == uc.getName()){
+			oldClass=i.second;
+		}
+	}
+
+	if (oldClass == nullptr && student->getUCcount()==7){
+		HelpRequest("Max UC count reached, cannot add a new class before removing another one", "add [UCcode] [ClassCode]");
+		return;
+	}
+
+	auto newClasses = uc.find(classcode);
+	for (auto i : newClasses){
+		if(i->getsize()>=manager->getsessionCap()){
+			HelpRequest("Class already at maximum capacity", "add [UCcode] [ClassCode]");
+			return;
+		}
+		if(i->getType()!="T" && student->verifyScheduleConflict(i)){
+			HelpRequest("Schedule conflict", "add [UCcode] [ClassCode]");
+			return;
+		}
+		
+		if(i->getType()!="T" && uc.verifyOccupancyConflict(i,oldClass)){
+			HelpRequest("Occupancy conflict: would result in an uneven distribution of students (>5 of a diference between classes)", "add [UCcode] [ClassCode]");
+			return;
+		}
+	}
+	std::ofstream out;
+	out.open("./data/changes.csv", std::ios::app);
+
+	if(oldClass==nullptr){
+		student->editUCcount(+1);
+		manager->getUcMap()[uccode]->editStudentCount(+1);
+	}
+	else{
+		oldClass->removeStudent(student);
+	}
+	out << "add," + std::to_string(student->getCode()) + "," + uc.getName() + "," + classcode + ",all" << std::endl;
+
+	std::pair<UC *, Session *> ucSessionPair;
+	ucSessionPair.first=manager->getUcMap()[uccode];
+	for (auto i : newClasses){
+		ucSessionPair.second=i;
+		student->addToSchedule(ucSessionPair);
+		i->addStudent(student);
+	}
+	out.close();
 }
 
-void UI::SwapUC(std::string option)
+void UI::SwapUC(std::string option, Student *student)
 {
+	student = student;
 	option = option; // TODO
 }

@@ -75,3 +75,25 @@ bool Student::removeFromSchedule(std::pair<UC*,Session*> ucSessionToRemove) {
 	}
 	return false;
 }
+
+bool Student::verifyScheduleConflict(Session* session){
+	double minTime = session->getTime();
+	double maxTime = minTime+session->getDuration();
+	double tempMinTime;
+	double tempMaxTime;
+	
+	Session* tempSession = session;
+
+	for (auto i = schedule.begin(); i != schedule.end(); i++) {
+		if (i->second->getType()=="T"){
+			continue;
+		}
+		tempSession = i->second;
+		tempMinTime = tempSession->getTime();
+		tempMaxTime = tempMinTime+tempSession->getDuration();
+		if(tempMaxTime>minTime && tempMinTime < maxTime && session->getDay() == i->second->getDay()){
+			return true;
+		}
+	}
+	return false;
+}

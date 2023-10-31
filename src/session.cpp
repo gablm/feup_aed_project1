@@ -76,3 +76,7 @@ void Session::addStudent(Student *student)
 void Session::removeStudent(Student *student) {
 	studentList.remove(student);
 }
+
+int Session::getsize() const{
+	return studentList.size();
+}

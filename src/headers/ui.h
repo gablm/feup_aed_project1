@@ -59,8 +59,8 @@ class UI {
 		void HelpRequest(std::string error, std::string usage);
 		void RemoveUC(std::string option, Student *student);
 
-		void NewClass(std::string option);
-		void SwapUC(std::string option);
+		void NewClass(std::string option, Student *student);
+		void SwapUC(std::string option, Student *student);
 
     public:
         UI(Manager *manager);

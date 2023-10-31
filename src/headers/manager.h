@@ -27,6 +27,7 @@ class Manager {
 		BST& getStudents();
 		std::map<std::string, UC*>& getUcMap();
 		std::set<std::string>& getSessionSet();
+		int getsessionCap();
 
 		void RemoveUC(std::string UCname, Student *student);
 };

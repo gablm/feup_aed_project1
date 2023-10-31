@@ -22,6 +22,7 @@ class Student {
 		std::vector<std::pair<UC*,Session*>> getSchedule() const;
 		bool addToSchedule(std::pair<UC*,Session*> ucSessionPair);
 		bool removeFromSchedule(std::pair<UC*,Session*> ucSessiontoRemove);
+		bool verifyScheduleConflict(Session* session);
 };
 
 #endif
