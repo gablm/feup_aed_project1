@@ -6,10 +6,11 @@
 BST::BST() : node(NULL) {}
 
 /**
- * Create a BST node, composed of a key + content
+ * Complexity: O(1) | 
+ * Create a Binary Search Tree (BST) node, composed of a key and a pointer to its content
  * The left and right nodes are initiated to 0/NULL
  * @param key Key of the node
- * @param content Content on the node
+ * @param content Pointer to the content
 */
 BSTnode *bst_new(int key, void *content)
 {
@@ -22,6 +23,7 @@ BSTnode *bst_new(int key, void *content)
 }
 
 /**
+ * Complexity: O(n) |
  * Inserts a new node in the BST.
  * Following the concept of a Binary Search Tree, it looks for a place where the next node does not exist and the key is less than the key before it
  * @param key Key of the new node
@@ -64,8 +66,8 @@ static void *recursive_search(BSTnode *node, int key) {
 }
 
 /**
- * Complexity: O(n)
- * Searches the BST for the content related to the key
+ * Complexity: O(n) | 
+ * Searches the Binary Search Tree (BST) for the content related to the key
  * @param key Key to look for
  * @return The content associated to the key
 */
@@ -85,8 +87,8 @@ static void bst_del(BSTnode *node, void (*del)(void *)) {
 }
 
 /**
- * Complexity: O(n)
- * Deletes the entire BST.
+ * Complexity: O(n) |
+ * Deletes the entire Binary Search Tree (BST).
  * As the BST stores void pointers, there is a need to ask for an appropriate function to delete the data. 
  * @param del Function to delete the content
 */
@@ -95,8 +97,8 @@ void BST::clear(void (*del)(void *)) {
 }
 
 /**
- * Complexity: O(1)
- * Returns a pointer to the root node of the BST
+ * Complexity: O(1) |
+ * Returns a pointer to the root node of the Binary Search Tree (BST).
  * @return Node
 */
 BSTnode *BST::getNode() const {
