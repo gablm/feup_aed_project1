@@ -81,31 +81,37 @@ std::list<Session*> UC::find(std::string sessionName) {
 }
 
 bool UC::verifyOccupancyConflict(Session* newSession, Session* oldSession){
+	
+	if (!newSession && !oldSession)
+		return false;
+	
 	int maxOccupancy = newSession->getsize();
 	int minOccupancy = maxOccupancy;
 	int tempOccupancy;
 
-	for (auto i = getSessionList().begin(); i != getSessionList().end(); i++) {
+	for (auto i = sessionList.begin(); i != sessionList.end(); i++) {
 		tempOccupancy = (*i)->getsize();
 
 		if (tempOccupancy>=maxOccupancy) maxOccupancy = tempOccupancy;
 		if (tempOccupancy<=minOccupancy) maxOccupancy = minOccupancy;
 	}
 
-	if (minOccupancy==newSession->getsize()){
+	if (minOccupancy == newSession->getsize())
 		return false;
-	}
-	if (oldSession==nullptr && ((maxOccupancy-minOccupancy<5 && newSession->getsize()!=maxOccupancy) || maxOccupancy-minOccupancy<4)){
+
+	if (!oldSession && ((maxOccupancy-minOccupancy < 5 && newSession->getsize() != maxOccupancy) || maxOccupancy - minOccupancy < 4))
 		return false;
-	}
-	if (minOccupancy==newSession->getsize()){
+
+	if (minOccupancy == newSession->getsize())
 		return false;
-	}
-	if (maxOccupancy-minOccupancy>4){
+
+	if (maxOccupancy - minOccupancy > 4)
 		return true;
-	}
-	if (maxOccupancy-minOccupancy==4 && (newSession->getsize()==maxOccupancy || oldSession->getsize()==minOccupancy)&&(newSession->getsize()!=oldSession->getsize())){
+
+	if (maxOccupancy - minOccupancy == 4 
+			&& (newSession->getsize() == maxOccupancy || oldSession->getsize() == minOccupancy) 
+			&& (newSession->getsize() != oldSession->getsize()))
 		return true;
-	}
+
 	return false;
 }
