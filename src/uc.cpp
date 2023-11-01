@@ -97,8 +97,10 @@ bool UC::verifyOccupancyConflict(Session* newSession, Session* oldSession){
 	for (auto i = sessionList.begin(); i != sessionList.end(); i++) {
 		tempOccupancy = (*i)->getsize();
 
-		if (tempOccupancy >= maxOccupancy) maxOccupancy = tempOccupancy;
-		if (tempOccupancy <= minOccupancy) maxOccupancy = minOccupancy;
+		if (tempOccupancy >= maxOccupancy) 
+			maxOccupancy = tempOccupancy;
+		if (tempOccupancy <= minOccupancy) 
+			minOccupancy = tempOccupancy;
 	}
 
 	if (minOccupancy == newSession->getsize())
