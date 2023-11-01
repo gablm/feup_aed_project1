@@ -1,5 +1,9 @@
 #include "headers/ui.h"
 
+/**
+ * Complexity: O(1) |
+ * Prints the menu asking for the code of the student being altered.
+*/
 void UI::PrintChange()
 {
 	while (1)
@@ -25,6 +29,11 @@ void UI::PrintChange()
 	}
 }
 
+/**
+ * Complexity: O(n^2)
+ * Prints the student's schedule and awaits for the user input
+ * @param option Student code
+*/
 void UI::RequestDetails(std::string option)
 {
 	std::istringstream is(option);
@@ -49,7 +58,7 @@ void UI::RequestDetails(std::string option)
 	{
 		system(CLEAR);
 		std::cout
-			<< "Student Inspector - "
+			<< "Student Inspector -"
 			<< student->getCode()
 			<< "/" << student->getName()
 			<< " Schedule\n";
@@ -126,6 +135,12 @@ void UI::RequestDetails(std::string option)
 	}
 }
 
+/**
+ * Complexity: O(1) |
+ * Prints the help menu if both arguments are equal to "".
+ * Otherwise, shows an error message.
+ * It waits for user input to proceed.
+*/
 void UI::HelpRequest(std::string error, std::string usage)
 {
 	std::string option;
@@ -152,8 +167,13 @@ void UI::HelpRequest(std::string error, std::string usage)
 	}
 }
 
-// void ChangeClass(){}
-
+/**
+ * Complexity: O(n) |
+ * Removes all session for the respective UC.
+ * The isn't any verification as removing is not bound by requeriments apart from validating the UC code.
+ * @param UCname The code for the UC to be removed
+ * @param student The pointer to the student being edited
+*/
 void UI::RemoveUC(std::string option, Student *student)
 { 
 	std::istringstream is(option);
@@ -176,7 +196,9 @@ void UI::RemoveUC(std::string option, Student *student)
 			if (!removed) {
 				student->editUCcount(-1);
 				pair.first->editStudentCount(-1);
-				out << "remove," + std::to_string(student->getCode()) + "," + up + ",all" << std::endl;
+				std::string stCode = std::to_string(student->getCode());
+				out << "remove," + stCode + "," + up + ",all" << std::endl;
+				log("Removed all classes for " + up + " of " + stCode);
 				removed = true;
 			}
 			student->removeFromSchedule(pair);
@@ -186,6 +208,15 @@ void UI::RemoveUC(std::string option, Student *student)
 	out.close();
 }
 
+/**
+ * Complexity: O(n^2) |
+ * Adds a UC and class or changes the class if a student is already in the UC.
+ * There are various checks in place: Max allocation of 25, max allocation difference of 4 and schedule conflicts
+ * The allocation difference is not verified if the session to enter is the one with the lowest occupation.
+ * That way, the UC will return to a balanced state after a while if not already in such state.
+ * @param uccode The code for the UC to be added/changed
+ * @param classcode The code for the class to be added. Can be "any" and the class with the lowest occupation will be attributed.
+*/
 void UI::NewClass(std::string option, Student *student) {
 
 	std::istringstream is(option);
@@ -262,7 +293,10 @@ void UI::NewClass(std::string option, Student *student) {
 		oldClass->removeStudent(student);
 	}
 
-	out << "add," + std::to_string(student->getCode()) + "," + uc->getName() + "," + classcode << std::endl;
+	std::string codeStr = std::to_string(student->getCode());
+	out << "add," + codeStr + "," + uc->getName() + "," + classcode << std::endl;
+	
+	log("Added pair <" + uc->getName() + ", " + classcode + "> to " + codeStr);
 
 	for (auto i: schedule) {
 		if (i.first->getName() == uc->getName()) {
@@ -281,4 +315,18 @@ void UI::SwapUC(std::string option, Student *student)
 {
 	student = student;
 	option = option; // TODO
+}
+
+/**
+ * Complexity: O(1) |
+ * Logs the operations made by the user using the UI.
+ * Changing the contents of this file won't affect the system.
+*/
+void UI::log(std::string action) 
+{
+	std::ofstream out;
+	out.open("./changes.log", std::ios::app);
+	time_t timenow = std::time(nullptr);
+	out << "[" << std::put_time(std::localtime(&timenow), "%d/%m/%Y %T") << "] " << action << std::endl;
+	out.close();
 }

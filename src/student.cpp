@@ -76,6 +76,11 @@ bool Student::removeFromSchedule(std::pair<UC*,Session*> ucSessionToRemove) {
 	return false;
 }
 
+/**
+ * Complexity: O(n) |
+ * Checks if a session to be added overlaps
+ * @return True if there are conflits, false otherwise
+*/
 bool Student::verifyScheduleConflict(Session* session){
 	
 	if (!session)
@@ -85,18 +90,16 @@ bool Student::verifyScheduleConflict(Session* session){
 	double maxTime = minTime + session->getDuration();
 	double tempMinTime, tempMaxTime;
 	
-	Session* tempSession = session;
-
 	for (auto i = schedule.begin(); i != schedule.end(); i++) {
 		
 		if (i->second->getType() == "T")
 			continue;
 
-		tempSession = i->second;
-		tempMinTime = tempSession->getTime();
-		tempMaxTime = tempMinTime + tempSession->getDuration();
+		Session tempSession = *(i->second);
+		tempMinTime = tempSession.getTime();
+		tempMaxTime = tempMinTime + tempSession.getDuration();
 		
-		if(tempMaxTime > minTime && tempMinTime < maxTime && session->getDay() == i->second->getDay())
+		if(tempMaxTime > minTime && tempMinTime < maxTime && session->getDay() == tempSession.getDay())
 			return true;
 	}
 

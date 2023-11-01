@@ -201,7 +201,6 @@ void UI::PrintStudent(bool (*tree_filter)(void *), bool (*sort_filter)(const voi
 */
 void UI::ShowStudent(std::string option)
 {
-	system(CLEAR);
 	std::istringstream is(option);
 	std::string up;
 	is >> up >> up;
@@ -221,6 +220,7 @@ void UI::ShowStudent(std::string option)
 
 	while (1)
 	{
+		system(CLEAR);
 		std::cout
 			<< "Student Inspector - "
 			<< student->getCode()
@@ -273,7 +273,7 @@ void UI::ShowStudent(std::string option)
  * Complexity: O(1) |
  * Prints the help menu if both arguments are equal to "".
  * Otherwise, shows an error message.
- * It waits the the user input to proceed.
+ * It waits for user input to proceed.
 */
 void UI::HelpStudent(std::string error, std::string usage)
 {

@@ -171,7 +171,6 @@ void UI::PrintSession(bool (*tree_filter)(std::string), bool (*sort_filter)(cons
  * @param option The string with the full request
 */
 void UI::ShowSession(std::string option) {
-	system(CLEAR);
 	std::istringstream is(option);
 	std::string code;
 	is >> code >> code;
@@ -202,6 +201,7 @@ void UI::ShowSession(std::string option) {
 
 	while (1)
 	{
+		system(CLEAR);
 		std::cout
 			<< "Class Inspector - "
 			<< code
@@ -241,7 +241,7 @@ void UI::ShowSession(std::string option) {
  * Complexity: O(1) |
  * Prints the help menu if both arguments are equal to "".
  * Otherwise, shows an error message.
- * It waits the the user input to proceed.
+ * It waits for user input to proceed.
 */
 void UI::HelpSession(std::string error, std::string usage)
 {
