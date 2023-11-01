@@ -81,7 +81,7 @@ bool Student::removeFromSchedule(std::pair<UC*,Session*> ucSessionToRemove) {
  * Checks if a session to be added overlaps
  * @return True if there are conflits, false otherwise
 */
-bool Student::verifyScheduleConflict(Session* session){
+bool Student::verifyScheduleConflict(std::string ucname, Session* session){
 	
 	if (!session)
 		return false;
@@ -92,7 +92,7 @@ bool Student::verifyScheduleConflict(Session* session){
 	
 	for (auto i = schedule.begin(); i != schedule.end(); i++) {
 		
-		if (i->second->getType() == "T")
+		if (i->second->getType() == "T" || i->first->getName() == ucname)
 			continue;
 
 		Session tempSession = *(i->second);

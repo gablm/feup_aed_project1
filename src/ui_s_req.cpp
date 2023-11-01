@@ -271,7 +271,7 @@ void UI::NewClass(std::string option, Student *student) {
 			HelpRequest("Class already at maximum capacity", "add [UCcode] [ClassCode]");
 			return;
 		}
-		if (i->getType() != "T" && student->verifyScheduleConflict(i)) {
+		if (i->getType() != "T" && student->verifyScheduleConflict(uc->getName(), i)) {
 			HelpRequest("Schedule conflict", "add [UCcode] [ClassCode]");
 			return;
 		}
