@@ -1,23 +1,25 @@
 # AED - Project 1
 
-A project about a scheduling system and management of students and classes.
+Please use LINUX or Windows Subsystem for Linux to compile and run the executable.
+To compile and execute in other ambients such as Windows natively you need to use ming32-make or a software with automatic Makefile support such as CLion.
+Although the program runs file when compiled on Windows, the interface won't be cleaned and instead only appended below.
 
+## Compile
+```
+make
+```
 
-TODO:
-    removeFromSchedule function in student class
+## Clear all binaries (Linux only)
+```
+make fclean
+```
 
-    create a record for any changes made to the system
-    implement a way to add/remove/swap things in a student's schedule through the UI taking into account if they should be able to or not
-
-    implement a way to consult, through the UI:
-        a student or class's schedule
-        the students in a class, course or year
-        the number of students in at least n UCs
-        the ocupation in a class/year/UC (sorting by UC, ascending or descending order, …)
-        UC's with the most students (seems redundant with the previous one??)
-        (anything else considered relevant)
-
-    CONFIRM WITH THE TEACHER create new cvs files with the updated info when the program stops
-    
-    additional ideas not in the SoW (optional):
-        add a way to add new students
+## Execute (using a terminal)
+Linux:
+```
+./schedules
+```
+Windows:
+```
+schedules.exe
+```
