@@ -80,6 +80,11 @@ std::list<Session*> UC::find(std::string sessionName) {
 	return res;
 }
 
+/**
+ * Complexity: O(n) |
+ * Checks if adding a student to the session generates a occupation conflict
+ * @return True if there are conflits, false otherwise
+*/
 bool UC::verifyOccupancyConflict(Session* newSession, Session* oldSession){
 	
 	if (!newSession && !oldSession)
@@ -92,14 +97,14 @@ bool UC::verifyOccupancyConflict(Session* newSession, Session* oldSession){
 	for (auto i = sessionList.begin(); i != sessionList.end(); i++) {
 		tempOccupancy = (*i)->getsize();
 
-		if (tempOccupancy>=maxOccupancy) maxOccupancy = tempOccupancy;
-		if (tempOccupancy<=minOccupancy) maxOccupancy = minOccupancy;
+		if (tempOccupancy >= maxOccupancy) maxOccupancy = tempOccupancy;
+		if (tempOccupancy <= minOccupancy) maxOccupancy = minOccupancy;
 	}
 
 	if (minOccupancy == newSession->getsize())
 		return false;
 
-	if (!oldSession && ((maxOccupancy-minOccupancy < 5 && newSession->getsize() != maxOccupancy) || maxOccupancy - minOccupancy < 4))
+	if (!oldSession && ((maxOccupancy - minOccupancy < 4 && newSession->getsize() != maxOccupancy) || maxOccupancy - minOccupancy < 4))
 		return false;
 
 	if (minOccupancy == newSession->getsize())

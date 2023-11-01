@@ -78,6 +78,10 @@ void Session::removeStudent(Student *student) {
 	studentList.remove(student);
 }
 
+/**
+ * Complexity: O(1)
+ * @return The ammount of students in the Session
+*/
 int Session::getsize() const{
 	return studentList.size();
 }

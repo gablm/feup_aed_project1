@@ -273,7 +273,7 @@ void UI::ShowStudent(std::string option)
  * Complexity: O(1) |
  * Prints the help menu if both arguments are equal to "".
  * Otherwise, shows an error message.
- * It waits the the user input to proceed.
+ * It waits for user input to proceed.
 */
 void UI::HelpStudent(std::string error, std::string usage)
 {

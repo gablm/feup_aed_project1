@@ -241,7 +241,7 @@ void UI::ShowSession(std::string option) {
  * Complexity: O(1) |
  * Prints the help menu if both arguments are equal to "".
  * Otherwise, shows an error message.
- * It waits the the user input to proceed.
+ * It waits for user input to proceed.
 */
 void UI::HelpSession(std::string error, std::string usage)
 {
