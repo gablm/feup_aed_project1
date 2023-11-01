@@ -10,6 +10,7 @@
 #include <algorithm>
 #include <map>
 #include <fstream>
+#include <ctime>
 #include "manager.h"
 
 #ifdef __linux__
@@ -28,6 +29,8 @@ class UI {
 		std::list<void *> toDisplay;
 		std::list<std::string> toDisplayStr;
 		std::string field, filter;
+
+		void log(std::string action);
 
 		// Student
 		void PrintStudent(bool (*tree_filter)(void *), bool (*sort_filter)(const void *, const void *));

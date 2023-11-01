@@ -49,7 +49,7 @@ void UI::RequestDetails(std::string option)
 	{
 		system(CLEAR);
 		std::cout
-			<< "Student Inspector - "
+			<< "Student Inspector -"
 			<< student->getCode()
 			<< "/" << student->getName()
 			<< " Schedule\n";
@@ -176,7 +176,9 @@ void UI::RemoveUC(std::string option, Student *student)
 			if (!removed) {
 				student->editUCcount(-1);
 				pair.first->editStudentCount(-1);
-				out << "remove," + std::to_string(student->getCode()) + "," + up + ",all" << std::endl;
+				std::string stCode = std::to_string(student->getCode());
+				out << "remove," + stCode + "," + up + ",all" << std::endl;
+				log("Removed all classes for " + up + " of " + stCode);
 				removed = true;
 			}
 			student->removeFromSchedule(pair);
@@ -262,7 +264,10 @@ void UI::NewClass(std::string option, Student *student) {
 		oldClass->removeStudent(student);
 	}
 
-	out << "add," + std::to_string(student->getCode()) + "," + uc->getName() + "," + classcode << std::endl;
+	std::string codeStr = std::to_string(student->getCode());
+	out << "add," + codeStr + "," + uc->getName() + "," + classcode << std::endl;
+	
+	log("Added pair <" + uc->getName() + ", " + classcode + "> to " + codeStr);
 
 	for (auto i: schedule) {
 		if (i.first->getName() == uc->getName()) {
@@ -281,4 +286,13 @@ void UI::SwapUC(std::string option, Student *student)
 {
 	student = student;
 	option = option; // TODO
+}
+
+void UI::log(std::string action) 
+{
+	std::ofstream out;
+	out.open("./changes.log", std::ios::app);
+	time_t timenow = std::time(nullptr);
+	out << "[" << std::put_time(std::localtime(&timenow), "%d/%m/%Y %T") << "] " << action << std::endl;
+	out.close();
 }
