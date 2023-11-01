@@ -301,6 +301,7 @@ void UI::NewClass(std::string option, Student *student) {
 	for (auto i: schedule) {
 		if (i.first->getName() == uc->getName()) {
 			student->removeFromSchedule(i);
+			i.second->removeStudent(student);
 		}
 	}
 
