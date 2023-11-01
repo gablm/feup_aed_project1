@@ -30,6 +30,7 @@ class Manager {
 		int getsessionCap();
 
 		void RemoveUC(std::string UCname, Student *student);
+		void NewClass(std::string uccode, std::string classcode, Student *student);
 };
 
 #endif

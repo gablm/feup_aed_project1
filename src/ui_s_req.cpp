@@ -154,7 +154,7 @@ void UI::HelpRequest(std::string error, std::string usage)
 
 // void ChangeClass(){}
 
-void UI::RemoveUC(std::string option, Student *student) // now is working!
+void UI::RemoveUC(std::string option, Student *student)
 { 
 	std::istringstream is(option);
 	std::string up;
@@ -199,7 +199,7 @@ void UI::NewClass(std::string option, Student *student) {
 		return;
 	}
 
-	auto uc = manager->getUcMap()[uccode];
+	UC *uc = manager->getUcMap()[uccode];
 
 	if (classcode == "any") {
 		int minCount = 100;
@@ -250,13 +250,13 @@ void UI::NewClass(std::string option, Student *student) {
 			return;
 		}
 	}
-	
+	        
 	std::ofstream out;
 	out.open("./data/changes.csv", std::ios::app);
 
 	if (!oldClass) {
 		student->editUCcount(1);
-		manager->getUcMap()[uccode]->editStudentCount(1);
+		ucMap[uccode]->editStudentCount(1);
 	}
 	else {
 		oldClass->removeStudent(student);
@@ -264,11 +264,14 @@ void UI::NewClass(std::string option, Student *student) {
 
 	out << "add," + std::to_string(student->getCode()) + "," + uc->getName() + "," + classcode << std::endl;
 
-	std::pair<UC *, Session *> ucSessionPair;
-	ucSessionPair.first = manager->getUcMap()[uccode];
-	for (auto i : newClasses){
-		ucSessionPair.second = i;
-		student->addToSchedule(ucSessionPair);
+	for (auto i: schedule) {
+		if (i.first->getName() == uc->getName()) {
+			student->removeFromSchedule(i);
+		}
+	}
+
+	for (auto i : newClasses) {
+		student->addToSchedule(std::make_pair(uc, i));
 		i->addStudent(student);
 	}
 	out.close();

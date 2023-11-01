@@ -248,9 +248,9 @@ void Manager::load_alterations()
 		}
 
 		if (action == "remove")
-		{
 			RemoveUC(UCName, temp_student);
-		}
+		if (action == "add")
+			NewClass(UCName, sessionName, temp_student);
 	}
 	file.close();
 }

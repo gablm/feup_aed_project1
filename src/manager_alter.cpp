@@ -27,3 +27,49 @@ void Manager::RemoveUC(std::string UCname, Student *student) {
 		}
 	}
 }
+
+void Manager::NewClass(std::string uccode, std::string classcode, Student *student) {
+
+	UC *uc = ucMap[uccode];
+
+	if (classcode == "any") {
+		int minCount = 100;
+		Session *tempsession;
+		for (auto i : uc->getSessionList()){
+			if (i->getsize() < minCount){
+				minCount = i->getsize();
+				tempsession = i;
+			}
+		}
+		classcode = tempsession->getName();
+	}
+
+	auto schedule = student->getSchedule();
+	Session *oldClass = NULL;
+	for (auto i: schedule) {
+		if (i.first->getName() == uc->getName()){
+			oldClass = i.second;
+		}
+	}
+
+	auto newClasses = uc->find(classcode);
+
+	if (!oldClass) {
+		student->editUCcount(1);
+		ucMap[uccode]->editStudentCount(1);
+	}
+	else {
+		oldClass->removeStudent(student);
+	}
+
+	for (auto i: schedule) {
+		if (i.first->getName() == uc->getName()) {
+			student->removeFromSchedule(i);
+		}
+	}
+
+	for (auto i : newClasses) {
+		student->addToSchedule(std::make_pair(uc, i));
+		i->addStudent(student);
+	}
+}
