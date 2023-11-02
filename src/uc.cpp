@@ -106,7 +106,7 @@ bool UC::verifyOccupancyConflict(Session* newSession, Session* oldSession){
 	if (minOccupancy == newSession->getsize())
 		return false;
 
-	if (!oldSession && ((maxOccupancy - minOccupancy < 4 && newSession->getsize() != maxOccupancy) || maxOccupancy - minOccupancy < 4))
+	if (!oldSession && ((maxOccupancy - minOccupancy < 5 && newSession->getsize() != maxOccupancy) || maxOccupancy - minOccupancy < 4))
 		return false;
 
 	if (minOccupancy == newSession->getsize())
@@ -114,6 +114,10 @@ bool UC::verifyOccupancyConflict(Session* newSession, Session* oldSession){
 
 	if (maxOccupancy - minOccupancy > 4)
 		return true;
+	
+	if (!oldSession){
+		return true;
+	}
 
 	if (maxOccupancy - minOccupancy == 4 
 			&& (newSession->getsize() == maxOccupancy || oldSession->getsize() == minOccupancy) 
