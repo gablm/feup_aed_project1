@@ -204,7 +204,7 @@ void Manager::load_students()
 void Manager::load_alterations()
 {
 
-	string line, action, studentCode, UCName, sessionName;
+	string line, action, studentCode, parameter1, parameter2, parameter3;
 	int code;
 	Student *temp_student = NULL;
 
@@ -239,8 +239,9 @@ void Manager::load_alterations()
 		std::getline(ss, action, ',');
 		std::getline(ss, studentCode, ',');
 		code = stoi(studentCode);
-		std::getline(ss, UCName, ',');
-		std::getline(ss, sessionName, '\r');
+		std::getline(ss, parameter1, ',');
+		std::getline(ss, parameter2, ',');
+		std::getline(ss, parameter3, '\r');
 
 		if (!temp_student || temp_student->getCode() != code)
 		{
@@ -248,9 +249,11 @@ void Manager::load_alterations()
 		}
 
 		if (action == "remove")
-			RemoveUC(UCName, temp_student);
+			RemoveUC(parameter1, temp_student);
 		if (action == "add")
-			NewClass(UCName, sessionName, temp_student);
+			NewClass(parameter1, parameter2, temp_student);
+		if (action == "swapUC")
+			SwapUC(parameter1, parameter2, parameter3, temp_student);
 	}
 	file.close();
 }
