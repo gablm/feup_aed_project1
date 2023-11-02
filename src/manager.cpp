@@ -22,6 +22,11 @@ Manager::~Manager()
 		p->clearSessions();
 		delete i->second;
 	}
+	while (!requestStack.empty()) {
+		auto i = requestStack.top();
+		delete i;
+		requestStack.pop();
+	}
 }
 
 /**
@@ -294,6 +299,10 @@ void Manager::test_students()
 	print(students.getNode());
 }
 
-int Manager::getsessionCap(){
+/**
+ * Complexity: O(1)
+ * @return The hard-set student limit for a session 
+*/
+int Manager::getsessionCap() {
 	return sessionCap;
 }

@@ -189,6 +189,7 @@ void UI::RemoveUC(std::string option, Student *student)
 	bool removed = false;
 	std::ofstream out;
 	out.open("./data/changes.csv", std::ios::app);
+	std::string session = "";
 	for (const auto &pair : student->getSchedule())
 	{
 		if (pair.first->getName() == up)
@@ -203,9 +204,13 @@ void UI::RemoveUC(std::string option, Student *student)
 			}
 			student->removeFromSchedule(pair);
 			pair.second->removeStudent(student);
+			session = pair.second->getName();
 		}
 	}
 	out.close();
+
+	Request *req = new Request("remove", std::to_string(student->getCode()), up, session, "", "");
+	manager->getRequestStack().push(req);
 }
 
 /**
@@ -297,6 +302,9 @@ void UI::NewClass(std::string option, Student *student) {
 	out << "add," + codeStr + "," + uc->getName() + "," + classcode << std::endl;
 	
 	log("Added pair <" + uc->getName() + ", " + classcode + "> to " + codeStr);
+
+	Request *req = new Request("add", std::to_string(student->getCode()), uccode, classcode, "", oldClass != NULL ? oldClass->getName() : "");
+	manager->getRequestStack().push(req);
 
 	for (auto i: schedule) {
 		if (i.first->getName() == uc->getName()) {

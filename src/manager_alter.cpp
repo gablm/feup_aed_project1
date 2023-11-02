@@ -1,5 +1,23 @@
 #include "headers/manager.h"
 
+Request::Request(std::string type, std::string studentCode, std::string UC1, std::string session1, std::string UC2, std::string session2)
+{
+	this->type = type;
+	this->studentCode = studentCode;
+	this->UC1 = UC1;
+	this->session1 = session1;
+	this->UC2 = UC2;
+	this->session2 = session2;
+}
+
+/**
+ * Complexity: O(1)
+ * @return The request stack 
+*/
+std::stack<Request*>& Manager::getRequestStack() {
+	return requestStack;
+}
+
 /**
  * Complexity: O(n) |
  * Removes all session for the respective UC.
@@ -12,6 +30,7 @@ void Manager::RemoveUC(std::string UCname, Student *student) {
 	if (UCname.length() < 1 || ucMap.find(UCname) == ucMap.end())
 		return;
 
+	std::string session = "";
 	bool removed = false;
 	for (const auto &pair : student->getSchedule())
 	{
@@ -24,8 +43,12 @@ void Manager::RemoveUC(std::string UCname, Student *student) {
 			}
 			student->removeFromSchedule(pair);
 			pair.second->removeStudent(student);
+			session = pair.second->getName();
 		}
 	}
+
+	Request *req = new Request("remove", std::to_string(student->getCode()), UCname, session, "", "");
+	requestStack.push(req);
 }
 
 /**
@@ -39,18 +62,6 @@ void Manager::RemoveUC(std::string UCname, Student *student) {
 void Manager::NewClass(std::string uccode, std::string classcode, Student *student) {
 
 	UC *uc = ucMap[uccode];
-
-	if (classcode == "any") {
-		int minCount = 100;
-		Session *tempsession;
-		for (auto i : uc->getSessionList()){
-			if (i->getsize() < minCount){
-				minCount = i->getsize();
-				tempsession = i;
-			}
-		}
-		classcode = tempsession->getName();
-	}
 
 	auto schedule = student->getSchedule();
 	Session *oldClass = NULL;
@@ -80,4 +91,7 @@ void Manager::NewClass(std::string uccode, std::string classcode, Student *stude
 		student->addToSchedule(std::make_pair(uc, i));
 		i->addStudent(student);
 	}
+
+	Request *req = new Request("add", std::to_string(student->getCode()), uccode, classcode, "", oldClass != NULL ? oldClass->getName() : "");
+	requestStack.push(req);
 }

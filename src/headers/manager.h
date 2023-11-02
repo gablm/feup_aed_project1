@@ -4,11 +4,24 @@
 #include <string>
 #include <map>
 #include <set>
+#include <stack>
 
 #include "bst.h"
 #include "student.h"
 #include "uc.h"
 #include "session.h"
+
+class Request {
+	public:
+		Request(std::string type, std::string studentCode, std::string UC1, std::string session1, std::string UC2, std::string session2);
+	private:
+		std::string type;
+		std::string studentCode;
+		std::string UC1;
+		std::string session1;
+		std::string UC2;
+		std::string session2;	
+};
 
 class Manager {
 	private:
@@ -16,6 +29,7 @@ class Manager {
 		static const int sessionCap = 25;
 		std::map<std::string, UC*> ucMap;
 		std::set<std::string> sessionSet;
+		std::stack<Request*> requestStack;
 	public:
 		Manager();
 		~Manager();
@@ -27,6 +41,7 @@ class Manager {
 		BST& getStudents();
 		std::map<std::string, UC*>& getUcMap();
 		std::set<std::string>& getSessionSet();
+		std::stack<Request*>& getRequestStack();
 		int getsessionCap();
 
 		void RemoveUC(std::string UCname, Student *student);
