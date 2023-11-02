@@ -74,9 +74,8 @@ bool (*UI::ses_parse_sort_filter(std::string option))(const std::string a, const
  * Complexity: O(n) | 
  * Goes through the map and checks if the content validates the function passed.
  * If so, this content is added to a list
- * @param toDisplay The list used to store the output shown
+ * @param toDisplayStr The list used to store the output shown
  * @param f Function used to check if the element is supposed to be shown
- * @return Lambda function
 */
 void UI::read_if_Session(std::list<std::string> &toDisplayStr, bool (*f)(std::string)) {
 	std::set<std::string> IndivSessions = manager->getSessionSet();
@@ -107,8 +106,9 @@ void UI::PrintSession(bool (*tree_filter)(std::string), bool (*sort_filter)(cons
 
 	while (1)
 	{
-		system(CLEAR);
+		CLEAR;
 		std::cout << "Schedules - Session List\n\n"
+				  << std::left
 				  << std::setw(10) << "Code"
 				  << "Year"
 				  << "\n\n";
@@ -201,7 +201,7 @@ void UI::ShowSession(std::string option) {
 
 	while (1)
 	{
-		system(CLEAR);
+		CLEAR;
 		std::cout
 			<< "Class Inspector - "
 			<< code
@@ -245,7 +245,7 @@ void UI::ShowSession(std::string option) {
 */
 void UI::HelpSession(std::string error, std::string usage)
 {
-	system(CLEAR);
+	CLEAR;
 	std::cout << "Schedules - Session/Class List\n\n";
 	if (error != "" && usage != "") {
 		std::cout << "Invalid operation!\n"

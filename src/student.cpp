@@ -1,12 +1,11 @@
 #include "headers/student.h"
 #include <algorithm>
 #include <ostream>
-#include <iostream>
 
 /**
  * The only constructor for this class
  * @param name Student Name
- * @param up Student number (commonly known as code)
+ * @param code Student number
 */
 Student::Student(std::string name, int code) : name(name), code(code) {}
 
@@ -54,7 +53,7 @@ std::vector<std::pair<UC*,Session*>> Student::getSchedule() const {
 /**
  * Complexity: O(1) |
  * Adds an element to the student schedule
- * @return If the addition was sucessful
+ * @return If the addition was successful
 */
 bool Student::addToSchedule(std::pair<UC*,Session*> ucSessionPair) {
 	schedule.push_back(ucSessionPair);
@@ -81,7 +80,7 @@ bool Student::removeFromSchedule(std::pair<UC*,Session*> ucSessionToRemove) {
  * Checks if a session to be added overlaps
  * @param ucname Name of the UC, used to ignore existing classes in the case of switching
  * @param session Pointer to the session to verify
- * @return True if there are conflits, false otherwise
+ * @return True if there are conflicts, false otherwise
 */
 bool Student::verifyScheduleConflict(std::string ucname, Session* session){
 	

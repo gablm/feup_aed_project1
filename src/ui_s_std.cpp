@@ -4,7 +4,7 @@
  * Complexity: O(n) | 
  * Goes through the binary search tree and checks if the content validates the function passed.
  * If so, this content is added to a list
- * @param node Node da BST a pesquisar
+ * @param node BST node to search
  * @param toDisplay The list used to store all values meant to be shown in the output
  * @param f Function used to check if the element is supposed to be shown
 */
@@ -131,8 +131,9 @@ void UI::PrintStudent(bool (*tree_filter)(void *), bool (*sort_filter)(const voi
 
 	while (1)
 	{
-		system(CLEAR);
+		CLEAR;
 		std::cout << "Schedules - Student List\n\n"
+				  << std::left
 				  << std::setw(10) << "Code"
 				  << std::setw(11) << "Uc number"
 				  << "Name"
@@ -220,7 +221,7 @@ void UI::ShowStudent(std::string option)
 
 	while (1)
 	{
-		system(CLEAR);
+		CLEAR;
 		std::cout
 			<< "Student Inspector - "
 			<< student->getCode()
@@ -277,7 +278,7 @@ void UI::ShowStudent(std::string option)
 */
 void UI::HelpStudent(std::string error, std::string usage)
 {
-	system(CLEAR);
+	CLEAR;
 	std::cout << "Schedules - Student List\n\n";
 	if (error != "" && usage != "") {
 		std::cout << "Invalid operation!\n"

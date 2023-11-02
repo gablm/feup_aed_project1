@@ -14,13 +14,9 @@
 #include "manager.h"
 
 #ifdef __linux__
-# define CLEAR "clear"
-# include <unistd.h>
-# define SLEEP(x) sleep(x)
+# define CLEAR system("clear")
 #else
-# define CLEAR "cls"
-# include <windows.h>
-# define SLEEP(x) Sleep(x)
+# define CLEAR system("cls")
 #endif
 
 class UI {

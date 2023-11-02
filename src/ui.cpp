@@ -7,10 +7,10 @@ UI::~UI() {
 }
 
 /**
- * Clears the standard io, dealocates memory and exits
+ * Clears the standard io, deallocates memory and exits
 */
 void UI::ClearAndExit() {
-	system(CLEAR);
+	CLEAR;
 	delete manager;
 	std::exit(0);
 }
@@ -22,7 +22,7 @@ void UI::MainMenu() {
 
     while (1)
     {
-        system(CLEAR);
+        CLEAR;
         std::cout 
 		<< "FEUP - Schedules service\n"
         << "\n"

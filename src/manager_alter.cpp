@@ -34,6 +34,7 @@ void Manager::RemoveUC(std::string UCname, Student *student) {
  * Given that this function reads from the changes.csv, we assume it is well formatted and there is no verifications
  * @param uccode The code for the UC to be added/changed
  * @param classcode The code for the class to be added. Can be "any" and the class with the lowest occupation will be attributed.
+ * @param student The pointer to the student being edit
 */
 void Manager::NewClass(std::string uccode, std::string classcode, Student *student) {
 

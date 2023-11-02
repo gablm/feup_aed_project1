@@ -83,7 +83,7 @@ void Manager::load_map()
 
 		getline(file, line);
 
-		if (line.size() < 1)
+		if (line.size() < 5)
 			continue;
 
 		istringstream ss(line);
@@ -166,7 +166,7 @@ void Manager::load_students()
 
 		getline(file, line);
 
-		if (line.size() < 1)
+		if (line.size() < 5)
 			continue;
 
 		istringstream ss(line);
@@ -231,7 +231,7 @@ void Manager::load_alterations()
 
 		getline(file, line);
 
-		if (line.size() < 1)
+		if (line.size() < 5)
 			continue;
 
 		istringstream ss(line);

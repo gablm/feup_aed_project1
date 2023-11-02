@@ -83,7 +83,7 @@ std::list<Session*> UC::find(std::string sessionName) {
 /**
  * Complexity: O(n) |
  * Checks if adding a student to the session generates a occupation conflict
- * @return True if there are conflits, false otherwise
+ * @return True if there are conflicts, false otherwise
 */
 bool UC::verifyOccupancyConflict(Session* newSession, Session* oldSession){
 	

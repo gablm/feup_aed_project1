@@ -87,7 +87,6 @@ bool (*UI::uc_parse_sort_filter(std::string option))(const void *a, const void *
  * If so, this content is added to a list
  * @param toDisplay The list used to store the output shown
  * @param f Function used to check if the element is supposed to be shown
- * @return Lambda function
 */
 void UI::read_if_UC(std::list<void *> &toDisplay, bool (*f)(void *)) {
 	std::map<std::string, UC*> ucmap = manager->getUcMap();
@@ -119,8 +118,9 @@ void UI::PrintUC(bool (*tree_filter)(void *), bool (*sort_filter)(const void *, 
 
 	while (1)
 	{
-		system(CLEAR);
+		CLEAR;
 		std::cout << "Schedules - UC List\n\n"
+				  << std::left
 				  << std::setw(10) << "Code"
 				  << std::setw(5) << "Year"
 				  << "  Occupation"
@@ -186,7 +186,7 @@ void UI::PrintUC(bool (*tree_filter)(void *), bool (*sort_filter)(const void *, 
  * @param option The string with the full request
 */
 void UI::ShowUC(std::string option) {
-	system(CLEAR);
+	CLEAR;
 	std::istringstream is(option);
 	std::string code;
 	is >> code >> code;
@@ -259,7 +259,7 @@ void UI::ShowUC(std::string option) {
 */
 void UI::HelpUC(std::string error, std::string usage)
 {
-	system(CLEAR);
+	CLEAR;
 	std::cout << "Schedules - UC List\n\n";
 	if (error != "" && usage != "") {
 		std::cout << "Invalid operation!\n"

@@ -18,10 +18,19 @@ doxygen:
 	doxygen docs/Doxyfile
 
 clean:
+ifeq ($(OS),Windows_NT)
+	cmd /C rmdir /s /q objs
+	cmd /C mkdir objs 
+else
 	rm -fr $(FILES)
+endif
 
 fclean: clean
+ifeq ($(OS),Windows_NT)
+	cmd /C del $(NAME).exe
+else
 	rm -fr $(NAME)
+endif
 
 re: fclean all
 
