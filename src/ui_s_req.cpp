@@ -390,7 +390,7 @@ void UI::SwapUC(std::string option, Student *student)
 	ucMap[oldUCcode]->editStudentCount(-1);
 	ucMap[newUCcode]->editStudentCount(1);
 
-	std::string oldSessionName, newSessionName;
+	std::string oldSessionName;
 
 	for (auto i: schedule) {
 		if (i.first->getName() == oldUC->getName()) {

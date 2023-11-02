@@ -81,3 +81,42 @@ void Manager::NewClass(std::string uccode, std::string classcode, Student *stude
 		i->addStudent(student);
 	}
 }
+
+void Manager::SwapUC(std::string oldUCcode, std::string newUCcode, std::string classcode, Student *student)
+{
+	auto ucMap = getUcMap();
+
+	UC *oldUC = getUcMap()[oldUCcode];
+	UC *newUC = getUcMap()[newUCcode];
+
+	if (classcode == "any") {
+		int minCount = 100;
+		Session *tempsession;
+		for (auto i : newUC->getSessionList()){
+			if (i->getsize() < minCount){
+				minCount = i->getsize();
+				tempsession = i;
+			}
+		}
+		classcode = tempsession->getName();
+	}
+
+	auto schedule = student->getSchedule();
+	auto newClasses = newUC->find(classcode);
+
+	ucMap[oldUCcode]->editStudentCount(-1);
+	ucMap[newUCcode]->editStudentCount(1);
+
+	for (auto i: schedule) {
+		if (i.first->getName() == oldUC->getName()) {
+			student->removeFromSchedule(i);
+			i.second->removeStudent(student);
+		}
+	}
+
+	for (auto i : newClasses) {
+		student->addToSchedule(std::make_pair(newUC, i));
+		i->addStudent(student);
+
+	}
+}
