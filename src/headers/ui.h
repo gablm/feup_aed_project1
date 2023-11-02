@@ -15,12 +15,8 @@
 
 #ifdef __linux__
 # define CLEAR system("clear")
-# include <unistd.h>
-# define SLEEP(x) sleep(x)
 #else
-# define CLEAR std::cout << "\n\n"
-# include <windows.h>
-# define SLEEP(x) Sleep(x)
+# define CLEAR system("cls")
 #endif
 
 class UI {
