@@ -42,6 +42,7 @@ void UI::MainMenu() {
         << ">> Edit data\n"
         << "\n"
         << " [3] Change Student schedule\n"
+		<< " [4] Show recent changes\n"
         << "\n"
 		<< "[Q] Exit\n"
 		<< "\n"
@@ -69,6 +70,8 @@ void UI::MainMenu() {
 			case 3:
 				PrintChange();
 				break;
+			case 4:
+				PrintChangeHistory();
 		}
     }
 }

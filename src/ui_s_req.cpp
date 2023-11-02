@@ -198,8 +198,10 @@ void UI::RemoveUC(std::string option, Student *student)
 				student->editUCcount(-1);
 				pair.first->editStudentCount(-1);
 				std::string stCode = std::to_string(student->getCode());
-				out << "remove," + stCode + "," + up + ",all" << std::endl;
+				out << std::time(nullptr) << ",remove," + stCode + "," + up + ",all" << std::endl;
 				log("Removed all classes for " + up + " of " + stCode);
+				Request *req = new Request(std::time(nullptr), "remove", std::to_string(student->getCode()), up, session, "", "");
+				manager->getRequestStack().push(req);
 				removed = true;
 			}
 			student->removeFromSchedule(pair);
@@ -208,9 +210,6 @@ void UI::RemoveUC(std::string option, Student *student)
 		}
 	}
 	out.close();
-
-	Request *req = new Request("remove", std::to_string(student->getCode()), up, session, "", "");
-	manager->getRequestStack().push(req);
 }
 
 /**
@@ -299,11 +298,11 @@ void UI::NewClass(std::string option, Student *student) {
 	}
 
 	std::string codeStr = std::to_string(student->getCode());
-	out << "add," + codeStr + "," + uc->getName() + "," + classcode << std::endl;
+	out << std::time(nullptr) << ",add," + codeStr + "," + uc->getName() + "," + classcode << std::endl;
 	
 	log("Added pair <" + uc->getName() + ", " + classcode + "> to " + codeStr);
 
-	Request *req = new Request("add", std::to_string(student->getCode()), uccode, classcode, "", oldClass != NULL ? oldClass->getName() : "");
+	Request *req = new Request(std::time(nullptr), "add", std::to_string(student->getCode()), uccode, classcode, "", oldClass != NULL ? oldClass->getName() : "");
 	manager->getRequestStack().push(req);
 
 	for (auto i: schedule) {

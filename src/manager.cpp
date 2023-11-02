@@ -209,7 +209,8 @@ void Manager::load_students()
 void Manager::load_alterations()
 {
 
-	string line, action, studentCode, UCName, sessionName;
+	string line, timestr, action, studentCode, UCName, sessionName;
+	time_t time;
 	int code;
 	Student *temp_student = NULL;
 
@@ -241,6 +242,8 @@ void Manager::load_alterations()
 
 		istringstream ss(line);
 
+		std::getline(ss, timestr, ',');
+		time = stol(timestr);
 		std::getline(ss, action, ',');
 		std::getline(ss, studentCode, ',');
 		code = stoi(studentCode);
@@ -253,9 +256,9 @@ void Manager::load_alterations()
 		}
 
 		if (action == "remove")
-			RemoveUC(UCName, temp_student);
+			RemoveUC(time, UCName, temp_student);
 		if (action == "add")
-			NewClass(UCName, sessionName, temp_student);
+			NewClass(time, UCName, sessionName, temp_student);
 	}
 	file.close();
 }

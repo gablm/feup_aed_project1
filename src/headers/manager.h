@@ -4,6 +4,7 @@
 #include <string>
 #include <map>
 #include <set>
+#include <ctime>
 #include <stack>
 
 #include "bst.h"
@@ -13,8 +14,8 @@
 
 class Request {
 	public:
-		Request(std::string type, std::string studentCode, std::string UC1, std::string session1, std::string UC2, std::string session2);
-	private:
+		Request(time_t time, std::string type, std::string studentCode, std::string UC1, std::string session1, std::string UC2, std::string session2);
+		time_t timestamp;
 		std::string type;
 		std::string studentCode;
 		std::string UC1;
@@ -44,8 +45,8 @@ class Manager {
 		std::stack<Request*>& getRequestStack();
 		int getsessionCap();
 
-		void RemoveUC(std::string UCname, Student *student);
-		void NewClass(std::string uccode, std::string classcode, Student *student);
+		void RemoveUC(time_t time, std::string UCname, Student *student);
+		void NewClass(time_t time, std::string uccode, std::string classcode, Student *student);
 };
 
 #endif

@@ -11,7 +11,6 @@
 #include <map>
 #include <stack>
 #include <fstream>
-#include <ctime>
 #include "manager.h"
 
 #ifdef __linux__
@@ -61,6 +60,9 @@ class UI {
 
 		void NewClass(std::string option, Student *student);
 		void SwapUC(std::string option, Student *student);
+
+		// Change History
+		void PrintChangeHistory();
 
     public:
         UI(Manager *manager);
