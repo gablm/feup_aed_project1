@@ -64,7 +64,8 @@ class UI {
 		// Change History
 		void PrintChangeHistory();
 		void undoLastChange(std::stack<Request*> &requests);
-		void removeLast(std::string path) 
+		void removeLast(std::string path);
+		void printStack(std::stack<Request*> requests);
 
     public:
         UI(Manager *manager);

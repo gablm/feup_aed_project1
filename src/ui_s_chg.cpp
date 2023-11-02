@@ -41,11 +41,33 @@ void UI::undoLastChange(std::stack<Request*> &requests)
 
 	if (elem->type == "add")
 	{
+		UC *uc = manager->getUcMap()[elem->UC1];
 		
+		auto removeSessions = uc->find(elem->session1);	
+		for (auto i : removeSessions)
+		{
+			student->removeFromSchedule(std::make_pair(uc, i));
+			i->removeStudent(student);
+		}
+		
+		if (elem->session2 == "")
+		{
+			student->editUCcount(-1);
+			uc->editStudentCount(-1);
+		}
+		else
+		{
+			auto addSessions = uc->find(elem->session2);
+			for (auto i : addSessions)
+			{
+				student->addToSchedule(std::make_pair(uc, i));
+				i->addStudent(student);
+			}
+		}
 	}
 }
 
-void printStack(std::stack<Request*> requests)
+void UI::printStack(std::stack<Request*> requests)
 {
 	if (requests.empty())
 		return;
