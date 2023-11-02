@@ -155,9 +155,9 @@ void UI::HelpRequest(std::string error, std::string usage)
 	else
 	{
 		std::cout << "Commands available for the Requests page:"
-				  << "\n add [UCcode] [ClassCode] - add new UC to the schedule in the specified class or swaps the current class if the UC is already present"
+				  << "\n add [UCcode] [ClassCode/\"any\"] - add new UC to the schedule in the specified class or swaps the current class if the UC is already in the schedule"
 				  << "\n remove [UCcode] - Remove an UC from the schedule"
-				  << "\n swapUC [old UCCode] [new UCCode] [new ClassCode] - swaps an UC for another in the specified class"
+				  << "\n swapUC [old UCCode] [new UCCode] [new ClassCode/\"any\"] - swaps an UC for another in the specified class"
 				  << "\n b/B - Go back"
 				  << "\n\nNote: The commands and the respective arguments are case-sensitive."
 				  << "\n\nPress ENTER to continue...";
@@ -314,8 +314,105 @@ void UI::NewClass(std::string option, Student *student) {
 
 void UI::SwapUC(std::string option, Student *student)
 {
-	student = student;
-	option = option; // TODO
+	std::istringstream is(option);
+	std::string oldUCcode, newUCcode, classcode;
+	is >> oldUCcode >> oldUCcode >> newUCcode >> classcode;
+
+	auto ucMap = manager->getUcMap();
+	if (newUCcode.length() < 1 || ucMap.find(newUCcode) == ucMap.end())
+	{
+		HelpRequest("Invalid UC code for old UC", "swapUC [old UCCode] [new UCCode] [new ClassCode]");
+		return;
+	}
+	if (oldUCcode.length() < 1 || ucMap.find(oldUCcode) == ucMap.end())
+	{
+		HelpRequest("Invalid UC code for new UC", "swapUC [old UCCode] [new UCCode] [new ClassCode]");
+		return;
+	}
+
+	UC *oldUC = manager->getUcMap()[oldUCcode];
+	UC *newUC = manager->getUcMap()[newUCcode];
+
+	if (classcode == "any") {
+		int minCount = 100;
+		Session *tempsession;
+		for (auto i : newUC->getSessionList()){
+			if (i->getsize() < minCount){
+				minCount = i->getsize();
+				tempsession = i;
+			}
+		}
+		classcode = tempsession->getName();
+	}
+
+	auto schedule = student->getSchedule();
+	bool foundOld = false;
+	bool foundNew = false;
+	for (auto i: schedule) {
+		if (i.first->getName() == newUC->getName()){
+			foundNew=true;
+		}
+		if (i.first->getName() == oldUC->getName()){
+			foundOld=true;
+		}
+	}
+
+	if (foundNew){
+		HelpRequest("Already in selected new UC", "swapUC [old UCCode] [new UCCode] [new ClassCode]");
+		return;
+	}
+	if (!foundOld){
+		HelpRequest("Not part of selected old UC", "swapUC [old UCCode] [new UCCode] [new ClassCode]");
+		return;
+	}
+
+	auto newClasses = newUC->find(classcode);
+	for (auto i : newClasses) {
+
+		if(i->getsize() >= manager->getsessionCap()) {
+			HelpRequest("Class already at maximum capacity", "swapUC [old UCCode] [new UCCode] [new ClassCode]");
+			return;
+		}
+		if (i->getType() != "T" && student->verifyScheduleConflict(newUC->getName(), i)) {
+			HelpRequest("Schedule conflict", "swapUC [old UCCode] [new UCCode] [new ClassCode]");
+			return;
+		}
+		
+		if(i->getType() != "T" && newUC->verifyOccupancyConflict(i, nullptr)){
+			HelpRequest("Occupancy conflict: would result in an uneven distribution of students (difference > 4 between classes)", "swapUC [old UCCode] [new UCCode] [new ClassCode]");
+			return;
+		}
+	}
+
+	std::ofstream out;
+	out.open("./data/changes.csv", std::ios::app);
+
+	ucMap[oldUCcode]->editStudentCount(-1);
+	ucMap[newUCcode]->editStudentCount(1);
+
+	std::string oldSessionName;
+
+	for (auto i: schedule) {
+		if (i.first->getName() == oldUC->getName()) {
+			student->removeFromSchedule(i);
+			i.second->removeStudent(student);
+			oldSessionName = i.second->getName();
+		}
+	}
+
+	for (auto i : newClasses) {
+		student->addToSchedule(std::make_pair(newUC, i));
+		i->addStudent(student);
+
+	}
+
+	std::string codeStr = std::to_string(student->getCode());
+	out << "swapUC," + codeStr + "," + oldUC->getName() + "," + newUC->getName() + "," + classcode +"\n"<< std::endl;
+
+	log("Swapped UC from pair <" + oldUC->getName() + ", " + oldSessionName +"> to <" + newUC->getName() + ", " + classcode + "> for" + codeStr+"\n");
+
+	out.close();
+
 }
 
 /**
