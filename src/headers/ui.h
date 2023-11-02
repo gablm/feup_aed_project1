@@ -9,8 +9,10 @@
 #include <iomanip>
 #include <algorithm>
 #include <map>
+#include <stack>
 #include <fstream>
 #include <ctime>
+#include "request.h"
 #include "manager.h"
 
 #ifdef __linux__
@@ -25,6 +27,7 @@ class UI {
 		std::list<void *> toDisplay;
 		std::list<std::string> toDisplayStr;
 		std::string field, filter;
+		std::stack<Request> requestStack;
 
 		void log(std::string action);
 
