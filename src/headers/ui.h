@@ -14,11 +14,11 @@
 #include "manager.h"
 
 #ifdef __linux__
-# define CLEAR "clear"
+# define CLEAR system("clear")
 # include <unistd.h>
 # define SLEEP(x) sleep(x)
 #else
-# define CLEAR "cls"
+# define CLEAR std::cout << "\n\n"
 # include <windows.h>
 # define SLEEP(x) Sleep(x)
 #endif

@@ -119,8 +119,9 @@ void UI::PrintUC(bool (*tree_filter)(void *), bool (*sort_filter)(const void *, 
 
 	while (1)
 	{
-		system(CLEAR);
+		CLEAR;
 		std::cout << "Schedules - UC List\n\n"
+				  << std::left
 				  << std::setw(10) << "Code"
 				  << std::setw(5) << "Year"
 				  << "  Occupation"
@@ -186,7 +187,7 @@ void UI::PrintUC(bool (*tree_filter)(void *), bool (*sort_filter)(const void *, 
  * @param option The string with the full request
 */
 void UI::ShowUC(std::string option) {
-	system(CLEAR);
+	CLEAR;
 	std::istringstream is(option);
 	std::string code;
 	is >> code >> code;
@@ -259,7 +260,7 @@ void UI::ShowUC(std::string option) {
 */
 void UI::HelpUC(std::string error, std::string usage)
 {
-	system(CLEAR);
+	CLEAR;
 	std::cout << "Schedules - UC List\n\n";
 	if (error != "" && usage != "") {
 		std::cout << "Invalid operation!\n"

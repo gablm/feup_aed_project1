@@ -107,8 +107,9 @@ void UI::PrintSession(bool (*tree_filter)(std::string), bool (*sort_filter)(cons
 
 	while (1)
 	{
-		system(CLEAR);
+		CLEAR;
 		std::cout << "Schedules - Session List\n\n"
+				  << std::left
 				  << std::setw(10) << "Code"
 				  << "Year"
 				  << "\n\n";
@@ -201,7 +202,7 @@ void UI::ShowSession(std::string option) {
 
 	while (1)
 	{
-		system(CLEAR);
+		CLEAR;
 		std::cout
 			<< "Class Inspector - "
 			<< code
@@ -245,7 +246,7 @@ void UI::ShowSession(std::string option) {
 */
 void UI::HelpSession(std::string error, std::string usage)
 {
-	system(CLEAR);
+	CLEAR;
 	std::cout << "Schedules - Session/Class List\n\n";
 	if (error != "" && usage != "") {
 		std::cout << "Invalid operation!\n"
