@@ -1,6 +1,6 @@
 #include "headers/ui.h"
     
-void removeLast(std::string path) 
+void UI::removeLast(std::string path) 
 {
     std::ifstream in(path);
     std::ofstream out("edit.tmp");
@@ -15,15 +15,34 @@ void removeLast(std::string path)
 	std::rename("edit.tmp", path.c_str());
 }
 
-void undoLastChange(std::stack<Request*> &requests)
+void UI::undoLastChange(std::stack<Request*> &requests)
 {
 	if (requests.empty())
 		return;
 	auto elem = requests.top();
     requests.pop();
-	(void)elem;
 	removeLast("./changes.log");
 	removeLast("./data/changes.csv");
+
+	Student *student = (Student *) manager->getStudents().search(std::stod(elem->studentCode));
+
+	if (elem->type == "remove")
+	{
+		UC *uc = manager->getUcMap()[elem->UC1];
+		auto sessions = uc->find(elem->session1);
+		student->editUCcount(1);
+		uc->editStudentCount(1);
+		for (auto i : sessions)
+		{
+			i->addStudent(student);
+			student->addToSchedule(std::make_pair(uc, i));
+		}
+	}
+
+	if (elem->type == "add")
+	{
+		
+	}
 }
 
 void printStack(std::stack<Request*> requests)
