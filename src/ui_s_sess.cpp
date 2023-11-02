@@ -74,9 +74,8 @@ bool (*UI::ses_parse_sort_filter(std::string option))(const std::string a, const
  * Complexity: O(n) | 
  * Goes through the map and checks if the content validates the function passed.
  * If so, this content is added to a list
- * @param toDisplay The list used to store the output shown
+ * @param toDisplayStr The list used to store the output shown
  * @param f Function used to check if the element is supposed to be shown
- * @return Lambda function
 */
 void UI::read_if_Session(std::list<std::string> &toDisplayStr, bool (*f)(std::string)) {
 	std::set<std::string> IndivSessions = manager->getSessionSet();

@@ -5,7 +5,7 @@
 /**
  * The only constructor for this class
  * @param name Student Name
- * @param up Student number (commonly known as code)
+ * @param code Student number
 */
 Student::Student(std::string name, int code) : name(name), code(code) {}
 

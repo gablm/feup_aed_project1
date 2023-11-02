@@ -23,6 +23,12 @@ clean:
 fclean: clean
 	rm -fr $(NAME)
 
+clean_wd:
+	cmd //C del //Q //F $(FILES)
+
+fclean_wd: clean_wd
+	cmd //C del //Q //F $(NAME).exe
+
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean clean_wd fclean_wd re

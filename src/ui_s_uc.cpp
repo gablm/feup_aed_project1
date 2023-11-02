@@ -87,7 +87,6 @@ bool (*UI::uc_parse_sort_filter(std::string option))(const void *a, const void *
  * If so, this content is added to a list
  * @param toDisplay The list used to store the output shown
  * @param f Function used to check if the element is supposed to be shown
- * @return Lambda function
 */
 void UI::read_if_UC(std::list<void *> &toDisplay, bool (*f)(void *)) {
 	std::map<std::string, UC*> ucmap = manager->getUcMap();

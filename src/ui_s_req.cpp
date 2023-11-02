@@ -171,7 +171,7 @@ void UI::HelpRequest(std::string error, std::string usage)
  * Complexity: O(n) |
  * Removes all session for the respective UC.
  * The isn't any verification as removing is not bound by requirements apart from validating the UC code.
- * @param UCname The code for the UC to be removed
+ * @param option The command inputted by the user.
  * @param student The pointer to the student being edited
 */
 void UI::RemoveUC(std::string option, Student *student)
@@ -214,9 +214,9 @@ void UI::RemoveUC(std::string option, Student *student)
  * There are various checks in place: Max allocation of 25, max allocation difference of 4 and schedule conflicts
  * The allocation difference is not verified if the session to enter is the one with the lowest occupation.
  * That way, the UC will return to a balanced state after a while if not already in such state.
- * @param uccode The code for the UC to be added/changed
- * @param classcode The code for the class to be added. Can be "any" and the class with the lowest occupation will be attributed.
-*/
+ * @param option The command inputted by the user.
+ * @param student The pointer to the student being edited
+ */
 void UI::NewClass(std::string option, Student *student) {
 
 	std::istringstream is(option);
