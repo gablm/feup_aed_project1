@@ -226,8 +226,7 @@ void UI::RemoveUC(std::string option, Student *student)
  * That way, the UC will return to a balanced state after a while if not already in such state.
  * @param option The command inputted by the user.
  * @param student The pointer to the student being edited
- * @note Complexity: O(n^2)
- * The "n"s used here are very small and so a higher complexity only results in a negligible running time increase.
+ * @note Complexity: O(n^2) | The "n"s used here are very small and so a higher complexity only results in a negligible running time increase.
  */
 void UI::NewClass(std::string option, Student *student) {
 
@@ -332,11 +331,11 @@ void UI::NewClass(std::string option, Student *student) {
 }
 
 /**
- * Complexity: O(n^2) | The "n"s used here are very small and so a higher complexity only results in a negligible running time increase.
  * Removes an UC from the student's schedule and adds a new one in the specified class.
  * There are various checks in place: Max allocation of 25, max allocation difference of 4 and schedule conflicts
  * The allocation difference is not verified if the session to enter is the one with the lowest occupation.
  * That way, the new UC will return to a balanced state after a while if not already in such state.
+ * @note Complexity: O(n^2) | The "n"s used here are very small and so a higher complexity only results in a negligible running time increase.
  * @param option The command inputted by the user.
  * @param student The pointer to the student being edited
  */
