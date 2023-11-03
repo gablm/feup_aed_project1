@@ -76,13 +76,13 @@ void UI::undoLastChange(std::stack<Request*> &requests)
 
 		for (auto i : uc1->find(elem->session1))
 		{
-			student->addToSchedule(std::make_pair(uc, i));
+			student->addToSchedule(std::make_pair(uc1, i));
 			i->addStudent(student);
 		}
 
 		for (auto i : uc2->find(elem->session2))
 		{
-			student->removeFromSchedule(std::make_pair(uc, i));
+			student->removeFromSchedule(std::make_pair(uc2, i));
 			i->removeStudent(student);
 		}
 	}
