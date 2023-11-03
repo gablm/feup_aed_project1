@@ -93,7 +93,11 @@ void UI::PrintChangeHistory()
 	{
 		CLEAR;
 		std::cout << "Schedules - Change History\n\n";
-		printStack(manager->getRequestStack());
+		auto rStack = manager->getRequestStack();
+		if (rStack.empty())
+			std::cout << "(No history to show)";
+		else
+			printStack(rStack);
 		std::cout << std::left
 				  << "\n\n [U] Undo most recent action (first action)"
 				  << "\n [B] Go back"
@@ -106,7 +110,7 @@ void UI::PrintChangeHistory()
 			break;
 		if (str == "q" || str == "Q")
 			ClearAndExit();
-		if (str == "u" || str == "U")
+		if ((str == "u" || str == "U") && !rStack.empty())
 			undoLastChange(manager->getRequestStack());
 	}
 }
