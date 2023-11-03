@@ -2,10 +2,10 @@
 
 static std::string query;
 /**
- * Complexity: O(1) | 
  * Parses user input and returns the appropriate function to search the list 
  * @param option String with the request
  * @return Lambda function
+ * @note Complexity: O(1)
 */
 bool (*UI::ses_parse_search_filter(std::string option))(std::string)
 {
@@ -33,10 +33,10 @@ bool (*UI::ses_parse_search_filter(std::string option))(std::string)
 }
 
 /**
- * Complexity: O(1) | 
  * Parses user input and returns the appropriate function to sort the list 
  * @param option String with the request
  * @return Lambda function
+ * @note Complexity: O(1)
 */
 bool (*UI::ses_parse_sort_filter(std::string option))(const std::string a, const std::string b)
 {
@@ -71,11 +71,11 @@ bool (*UI::ses_parse_sort_filter(std::string option))(const std::string a, const
 }
 
 /**
- * Complexity: O(n) | 
  * Goes through the map and checks if the content validates the function passed.
  * If so, this content is added to a list
  * @param toDisplayStr The list used to store the output shown
  * @param f Function used to check if the element is supposed to be shown
+ * @note Complexity: O(n)
 */
 void UI::read_if_Session(std::list<std::string> &toDisplayStr, bool (*f)(std::string)) {
 	std::set<std::string> IndivSessions = manager->getSessionSet();
@@ -87,10 +87,10 @@ void UI::read_if_Session(std::list<std::string> &toDisplayStr, bool (*f)(std::st
 }
 
 /**
- * Complexity: O(n log n) | 
  * Prints the UC list, according to the results from the two filters.
  * @param tree_filter Lambda function to filter the content
  * @param sort_filter Lambda function to sort the content
+ * @note Complexity: O(n log n)
  */
 void UI::PrintSession(bool (*tree_filter)(std::string), bool (*sort_filter)(const std::string, const std::string))
 {
@@ -165,10 +165,10 @@ void UI::PrintSession(bool (*tree_filter)(std::string), bool (*sort_filter)(cons
 	}
 }
 
-/**
- * Complexity: O(n^2) | 
+/** 
  * Shows a Class's schedule based on its code 
  * @param option The string with the full request
+ * @note Complexity: O(n^2)
 */
 void UI::ShowSession(std::string option) {
 	std::istringstream is(option);
@@ -238,10 +238,10 @@ void UI::ShowSession(std::string option) {
 }
 
 /**
- * Complexity: O(1) |
  * Prints the help menu if both arguments are equal to "".
  * Otherwise, shows an error message.
  * It waits for user input to proceed.
+ * @note Complexity: O(1)
 */
 void UI::HelpSession(std::string error, std::string usage)
 {

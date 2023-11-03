@@ -8,56 +8,56 @@
 UC::UC(std::string name, int year) : name(name), year(year) {}
 
 /**
- * Complexity: O(1)
  * @return UC code
+ * @note Complexity: O(1)
 */
 std::string UC::getName() const {
 	return name;
 }
 
 /**
- * Complexity: O(1)
  * @return UC year
+ * @note Complexity: O(1)
 */
 int UC::getYear() const {
 	return year;
 }
 
 /**
- * Complexity: O(1)
  * @param diff Number to add to the student count
+ * @note Complexity: O(1)
  */
 void UC::editStudentCount(int diff) {
 	students += diff;
 }
 
 /**
- * Complexity: O(1)
  * @return UC student count
+ * @note Complexity: O(1)
 */
 int UC::getStudentCount() const {
 	return students;
 }
 
 /**
- * Complexity: O(1)
  * @param session The class/session to add to the UC
+ * @note Complexity: O(1)
 */
 void UC::addSession(Session *session) {
 	sessionList.push_back(session);
 }
 
 /**
- * Complexity: O(1)
  * @return The list of Sessions for the UC
+ * @note Complexity: O(1)
 */
 std::list<Session*> UC::getSessionList() const {
 	return sessionList;
 }
 
 /**
- * Complexity: O(n) | 
  * Clears all the sessions for a UC
+ * @note Complexity: O(n)
 */
 void UC::clearSessions() {
 	for (auto i = sessionList.begin(); i != sessionList.end(); i++)
@@ -66,9 +66,9 @@ void UC::clearSessions() {
 }
 
 /**
- * Complexity: O(n) | 
  * Finds all the session with the same name/code
  * @return List of sessions
+ * @note Complexity: O(n)
 */
 std::list<Session*> UC::find(std::string sessionName) {
 	std::list<Session*> res;
@@ -81,9 +81,9 @@ std::list<Session*> UC::find(std::string sessionName) {
 }
 
 /**
- * Complexity: O(n) |
  * Checks if adding a student to the session generates a occupation conflict
  * @return True if there are conflicts, false otherwise
+ * @note Complexity: O(n)
 */
 bool UC::verifyOccupancyConflict(Session* newSession, Session* oldSession){
 	

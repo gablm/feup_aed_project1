@@ -9,8 +9,8 @@ using namespace std;
 Manager::Manager() : students(BST()), ucMap() {}
 
 /**
- * Complexity: O(n) |
  * Disposes of everything that was allocated on the data filling methods.
+ * @note Complexity: O(1)
  */
 Manager::~Manager()
 {
@@ -22,11 +22,16 @@ Manager::~Manager()
 		p->clearSessions();
 		delete i->second;
 	}
+	while (!requestStack.empty()) {
+		auto i = requestStack.top();
+		delete i;
+		requestStack.pop();
+	}
 }
 
 /**
- * Complexity: O(1) |
  * Returns the Binary Search Tree where the students are stored.
+ * @note Complexity: O(1)
 */
 BST &Manager::getStudents()
 {
@@ -34,8 +39,8 @@ BST &Manager::getStudents()
 }
 
 /**
- * Complexity: O(1) |
  * Returns the map of UCs.
+ * @note Complexity: O(1)
 */
 std::map<std::string, UC *> &Manager::getUcMap()
 {
@@ -43,9 +48,9 @@ std::map<std::string, UC *> &Manager::getUcMap()
 }
 
 /**
- * Complexity: O(1) |
  * Returns the set of Session in string format.
  * It makes it easier to find all classes without going thru all ucs.
+ * @note Complexity: O(1)
 */
 std::set<std::string> &Manager::getSessionSet()
 {
@@ -53,9 +58,9 @@ std::set<std::string> &Manager::getSessionSet()
 }
 
 /**
- * Complexity: O(n) |
  * Goes thru every line of the Classes dataset and fills various structures: 
  * The map of UCs, the set of classes and the list of session inside each UC.
+ * @note Complexity: O(n)
 */
 void Manager::load_map()
 {
@@ -88,14 +93,23 @@ void Manager::load_map()
 
 		istringstream ss(line);
 
-		std::getline(ss, sessionName, ',');
-		std::getline(ss, UCName, ',');
-		std::getline(ss, sessionDay, ',');
-		std::getline(ss, sessionTimestr, ',');
-		sessionTime = stof(sessionTimestr);
-		std::getline(ss, sessionDurationstr, ',');
-		sessionDuration = stof(sessionDurationstr);
-		std::getline(ss, sessionType, '\r');
+		try 
+		{
+			std::getline(ss, sessionName, ',');
+			std::getline(ss, UCName, ',');
+			std::getline(ss, sessionDay, ',');
+			std::getline(ss, sessionTimestr, ',');
+			sessionTime = stof(sessionTimestr);
+			std::getline(ss, sessionDurationstr, ',');
+			sessionDuration = stof(sessionDurationstr);
+			std::getline(ss, sessionType, '\r');
+		} 
+		catch (const std::exception& e)
+		{
+			std::cout << "The file classes.csv is badly formatted. Please fix the file and reopen the program." << std::endl;
+			delete this;
+			exit(0);
+		}
 
 		if (!temp_uc || temp_uc->getName() != UCName)
 		{
@@ -112,9 +126,9 @@ void Manager::load_map()
 }
 
 /**
- * Complexity: O(n) | 
  * Prints the data parsed into the UC map.
  * Not used anywhere in the program apart from testing.
+ * @note Complexity: O(n)
 */
 void Manager::test_map()
 {
@@ -136,9 +150,9 @@ void Manager::test_map()
 }
 
 /**
- * Complexity: O(n^2) | 
  * Loads the students to the Binary Search Tree.
  * As there is the need to search for the specific UC and Sessions, the time complexity is higher.
+ * @note Complexity: O(n^2)
 */
 void Manager::load_students()
 {
@@ -171,11 +185,20 @@ void Manager::load_students()
 
 		istringstream ss(line);
 
-		std::getline(ss, codeStr, ',');
-		code = stoi(codeStr);
-		std::getline(ss, studentName, ',');
-		std::getline(ss, UCName, ',');
-		std::getline(ss, sessionName, '\r');
+		try
+		{
+			std::getline(ss, codeStr, ',');
+			code = stoi(codeStr);
+			std::getline(ss, studentName, ',');
+			std::getline(ss, UCName, ',');
+			std::getline(ss, sessionName, '\r');
+		} 
+		catch (const std::exception& e)
+		{
+			std::cout << "The file student_classes.csv is badly formatted. Please fix the file and reopen the program." << std::endl;
+			delete this;
+			exit(0);
+		}
 
 		if (!temp_student || temp_student->getCode() != code)
 		{
@@ -197,14 +220,14 @@ void Manager::load_students()
 }
 
 /**
- * Complexity: O(n^2) | 
  * Loads the alterations from the changes.csv file and applies it to specific students.
  * Similarly to load_students(), the need to search structure make the time complexity higher.
+ * @note Complexity: O(n^2)
 */
 void Manager::load_alterations()
 {
-
-	string line, action, studentCode, parameter1, parameter2, parameter3;
+	string line, timestr, action, studentCode, parameter1, parameter2, parameter3;
+	time_t time;
 	int code;
 	Student *temp_student = NULL;
 
@@ -218,7 +241,7 @@ void Manager::load_alterations()
 		file.close();
 		ofstream file2;
 		file2.open("./data/changes.csv", std::ios::app);
-		file2 << "Action,StudentCode,UCName,SessionName" << endl;
+		file2 << "Timestamp,Action,StudentCode,Param1,Param2,Param3" << endl;
 		file2.close();
 		return;
 	}
@@ -236,12 +259,23 @@ void Manager::load_alterations()
 
 		istringstream ss(line);
 
-		std::getline(ss, action, ',');
-		std::getline(ss, studentCode, ',');
-		code = stoi(studentCode);
-		std::getline(ss, parameter1, ',');
-		std::getline(ss, parameter2, ',');
-		std::getline(ss, parameter3, '\r');
+		try 
+		{
+			std::getline(ss, timestr, ',');
+			time = stol(timestr);
+			std::getline(ss, action, ',');
+			std::getline(ss, studentCode, ',');
+			code = stoi(studentCode);
+			std::getline(ss, parameter1, ',');
+			std::getline(ss, parameter2, ',');
+			std::getline(ss, parameter3, '\r');
+		} 
+		catch (const std::exception& e)
+		{
+			std::cout << "The file changes.csv is badly formatted. Please delete or fix the file and reopen the program." << std::endl;
+			delete this;
+			exit(0);
+		}
 
 		if (!temp_student || temp_student->getCode() != code)
 		{
@@ -249,11 +283,11 @@ void Manager::load_alterations()
 		}
 
 		if (action == "remove")
-			RemoveUC(parameter1, temp_student);
+			RemoveUC(time, parameter1, temp_student);
 		if (action == "add")
-			NewClass(parameter1, parameter2, temp_student);
+			NewClass(time, parameter1, parameter2, temp_student);
 		if (action == "swapUC")
-			SwapUC(parameter1, parameter2, parameter3, temp_student);
+			SwapUC(time, parameter1, parameter2, parameter3, temp_student);
 	}
 	file.close();
 }
@@ -288,15 +322,19 @@ void print(BSTnode *node)
 }
 
 /**
- * Complexity: O(n) |
  * Prints the data parsed into the Binary Search Tree.
  * Not used anywhere in the program apart from testing.
+ * @note Complexity: O(n)
 */
 void Manager::test_students()
 {
 	print(students.getNode());
 }
 
-int Manager::getsessionCap(){
+/**
+ * @return The hard-set student limit for a session
+ * @note Complexity: O(1)
+*/
+int Manager::getsessionCap() {
 	return sessionCap;
 }

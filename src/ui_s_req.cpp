@@ -1,8 +1,8 @@
 #include "headers/ui.h"
 
 /**
- * Complexity: O(1) |
  * Prints the menu asking for the code of the student being altered.
+ * @note Complexity: O(1)
 */
 void UI::PrintChange()
 {
@@ -30,9 +30,9 @@ void UI::PrintChange()
 }
 
 /**
- * Complexity: O(n^2)
  * Prints the student's schedule and awaits for the user input
  * @param option Student code
+ * @note Complexity: O(n^2)
 */
 void UI::RequestDetails(std::string option)
 {
@@ -58,10 +58,10 @@ void UI::RequestDetails(std::string option)
 	{
 		CLEAR;
 		std::cout
-			<< "Student Inspector -"
+			<< "Student Inspector - "
 			<< student->getCode()
 			<< "/" << student->getName()
-			<< " Schedule\n";
+			<< " Schedule (Edit mode)\n";
 
 		std::list<std::pair<UC *, Session *>> weekdays[7];
 		for (auto pair : student->getSchedule())
@@ -124,6 +124,11 @@ void UI::RequestDetails(std::string option)
 			SwapUC(option, student);
 			continue;
 		}
+		if (option == "undo")
+		{
+			PrintChangeHistory();
+			continue;
+		}
 		if (option == "b" || option == "B")
 			break;
 		if (option == "q" || option == "Q")
@@ -136,10 +141,10 @@ void UI::RequestDetails(std::string option)
 }
 
 /**
- * Complexity: O(1) |
  * Prints the help menu if both arguments are equal to "".
  * Otherwise, shows an error message.
  * It waits for user input to proceed.
+ * @note Complexity: O(1)
 */
 void UI::HelpRequest(std::string error, std::string usage)
 {
@@ -155,9 +160,10 @@ void UI::HelpRequest(std::string error, std::string usage)
 	else
 	{
 		std::cout << "Commands available for the Requests page:"
-				  << "\n add [UCcode] [ClassCode/\"any\"] - add new UC to the schedule in the specified class or swaps the current class if the UC is already in the schedule"
+				  << "\n add [UCcode] [ClassCode/\"any\"] - Add a new UC to the schedule in a specified class or swap the current class if the UC is already in the schedule"
 				  << "\n remove [UCcode] - Remove an UC from the schedule"
-				  << "\n swapUC [old UCCode] [new UCCode] [new ClassCode/\"any\"] - swaps an UC for another in the specified class"
+				  << "\n swapUC [old UCCode] [new UCCode] [new ClassCode/\"any\"] - Swap an UC for another in the specified class"
+				  << "\n undo - Go to the Change History page"
 				  << "\n b/B - Go back"
 				  << "\n\nNote: The commands and the respective arguments are case-sensitive."
 				  << "\n\nPress ENTER to continue...";
@@ -168,11 +174,11 @@ void UI::HelpRequest(std::string error, std::string usage)
 }
 
 /**
- * Complexity: O(n) |
  * Removes all session for the respective UC.
  * The isn't any verification as removing is not bound by requirements apart from validating the UC code.
  * @param option The command inputted by the user.
  * @param student The pointer to the student being edited
+ * @note Complexity: O(n)
 */
 void UI::RemoveUC(std::string option, Student *student)
 { 
@@ -189,6 +195,7 @@ void UI::RemoveUC(std::string option, Student *student)
 	bool removed = false;
 	std::ofstream out;
 	out.open("./data/changes.csv", std::ios::app);
+	std::string session = "";
 	for (const auto &pair : student->getSchedule())
 	{
 		if (pair.first->getName() == up)
@@ -197,25 +204,28 @@ void UI::RemoveUC(std::string option, Student *student)
 				student->editUCcount(-1);
 				pair.first->editStudentCount(-1);
 				std::string stCode = std::to_string(student->getCode());
-				out << "remove," + stCode + "," + up + ",all" << std::endl;
+				out << std::time(nullptr) << ",remove," + stCode + "," + up + ",all" << std::endl;
 				log("Removed all classes for " + up + " of " + stCode);
+				Request *req = new Request(std::time(nullptr), "remove", std::to_string(student->getCode()), up, session, "", "");
+				manager->getRequestStack().push(req);
 				removed = true;
 			}
 			student->removeFromSchedule(pair);
 			pair.second->removeStudent(student);
+			session = pair.second->getName();
 		}
 	}
 	out.close();
 }
 
 /**
- * Complexity: O(n^2) |
  * Adds a UC and class or changes the class if a student is already in the UC.
  * There are various checks in place: Max allocation of 25, max allocation difference of 4 and schedule conflicts
  * The allocation difference is not verified if the session to enter is the one with the lowest occupation.
  * That way, the UC will return to a balanced state after a while if not already in such state.
  * @param option The command inputted by the user.
  * @param student The pointer to the student being edited
+ * @note Complexity: O(n^2)
  */
 void UI::NewClass(std::string option, Student *student) {
 
@@ -233,20 +243,20 @@ void UI::NewClass(std::string option, Student *student) {
 	UC *uc = manager->getUcMap()[uccode];
 
 	if (classcode == "any") {
-		int minCount = 100;
-		Session *tempsession = nullptr;
-		for (auto i : uc->getSessionList()){
-			if (i->getsize() < minCount && !student->verifyScheduleConflict(uc->getName(), i)){
-				minCount = i->getsize();
-				tempsession = i;
-			}
-		}
-		if (tempsession == nullptr){
-			HelpRequest("No available classes for this UC", "add [UCcode] [ClassCode]");
-			return;
-		}
-		classcode = tempsession->getName();
-	}
+        int minCount = 100;
+        Session *tempsession = nullptr;
+        for (auto i : uc->getSessionList()){
+            if (i->getsize() < minCount && !student->verifyScheduleConflict(uc->getName(), i)){
+                minCount = i->getsize();
+                tempsession = i;
+            }
+        }
+        if (tempsession == nullptr){
+            HelpRequest("No available classes for this UC", "add [UCcode] [ClassCode]");
+            return;
+        }
+        classcode = tempsession->getName();
+    }
 
 	if (classcode.length() < 1 || uc->find(classcode).size() < 1)
 	{
@@ -298,9 +308,12 @@ void UI::NewClass(std::string option, Student *student) {
 	}
 
 	std::string codeStr = std::to_string(student->getCode());
-	out << "add," + codeStr + "," + uc->getName() + "," + classcode << std::endl;
+	out << std::time(nullptr) << ",add," + codeStr + "," + uc->getName() + "," + classcode << std::endl;
 	
 	log("Added pair <" + uc->getName() + ", " + classcode + "> to " + codeStr);
+
+	Request *req = new Request(std::time(nullptr), "add", std::to_string(student->getCode()), uccode, classcode, "", oldClass != NULL ? oldClass->getName() : "");
+	manager->getRequestStack().push(req);
 
 	for (auto i: schedule) {
 		if (i.first->getName() == uc->getName()) {
@@ -316,16 +329,12 @@ void UI::NewClass(std::string option, Student *student) {
 	out.close();
 }
 
-
 /**
- * Complexity: O(n^2) |
- * Adds a UC and class or changes the class if a student is already in the UC.
- * There are various checks in place: Max allocation of 25, max allocation difference of 4 and schedule conflicts
- * The allocation difference is not verified if the session to enter is the one with the lowest occupation.
- * That way, the UC will return to a balanced state after a while if not already in such state.
- * @param option The command inputted by the user.
+ * TODO ????????????????
+ * @note Complexity: O(???????????????????????)
+ * @param option Contains the operation requested by the user
  * @param student The pointer to the student being edited
- */
+*/
 void UI::SwapUC(std::string option, Student *student)
 {
 	std::istringstream is(option);
@@ -348,20 +357,20 @@ void UI::SwapUC(std::string option, Student *student)
 	UC *newUC = manager->getUcMap()[newUCcode];
 
 	if (classcode == "any") {
-		int minCount = 100;
-		Session *tempsession;
-		for (auto i : newUC->getSessionList()){
-			if (i->getsize() < minCount && !student->verifyScheduleConflict(newUC->getName(), i)){
-				minCount = i->getsize();
-				tempsession = i;
-			}
-			if (tempsession == nullptr){
-				HelpRequest("No available classes for this UC", "add [UCcode] [ClassCode]");
-				return;
-			}
-		}
-		classcode = tempsession->getName();
-	}
+        int minCount = 100;
+        Session *tempsession;
+        for (auto i : newUC->getSessionList()){
+            if (i->getsize() < minCount && !student->verifyScheduleConflict(newUC->getName(), i)){
+                minCount = i->getsize();
+                tempsession = i;
+            }
+            if (tempsession == nullptr){
+                HelpRequest("No available classes for this UC", "swapUC [old UCCode] [new UCCode] [new ClassCode]");
+                return;
+            }
+        }
+        classcode = tempsession->getName();
+    }
 
 	auto schedule = student->getSchedule();
 	bool foundOld = false;
@@ -425,18 +434,20 @@ void UI::SwapUC(std::string option, Student *student)
 	}
 
 	std::string codeStr = std::to_string(student->getCode());
-	out << "swapUC," + codeStr + "," + oldUC->getName() + "," + newUC->getName() + "," + classcode +"\n"<< std::endl;
+	out << std::time(nullptr) << ",swapUC," + codeStr + "," + oldUC->getName() + "," + newUC->getName() + "," + classcode +"\n"<< std::endl;
 
-	log("Swapped UC from pair <" + oldUC->getName() + ", " + oldSessionName +"> to <" + newUC->getName() + ", " + classcode + "> for" + codeStr+"\n");
+	log("Swapped UC from pair <" + oldUC->getName() + ", " + oldSessionName +"> to <" + newUC->getName() + ", " + classcode + "> for " + codeStr);
 
 	out.close();
 
+	Request *req = new Request(std::time(nullptr), "swapUC", std::to_string(student->getCode()), oldUC->getName(), oldSessionName, newUC->getName(), classcode);
+	manager->getRequestStack().push(req);
 }
 
 /**
- * Complexity: O(1) |
  * Logs the operations made by the user using the UI.
  * Changing the contents of this file won't affect the system.
+ * @note Complexity: O(1)
 */
 void UI::log(std::string action) 
 {
