@@ -93,14 +93,23 @@ void Manager::load_map()
 
 		istringstream ss(line);
 
-		std::getline(ss, sessionName, ',');
-		std::getline(ss, UCName, ',');
-		std::getline(ss, sessionDay, ',');
-		std::getline(ss, sessionTimestr, ',');
-		sessionTime = stof(sessionTimestr);
-		std::getline(ss, sessionDurationstr, ',');
-		sessionDuration = stof(sessionDurationstr);
-		std::getline(ss, sessionType, '\r');
+		try 
+		{
+			std::getline(ss, sessionName, ',');
+			std::getline(ss, UCName, ',');
+			std::getline(ss, sessionDay, ',');
+			std::getline(ss, sessionTimestr, ',');
+			sessionTime = stof(sessionTimestr);
+			std::getline(ss, sessionDurationstr, ',');
+			sessionDuration = stof(sessionDurationstr);
+			std::getline(ss, sessionType, '\r');
+		} 
+		catch (const std::exception& e)
+		{
+			std::cout << "The file classes.csv is badly formatted. Please fix the file and reopen the program." << std::endl;
+			delete this;
+			exit(0);
+		}
 
 		if (!temp_uc || temp_uc->getName() != UCName)
 		{
@@ -176,11 +185,20 @@ void Manager::load_students()
 
 		istringstream ss(line);
 
-		std::getline(ss, codeStr, ',');
-		code = stoi(codeStr);
-		std::getline(ss, studentName, ',');
-		std::getline(ss, UCName, ',');
-		std::getline(ss, sessionName, '\r');
+		try
+		{
+			std::getline(ss, codeStr, ',');
+			code = stoi(codeStr);
+			std::getline(ss, studentName, ',');
+			std::getline(ss, UCName, ',');
+			std::getline(ss, sessionName, '\r');
+		} 
+		catch (const std::exception& e)
+		{
+			std::cout << "The file student_classes.csv is badly formatted. Please fix the file and reopen the program." << std::endl;
+			delete this;
+			exit(0);
+		}
 
 		if (!temp_student || temp_student->getCode() != code)
 		{
@@ -241,14 +259,23 @@ void Manager::load_alterations()
 
 		istringstream ss(line);
 
-		std::getline(ss, timestr, ',');
-		time = stol(timestr);
-		std::getline(ss, action, ',');
-		std::getline(ss, studentCode, ',');
-		code = stoi(studentCode);
-		std::getline(ss, parameter1, ',');
-		std::getline(ss, parameter2, ',');
-		std::getline(ss, parameter3, '\r');
+		try 
+		{
+			std::getline(ss, timestr, ',');
+			time = stol(timestr);
+			std::getline(ss, action, ',');
+			std::getline(ss, studentCode, ',');
+			code = stoi(studentCode);
+			std::getline(ss, parameter1, ',');
+			std::getline(ss, parameter2, ',');
+			std::getline(ss, parameter3, '\r');
+		} 
+		catch (const std::exception& e)
+		{
+			std::cout << "The file changes.csv is badly formatted. Please delete or fix the file and reopen the program." << std::endl;
+			delete this;
+			exit(0);
+		}
 
 		if (!temp_student || temp_student->getCode() != code)
 		{
