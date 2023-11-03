@@ -330,11 +330,14 @@ void UI::NewClass(std::string option, Student *student) {
 }
 
 /**
- * TODO ????????????????
- * @note Complexity: O(???????????????????????)
- * @param option Contains the operation requested by the user
+ * Removes an UC from the student's schedule and adds a new one in the specified class.
+ * There are various checks in place: Max allocation of 25, max allocation difference of 4 and schedule conflicts
+ * The allocation difference is not verified if the session to enter is the one with the lowest occupation.
+ * That way, the new UC will return to a balanced state after a while if not already in such state.
+ * @note Complexity: O(n^2)
+ * @param option The command inputted by the user.
  * @param student The pointer to the student being edited
-*/
+ */
 void UI::SwapUC(std::string option, Student *student)
 {
 	std::istringstream is(option);
