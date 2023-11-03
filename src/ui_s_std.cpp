@@ -52,7 +52,7 @@ bool (*UI::st_parse_search_filter(std::string option))(void *)
 								return name.find(query) != name.npos; };
 		return res;
 	}
-	if (field == "minUC")
+	if (field == "minNumUC")
 	{
 		auto res = [](void *a)
 		{ return ((Student *)a)->getUCcount() >= std::stod(query); };
@@ -88,19 +88,25 @@ bool (*UI::st_parse_sort_filter(std::string option))(const void *a, const void *
 		return res;
 	}
 
+	if (field == "code") {
+		auto res = [](const void *a, const void *b)
+		{ return ((Student *)a)->getCode() < ((Student *)b)->getCode(); };
+		return res;
+	}
+
 	if (field == "rev_code") {
 		auto res = [](const void *a, const void *b)
 		{ return ((Student *)a)->getCode() > ((Student *)b)->getCode(); };
 		return res;
 	}
 
-	if (field == "minUC") {
+	if (field == "numUC") {
 		auto res = [](const void *a, const void *b)
 		{ return ((Student *)a)->getUCcount() < ((Student *)b)->getUCcount(); };
 		return res;
 	}
 
-	if (field == "rev_minUC") {
+	if (field == "rev_numUC") {
 		auto res = [](const void *a, const void *b)
 		{ return ((Student *)a)->getUCcount() > ((Student *)b)->getUCcount(); };
 		return res;
@@ -165,16 +171,16 @@ void UI::PrintStudent(bool (*tree_filter)(void *), bool (*sort_filter)(const voi
 		if (option.substr(0, 7) == "search ") {
 			auto new_filter = st_parse_search_filter(option);
 			if (!new_filter) {
-				HelpStudent("Invalid field", "search [code|name|minUC] [query]");
+				HelpStudent("Invalid field", "search [code|name|minNumUC] [query]");
 				continue;
 			}
 			PrintStudent(new_filter, sort_filter);
 			break;
 		}
-		if (option.substr(0, 5) == "sort " && option != "sort code") {
+		if (option.substr(0, 5) == "sort ") {
 			auto new_filter = st_parse_sort_filter(option);
 			if (!new_filter) {
-				HelpStudent("Invalid field", "sort [name|rev_name|code|rev_code|minUC|rev_minUC]");
+				HelpStudent("Invalid field", "sort [name|rev_name|code|rev_code|numUC|rev_numUC]");
 				continue;
 			}
 			PrintStudent(tree_filter, new_filter);
@@ -288,8 +294,8 @@ void UI::HelpStudent(std::string error, std::string usage)
 	} else {
 		std::cout << "Commands available for the Student page:"
 				  << "\n reset - Reset listing to the default sorting and search scheme"
-				  << "\n search [code|name|minUC] [query] - Search the list"
-				  << "\n sort [name|rev_name|code|rev_code|minUC|rev_minUC] - Sort the current list"
+				  << "\n search [code|name|minNumUC] [query] - Search the list"
+				  << "\n sort [name|rev_name|code|rev_code|numUC|rev_numUC] - Sort the current list"
 				  << "\n select [code] - Show the student's schedule"
 				  << "\n edit [code] - Change a student's schedule"
 				  << "\n b - Go back"
