@@ -223,7 +223,7 @@ void Manager::load_alterations()
 		file.close();
 		ofstream file2;
 		file2.open("./data/changes.csv", std::ios::app);
-		file2 << "Action,StudentCode,UCName,SessionName" << endl;
+		file2 << "Timestamp,Action,StudentCode,Param1,Param2,Param3" << endl;
 		file2.close();
 		return;
 	}
