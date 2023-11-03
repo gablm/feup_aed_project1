@@ -260,7 +260,7 @@ void Manager::load_alterations()
 		if (action == "add")
 			NewClass(time, parameter1, parameter2, temp_student);
 		if (action == "swapUC")
-			SwapUC(parameter1, parameter2, parameter3, temp_student);
+			SwapUC(time, parameter1, parameter2, parameter3, temp_student);
 	}
 	file.close();
 }

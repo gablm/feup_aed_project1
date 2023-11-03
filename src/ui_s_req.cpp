@@ -416,10 +416,12 @@ void UI::SwapUC(std::string option, Student *student)
 	std::string codeStr = std::to_string(student->getCode());
 	out << "swapUC," + codeStr + "," + oldUC->getName() + "," + newUC->getName() + "," + classcode +"\n"<< std::endl;
 
-	log("Swapped UC from pair <" + oldUC->getName() + ", " + oldSessionName +"> to <" + newUC->getName() + ", " + classcode + "> for" + codeStr+"\n");
+	log("Swapped UC from pair <" + oldUC->getName() + ", " + oldSessionName +"> to <" + newUC->getName() + ", " + classcode + "> for " + codeStr);
 
 	out.close();
 
+	Request *req = new Request(std::time(nullptr), "swapUC", std::to_string(student->getCode()), oldUC->getName(), oldSessionName, newUC->getName(), classcode);
+	manager->getRequestStack().push(req);
 }
 
 /**

@@ -45,13 +45,9 @@ class Manager {
 		std::stack<Request*>& getRequestStack();
 		int getsessionCap();
 
-
 		void RemoveUC(time_t time, std::string UCname, Student *student);
 		void NewClass(time_t time, std::string uccode, std::string classcode, Student *student);
-		void RemoveUC(std::string UCname, Student *student);
-		void NewClass(std::string uccode, std::string classcode, Student *student);
-		void SwapUC(std::string oldUCcode, std::string newUCcode, std::string classcode, Student *student);
-
+		void SwapUC(time_t time, std::string oldUCcode, std::string newUCcode, std::string classcode, Student *student);
 };
 
 #endif

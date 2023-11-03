@@ -95,15 +95,13 @@ void Manager::NewClass(time_t time, std::string uccode, std::string classcode, S
 
 	Request *req = new Request(time, "add", std::to_string(student->getCode()), uccode, classcode, "", oldClass != NULL ? oldClass->getName() : "");
 	requestStack.push(req);
-
 }
 
-void Manager::SwapUC(std::string oldUCcode, std::string newUCcode, std::string classcode, Student *student)
+void Manager::SwapUC(time_t time, std::string oldUCcode, std::string newUCcode, std::string classcode, Student *student)
 {
-	auto ucMap = getUcMap();
 
-	UC *oldUC = getUcMap()[oldUCcode];
-	UC *newUC = getUcMap()[newUCcode];
+	UC *oldUC = ucMap[oldUCcode];
+	UC *newUC = ucMap[newUCcode];
 
 	if (classcode == "any") {
 		int minCount = 100;
@@ -117,21 +115,24 @@ void Manager::SwapUC(std::string oldUCcode, std::string newUCcode, std::string c
 		classcode = tempsession->getName();
 	}
 
-	auto schedule = student->getSchedule();
-	auto newClasses = newUC->find(classcode);
-
 	ucMap[oldUCcode]->editStudentCount(-1);
 	ucMap[newUCcode]->editStudentCount(1);
 
-	for (auto i: schedule) {
+	std::string oldSessionName;
+
+	for (auto i: student->getSchedule()) {
 		if (i.first->getName() == oldUC->getName()) {
 			student->removeFromSchedule(i);
 			i.second->removeStudent(student);
+			oldSessionName = i.second->getName();
 		}
 	}
 
-	for (auto i : newClasses) {
+	for (auto i : newUC->find(classcode)) {
 		student->addToSchedule(std::make_pair(newUC, i));
 		i->addStudent(student);
 	}
+
+	Request *req = new Request(time, "swapUC", std::to_string(student->getCode()), oldUC->getName(), oldSessionName, newUC->getName(), classcode);
+	requestStack.push(req);
 }
