@@ -1,8 +1,8 @@
 #include "headers/ui.h"
 
 /**
- * Complexity: O(1) |
  * Prints the menu asking for the code of the student being altered.
+ * @note Complexity: O(1)
 */
 void UI::PrintChange()
 {
@@ -30,9 +30,9 @@ void UI::PrintChange()
 }
 
 /**
- * Complexity: O(n^2)
  * Prints the student's schedule and awaits for the user input
  * @param option Student code
+ * @note Complexity: O(n^2)
 */
 void UI::RequestDetails(std::string option)
 {
@@ -141,10 +141,10 @@ void UI::RequestDetails(std::string option)
 }
 
 /**
- * Complexity: O(1) |
  * Prints the help menu if both arguments are equal to "".
  * Otherwise, shows an error message.
  * It waits for user input to proceed.
+ * @note Complexity: O(1)
 */
 void UI::HelpRequest(std::string error, std::string usage)
 {
@@ -174,11 +174,11 @@ void UI::HelpRequest(std::string error, std::string usage)
 }
 
 /**
- * Complexity: O(n) |
  * Removes all session for the respective UC.
  * The isn't any verification as removing is not bound by requirements apart from validating the UC code.
  * @param option The command inputted by the user.
  * @param student The pointer to the student being edited
+ * @note Complexity: O(n)
 */
 void UI::RemoveUC(std::string option, Student *student)
 { 
@@ -219,13 +219,13 @@ void UI::RemoveUC(std::string option, Student *student)
 }
 
 /**
- * Complexity: O(n^2) |
  * Adds a UC and class or changes the class if a student is already in the UC.
  * There are various checks in place: Max allocation of 25, max allocation difference of 4 and schedule conflicts
  * The allocation difference is not verified if the session to enter is the one with the lowest occupation.
  * That way, the UC will return to a balanced state after a while if not already in such state.
  * @param option The command inputted by the user.
  * @param student The pointer to the student being edited
+ * @note Complexity: O(n^2)
  */
 void UI::NewClass(std::string option, Student *student) {
 
@@ -329,6 +329,12 @@ void UI::NewClass(std::string option, Student *student) {
 	out.close();
 }
 
+/**
+ * TODO ????????????????
+ * @note Complexity: O(???????????????????????)
+ * @param option Contains the operation requested by the user
+ * @param student The pointer to the student being edited
+*/
 void UI::SwapUC(std::string option, Student *student)
 {
 	std::istringstream is(option);
@@ -439,9 +445,9 @@ void UI::SwapUC(std::string option, Student *student)
 }
 
 /**
- * Complexity: O(1) |
  * Logs the operations made by the user using the UI.
  * Changing the contents of this file won't affect the system.
+ * @note Complexity: O(1)
 */
 void UI::log(std::string action) 
 {
