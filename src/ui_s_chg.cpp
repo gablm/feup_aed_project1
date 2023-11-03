@@ -1,5 +1,11 @@
 #include "headers/ui.h"
-    
+
+/**
+ * Removes the last line of a file by writing the entire file to a temporary file ignoring the last line.
+ * Then it renames the temporary file to the original name.
+ * @note Complexity: O(n)
+ * @param path The path to the file
+*/
 void UI::removeLast(std::string path) 
 {
     std::ifstream in(path);
@@ -15,6 +21,13 @@ void UI::removeLast(std::string path)
 	std::rename("edit.tmp", path.c_str());
 }
 
+/**
+ * Undoes the last change recorded.
+ * As we only allow the last change to be "undone", it is assumed the system did not have conflicts before it.
+ * So, there is no verification of conflicts.
+ * @note Complexity: O(n)
+ * @param requests Stack of requests
+*/
 void UI::undoLastChange(std::stack<Request*> &requests)
 {
 	if (requests.empty())
@@ -88,6 +101,11 @@ void UI::undoLastChange(std::stack<Request*> &requests)
 	}
 }
 
+/**
+ * Prints the entire stack in a readable form using recursion.
+ * @note Complexity: O(n)
+ * @param requests Stack of requests
+*/
 void UI::printStack(std::stack<Request*> requests)
 {
 	if (requests.empty())
@@ -106,6 +124,10 @@ void UI::printStack(std::stack<Request*> requests)
 	std::cout << std::endl;
 }
 
+/**
+ * Prints the menu for viewing the request stack.
+ * @note Complexity: O(n)
+*/
 void UI::PrintChangeHistory()
 {
 	while (1)

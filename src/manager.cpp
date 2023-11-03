@@ -9,8 +9,8 @@ using namespace std;
 Manager::Manager() : students(BST()), ucMap() {}
 
 /**
- * Complexity: O(n) |
  * Disposes of everything that was allocated on the data filling methods.
+ * @note Complexity: O(1)
  */
 Manager::~Manager()
 {
@@ -30,8 +30,8 @@ Manager::~Manager()
 }
 
 /**
- * Complexity: O(1) |
  * Returns the Binary Search Tree where the students are stored.
+ * @note Complexity: O(1)
 */
 BST &Manager::getStudents()
 {
@@ -39,8 +39,8 @@ BST &Manager::getStudents()
 }
 
 /**
- * Complexity: O(1) |
  * Returns the map of UCs.
+ * @note Complexity: O(1)
 */
 std::map<std::string, UC *> &Manager::getUcMap()
 {
@@ -48,9 +48,9 @@ std::map<std::string, UC *> &Manager::getUcMap()
 }
 
 /**
- * Complexity: O(1) |
  * Returns the set of Session in string format.
  * It makes it easier to find all classes without going thru all ucs.
+ * @note Complexity: O(1)
 */
 std::set<std::string> &Manager::getSessionSet()
 {
@@ -58,9 +58,9 @@ std::set<std::string> &Manager::getSessionSet()
 }
 
 /**
- * Complexity: O(n) |
  * Goes thru every line of the Classes dataset and fills various structures: 
  * The map of UCs, the set of classes and the list of session inside each UC.
+ * @note Complexity: O(n)
 */
 void Manager::load_map()
 {
@@ -126,9 +126,9 @@ void Manager::load_map()
 }
 
 /**
- * Complexity: O(n) | 
  * Prints the data parsed into the UC map.
  * Not used anywhere in the program apart from testing.
+ * @note Complexity: O(n)
 */
 void Manager::test_map()
 {
@@ -150,9 +150,9 @@ void Manager::test_map()
 }
 
 /**
- * Complexity: O(n^2) | 
  * Loads the students to the Binary Search Tree.
  * As there is the need to search for the specific UC and Sessions, the time complexity is higher.
+ * @note Complexity: O(n^2)
 */
 void Manager::load_students()
 {
@@ -220,9 +220,9 @@ void Manager::load_students()
 }
 
 /**
- * Complexity: O(n^2) | 
  * Loads the alterations from the changes.csv file and applies it to specific students.
  * Similarly to load_students(), the need to search structure make the time complexity higher.
+ * @note Complexity: O(n^2)
 */
 void Manager::load_alterations()
 {
@@ -322,9 +322,9 @@ void print(BSTnode *node)
 }
 
 /**
- * Complexity: O(n) |
  * Prints the data parsed into the Binary Search Tree.
  * Not used anywhere in the program apart from testing.
+ * @note Complexity: O(n)
 */
 void Manager::test_students()
 {
@@ -332,8 +332,8 @@ void Manager::test_students()
 }
 
 /**
- * Complexity: O(1)
- * @return The hard-set student limit for a session 
+ * @return The hard-set student limit for a session
+ * @note Complexity: O(1)
 */
 int Manager::getsessionCap() {
 	return sessionCap;
