@@ -64,26 +64,26 @@ void UI::undoLastChange(std::stack<Request*> &requests)
 				i->addStudent(student);
 			}
 		}
+	}
 
-		if (elem->type == "swapUC")
+	if (elem->type == "swapUC")
+	{
+		UC *uc1 = manager->getUcMap()[elem->UC1];
+		UC *uc2 = manager->getUcMap()[elem->UC2];
+
+		uc1->editStudentCount(1);
+		uc2->editStudentCount(-1);
+
+		for (auto i : uc1->find(elem->session1))
 		{
-			UC *uc1 = manager->getUcMap()[elem->UC1];
-			UC *uc2 = manager->getUcMap()[elem->UC2];
+			student->addToSchedule(std::make_pair(uc, i));
+			i->addStudent(student);
+		}
 
-			uc1->editStudentCount(1);
-			uc2->editStudentCount(-1);
-
-			for (auto i : uc1->find(elem->session1))
-			{
-				student->addToSchedule(std::make_pair(uc, i));
-				i->addStudent(student);
-			}
-
-			for (auto i : uc2->find(elem->session2))
-			{
-				student->removeFromSchedule(std::make_pair(uc, i));
-				i->removeStudent(student);
-			}
+		for (auto i : uc2->find(elem->session2))
+		{
+			student->removeFromSchedule(std::make_pair(uc, i));
+			i->removeStudent(student);
 		}
 	}
 }
