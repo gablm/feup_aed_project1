@@ -237,16 +237,20 @@ void UI::NewClass(std::string option, Student *student) {
 	UC *uc = manager->getUcMap()[uccode];
 
 	if (classcode == "any") {
-		int minCount = 100;
-		Session *tempsession;
-		for (auto i : uc->getSessionList()){
-			if (i->getsize() < minCount){
-				minCount = i->getsize();
-				tempsession = i;
-			}
-		}
-		classcode = tempsession->getName();
-	}
+        int minCount = 100;
+        Session *tempsession = nullptr;
+        for (auto i : uc->getSessionList()){
+            if (i->getsize() < minCount && !student->verifyScheduleConflict(uc->getName(), i)){
+                minCount = i->getsize();
+                tempsession = i;
+            }
+        }
+        if (tempsession == nullptr){
+            HelpRequest("No available classes for this UC", "add [UCcode] [ClassCode]");
+            return;
+        }
+        classcode = tempsession->getName();
+    }
 
 	if (classcode.length() < 1 || uc->find(classcode).size() < 1)
 	{
@@ -341,16 +345,20 @@ void UI::SwapUC(std::string option, Student *student)
 	UC *newUC = manager->getUcMap()[newUCcode];
 
 	if (classcode == "any") {
-		int minCount = 100;
-		Session *tempsession;
-		for (auto i : newUC->getSessionList()){
-			if (i->getsize() < minCount){
-				minCount = i->getsize();
-				tempsession = i;
-			}
-		}
-		classcode = tempsession->getName();
-	}
+        int minCount = 100;
+        Session *tempsession;
+        for (auto i : newUC->getSessionList()){
+            if (i->getsize() < minCount && !student->verifyScheduleConflict(newUC->getName(), i)){
+                minCount = i->getsize();
+                tempsession = i;
+            }
+            if (tempsession == nullptr){
+                HelpRequest("No available classes for this UC", "swapUC [old UCCode] [new UCCode] [new ClassCode]");
+                return;
+            }
+        }
+        classcode = tempsession->getName();
+    }
 
 	auto schedule = student->getSchedule();
 	bool foundOld = false;
