@@ -312,6 +312,16 @@ void UI::NewClass(std::string option, Student *student) {
 	out.close();
 }
 
+
+/**
+ * Complexity: O(n^2) |
+ * Removes an UC from the student's schedule and adds a new one in the specified class.
+ * There are various checks in place: Max allocation of 25, max allocation difference of 4 and schedule conflicts
+ * The allocation difference is not verified if the session to enter is the one with the lowest occupation.
+ * That way, the new UC will return to a balanced state after a while if not already in such state.
+ * @param option The command inputted by the user.
+ * @param student The pointer to the student being edited
+ */
 void UI::SwapUC(std::string option, Student *student)
 {
 	std::istringstream is(option);
@@ -334,16 +344,20 @@ void UI::SwapUC(std::string option, Student *student)
 	UC *newUC = manager->getUcMap()[newUCcode];
 
 	if (classcode == "any") {
-		int minCount = 100;
-		Session *tempsession;
-		for (auto i : newUC->getSessionList()){
-			if (i->getsize() < minCount){
-				minCount = i->getsize();
-				tempsession = i;
-			}
+        int minCount = 100;
+        Session *tempsession;
+        for (auto i : newUC->getSessionList()){
+            if (i->getsize() < minCount && !student->verifyScheduleConflict(newUC->getName(), i)){
+                minCount = i->getsize();
+                tempsession = i;
+            }
 		}
-		classcode = tempsession->getName();
-	}
+        if (tempsession == nullptr){
+            HelpRequest("No available classes for this UC", "swapUC [old UCCode] [new UCCode] [new ClassCode]");
+            return;
+        }
+        classcode = tempsession->getName();
+    }
 
 	auto schedule = student->getSchedule();
 	bool foundOld = false;
