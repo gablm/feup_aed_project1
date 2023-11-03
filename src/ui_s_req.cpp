@@ -61,7 +61,7 @@ void UI::RequestDetails(std::string option)
 			<< "Student Inspector - "
 			<< student->getCode()
 			<< "/" << student->getName()
-			<< " Schedule\n";
+			<< " Schedule (Edit mode)\n";
 
 		std::list<std::pair<UC *, Session *>> weekdays[7];
 		for (auto pair : student->getSchedule())
@@ -124,6 +124,11 @@ void UI::RequestDetails(std::string option)
 			SwapUC(option, student);
 			continue;
 		}
+		if (option == "undo")
+		{
+			PrintChangeHistory();
+			continue;
+		}
 		if (option == "b" || option == "B")
 			break;
 		if (option == "q" || option == "Q")
@@ -155,9 +160,10 @@ void UI::HelpRequest(std::string error, std::string usage)
 	else
 	{
 		std::cout << "Commands available for the Requests page:"
-				  << "\n add [UCcode] [ClassCode/\"any\"] - add new UC to the schedule in the specified class or swaps the current class if the UC is already in the schedule"
+				  << "\n add [UCcode] [ClassCode/\"any\"] - Add a new UC to the schedule in a specified class or swap the current class if the UC is already in the schedule"
 				  << "\n remove [UCcode] - Remove an UC from the schedule"
-				  << "\n swapUC [old UCCode] [new UCCode] [new ClassCode/\"any\"] - swaps an UC for another in the specified class"
+				  << "\n swapUC [old UCCode] [new UCCode] [new ClassCode/\"any\"] - Swap an UC for another in the specified class"
+				  << "\n undo - Go to the Change History page"
 				  << "\n b/B - Go back"
 				  << "\n\nNote: The commands and the respective arguments are case-sensitive."
 				  << "\n\nPress ENTER to continue...";

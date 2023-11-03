@@ -226,7 +226,7 @@ void UI::ShowStudent(std::string option)
 			<< "Student Inspector - "
 			<< student->getCode()
 			<< "/" << student->getName()
-			<< " Schedule\n";
+			<< " Schedule (View mode)\n";
 
 		std::list<std::pair<UC*, Session*>> weekdays[7];
 		for (auto pair : student->getSchedule())
