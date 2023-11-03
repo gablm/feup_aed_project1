@@ -1,1 +1,4 @@
-Timestamp,Action,StudentCode,UCName,Sessioncode
+Timestamp,Action,StudentCode,Param1,Param2,Param3
+1698973893,add,202080397,L.EIC023,3LEIC08
+1698973957,swapUC,202080397,L.EIC025,L.EIC001,1LEIC01
+
