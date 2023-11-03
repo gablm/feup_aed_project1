@@ -24,7 +24,6 @@ class UI {
 		Manager *manager;
 		std::list<void *> toDisplay;
 		std::list<std::string> toDisplayStr;
-		std::string field, filter;
 
 		void log(std::string action);
 
