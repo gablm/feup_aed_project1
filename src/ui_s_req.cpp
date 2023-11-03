@@ -234,12 +234,16 @@ void UI::NewClass(std::string option, Student *student) {
 
 	if (classcode == "any") {
 		int minCount = 100;
-		Session *tempsession;
+		Session *tempsession = nullptr;
 		for (auto i : uc->getSessionList()){
-			if (i->getsize() < minCount){
+			if (i->getsize() < minCount && !student->verifyScheduleConflict(uc->getName(), i)){
 				minCount = i->getsize();
 				tempsession = i;
 			}
+		}
+		if (tempsession == nullptr){
+			HelpRequest("No available classes for this UC", "add [UCcode] [ClassCode]");
+			return;
 		}
 		classcode = tempsession->getName();
 	}
@@ -312,6 +316,16 @@ void UI::NewClass(std::string option, Student *student) {
 	out.close();
 }
 
+
+/**
+ * Complexity: O(n^2) |
+ * Adds a UC and class or changes the class if a student is already in the UC.
+ * There are various checks in place: Max allocation of 25, max allocation difference of 4 and schedule conflicts
+ * The allocation difference is not verified if the session to enter is the one with the lowest occupation.
+ * That way, the UC will return to a balanced state after a while if not already in such state.
+ * @param option The command inputted by the user.
+ * @param student The pointer to the student being edited
+ */
 void UI::SwapUC(std::string option, Student *student)
 {
 	std::istringstream is(option);
@@ -337,9 +351,13 @@ void UI::SwapUC(std::string option, Student *student)
 		int minCount = 100;
 		Session *tempsession;
 		for (auto i : newUC->getSessionList()){
-			if (i->getsize() < minCount){
+			if (i->getsize() < minCount && !student->verifyScheduleConflict(newUC->getName(), i)){
 				minCount = i->getsize();
 				tempsession = i;
+			}
+			if (tempsession == nullptr){
+				HelpRequest("No available classes for this UC", "add [UCcode] [ClassCode]");
+				return;
 			}
 		}
 		classcode = tempsession->getName();
