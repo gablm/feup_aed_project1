@@ -200,6 +200,7 @@ void UI::RemoveUC(std::string option, Student *student)
 	{
 		if (pair.first->getName() == up)
 		{
+			session = pair.second->getName();
 			if (!removed) {
 				student->editUCcount(-1);
 				pair.first->editStudentCount(-1);
@@ -212,7 +213,6 @@ void UI::RemoveUC(std::string option, Student *student)
 			}
 			student->removeFromSchedule(pair);
 			pair.second->removeStudent(student);
-			session = pair.second->getName();
 		}
 	}
 	out.close();
