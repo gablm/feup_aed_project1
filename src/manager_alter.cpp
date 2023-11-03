@@ -105,14 +105,15 @@ void Manager::SwapUC(time_t time, std::string oldUCcode, std::string newUCcode, 
 
 	if (classcode == "any") {
 		int minCount = 100;
-		Session *tempsession;
+		Session *tempsession = NULL;
 		for (auto i : newUC->getSessionList()){
 			if (i->getsize() < minCount){
 				minCount = i->getsize();
 				tempsession = i;
 			}
 		}
-		classcode = tempsession->getName();
+		if (tempsession)
+			classcode = tempsession->getName();
 	}
 
 	ucMap[oldUCcode]->editStudentCount(-1);

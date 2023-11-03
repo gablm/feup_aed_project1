@@ -414,7 +414,7 @@ void UI::SwapUC(std::string option, Student *student)
 	}
 
 	std::string codeStr = std::to_string(student->getCode());
-	out << "swapUC," + codeStr + "," + oldUC->getName() + "," + newUC->getName() + "," + classcode +"\n"<< std::endl;
+	out << std::time(nullptr) << "swapUC," + codeStr + "," + oldUC->getName() + "," + newUC->getName() + "," + classcode +"\n"<< std::endl;
 
 	log("Swapped UC from pair <" + oldUC->getName() + ", " + oldSessionName +"> to <" + newUC->getName() + ", " + classcode + "> for " + codeStr);
 

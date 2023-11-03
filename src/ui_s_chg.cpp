@@ -64,6 +64,27 @@ void UI::undoLastChange(std::stack<Request*> &requests)
 				i->addStudent(student);
 			}
 		}
+
+		if (elem->type == "swapUC")
+		{
+			UC *uc1 = manager->getUcMap()[elem->UC1];
+			UC *uc2 = manager->getUcMap()[elem->UC2];
+
+			uc1->editStudentCount(1);
+			uc2->editStudentCount(-1);
+
+			for (auto i : uc1->find(elem->session1))
+			{
+				student->addToSchedule(i);
+				i->addStudent(student);
+			}
+
+			for (auto i : uc2->find(elem->session2))
+			{
+				student->removeFromSchedule(i);
+				i->removeStudent(student);
+			}
+		}
 	}
 }
 
@@ -77,13 +98,11 @@ void UI::printStack(std::stack<Request*> requests)
     requests.push(elem);
     std::cout << "[" << std::put_time(std::localtime(&elem->timestamp), "%d/%m/%Y %T") << "] ";
 	if (elem->type == "add")
-	{
 		std::cout << "Added pair <" << elem->UC1 << ", " << elem->session1 << "> to " + elem->studentCode;
-	}
 	if (elem->type == "remove")
-	{
 		std::cout << "Removed all classes for " <<  elem->UC1 << " of " << elem->studentCode;
-	}
+	if (elem->type == "swapUC")
+		std::cout << "Swapped UC from pair <" << elem->UC1 << ", " << elem->session1 << "> to <" << elem->UC2 << ", " << elem->session2 << "> for " << elem->studentCode;
 	std::cout << std::endl;
 }
 
@@ -95,11 +114,11 @@ void UI::PrintChangeHistory()
 		std::cout << "Schedules - Change History\n\n";
 		auto rStack = manager->getRequestStack();
 		if (rStack.empty())
-			std::cout << "(No history to show)";
+			std::cout << "(No history to show)\n";
 		else
 			printStack(rStack);
 		std::cout << std::left
-				  << "\n\n [U] Undo most recent action (first action)"
+				  << "\n [U] Undo most recent action (last action on the list)"
 				  << "\n [B] Go back"
 				  << "\n [Q] Quit"
 				  << "\n\n"
