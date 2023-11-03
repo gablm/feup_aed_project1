@@ -406,14 +406,14 @@ bool(*)(const std::string a, const std::string b)&#160;</td><td class="memItemRi
   </tr>
 </table>
 </div><div class="memdoc">
-<p >Adds a <a class="el" href="class_u_c.html">UC</a> and class or changes the class if a student is already in the <a class="el" href="class_u_c.html">UC</a>. There are various checks in place: Max allocation of 25, max allocation difference of 4 and schedule conflicts The allocation difference is not verified if the session to enter is the one with the lowest occupation. That way, the <a class="el" href="class_u_c.html">UC</a> will return to a balanced state after a while if not already in such state. </p><dl class="params"><dt>Parameters</dt><dd>
+<p >Complexity: O(n^2) | The "n"s used here are very small and so a higher complexity only results in a negligible running time increase. Adds a <a class="el" href="class_u_c.html">UC</a> and class or changes the class if a student is already in the <a class="el" href="class_u_c.html">UC</a>. There are various checks in place: Max allocation of 25, max allocation difference of 4 and schedule conflicts The allocation difference is not verified if the session to enter is the one with the lowest occupation. That way, the <a class="el" href="class_u_c.html">UC</a> will return to a balanced state after a while if not already in such state. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">option</td><td>The command inputted by the user. </td></tr>
     <tr><td class="paramname">student</td><td>The pointer to the student being edited </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>Complexity: O(n^2) The "n"s used here are very small and so a higher complexity only results in a negligible running time increase. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Complexity: O(n^2) | The "n"s used here are very small and so a higher complexity only results in a negligible running time increase. </dd></dl>
 
 </div>
 </div>
@@ -1015,7 +1015,7 @@ bool(*)(const std::string a, const std::string b)&#160;</td><td class="memItemRi
   </tr>
 </table>
 </div><div class="memdoc">
-<p >Removes an <a class="el" href="class_u_c.html">UC</a> from the student's schedule and adds a new one in the specified class. There are various checks in place: Max allocation of 25, max allocation difference of 4 and schedule conflicts The allocation difference is not verified if the session to enter is the one with the lowest occupation. That way, the new <a class="el" href="class_u_c.html">UC</a> will return to a balanced state after a while if not already in such state. </p><dl class="section note"><dt>Note</dt><dd>Complexity: O(n^2) The "n"s used here are very small and so a higher complexity only results in a negligible running time increase. </dd></dl>
+<p >Removes an <a class="el" href="class_u_c.html">UC</a> from the student's schedule and adds a new one in the specified class. There are various checks in place: Max allocation of 25, max allocation difference of 4 and schedule conflicts The allocation difference is not verified if the session to enter is the one with the lowest occupation. That way, the new <a class="el" href="class_u_c.html">UC</a> will return to a balanced state after a while if not already in such state. </p><dl class="section note"><dt>Note</dt><dd>Complexity: O(n^2) | The "n"s used here are very small and so a higher complexity only results in a negligible running time increase. </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">option</td><td>The command inputted by the user. </td></tr>
