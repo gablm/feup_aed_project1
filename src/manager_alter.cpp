@@ -110,8 +110,9 @@ void Manager::NewClass(time_t time, std::string uccode, std::string classcode, S
 }
 
 /**
- * TODO ????????????????
- * @note Complexity: O(????????????????????????)
+ * Removes an UC from the student's schedule and adds a new one in the specified class.
+ * There are no verification as it is assumed the changes.csv wasn't altered by external factors.
+ * @note Complexity: O(n^2)
  * @param time Timestamp in ms since epoch
  * @param oldUCcode The code of the UC being removed
  * @param newUCcode The code of the UC being added

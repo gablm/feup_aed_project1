@@ -227,6 +227,7 @@ void UI::RemoveUC(std::string option, Student *student)
  * @param option The command inputted by the user.
  * @param student The pointer to the student being edited
  * @note Complexity: O(n^2)
+ * The "n"s used here are very small and so a higher complexity only results in a negligible running time increase.
  */
 void UI::NewClass(std::string option, Student *student) {
 
