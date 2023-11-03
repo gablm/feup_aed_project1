@@ -155,7 +155,7 @@ void UI::HelpRequest(std::string error, std::string usage)
 	else
 	{
 		std::cout << "Commands available for the Requests page:"
-				  << "\n add [UCcode] [ClassCode/any] - add new UC to the schedule in the specified class or swaps the current class if the UC is already present"
+				  << "\n add [UCcode] [ClassCode]/\"any\" - add new UC to the schedule in the specified class or swaps the current class if the UC is already present"
 				  << "\n remove [UCcode] - Remove an UC from the schedule"
 				  << "\n swapUC [old UCCode] [new UCCode] [new ClassCode] - swaps an UC for another in the specified class"
 				  << "\n b/B - Go back"
