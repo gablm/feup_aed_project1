@@ -209,7 +209,7 @@ void UI::RemoveUC(std::string option, Student *student)
 }
 
 /**
- * Complexity: O(n^2) |
+ * Complexity: O(n^2) | The "n"s used here are very small and so a higher complexity only results in a negligible running time increase.
  * Adds a UC and class or changes the class if a student is already in the UC.
  * There are various checks in place: Max allocation of 25, max allocation difference of 4 and schedule conflicts
  * The allocation difference is not verified if the session to enter is the one with the lowest occupation.
@@ -314,7 +314,7 @@ void UI::NewClass(std::string option, Student *student) {
 
 
 /**
- * Complexity: O(n^2) |
+ * Complexity: O(n^2) | The "n"s used here are very small and so a higher complexity only results in a negligible running time increase.
  * Removes an UC from the student's schedule and adds a new one in the specified class.
  * There are various checks in place: Max allocation of 25, max allocation difference of 4 and schedule conflicts
  * The allocation difference is not verified if the session to enter is the one with the lowest occupation.
