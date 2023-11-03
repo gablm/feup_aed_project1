@@ -16,7 +16,7 @@ $(NAME): $(FILES)
 	$(CC) $(FLAGS) $(FILES) -o $(NAME)
 
 doxygen:
-	doxygen docs/Doxyfile
+	@doxygen Doxyfile
 
 clean:
 ifeq ($(OS),Windows_NT)

@@ -10,7 +10,7 @@ Manager::Manager() : students(BST()), ucMap() {}
 
 /**
  * Disposes of everything that was allocated on the data filling methods.
- * @note Complexity: O(1)
+ * @note Complexity: O(n)
  */
 Manager::~Manager()
 {
