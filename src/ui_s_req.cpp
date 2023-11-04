@@ -360,6 +360,7 @@ void UI::SwapUC(std::string option, Student *student)
 	UC *oldUC = manager->getUcMap()[oldUCcode];
 	UC *newUC = manager->getUcMap()[newUCcode];
 
+
 	if (classcode == "any") {
         int minCount = 100;
         Session *tempsession;
@@ -375,6 +376,12 @@ void UI::SwapUC(std::string option, Student *student)
         }
         classcode = tempsession->getName();
     }
+
+	if (classcode.length() < 1 || newUC->find(classcode).size() < 1)
+	{
+		HelpRequest("Invalid Classcode", "add [UCcode] [ClassCode]");
+		return;
+	}
 
 	auto schedule = student->getSchedule();
 	bool foundOld = false;
